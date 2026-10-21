@@ -1,273 +1,193 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ICT Sniper</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<style>
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark;--bg:#0A0F1C;--panel:#121a2e;--line:#22304d;--txt:#e8edf7;--mut:#8b97b3;--g:#22c55e;--r:#ef4444;--b:#3b82f6;--ac:#D4AF37}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--txt);font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-variant-numeric:tabular-nums;padding:16px}
-.wrap{max-width:620px;margin:0 auto;display:grid;gap:14px}
-h1{font-size:20px;margin:4px 0 0}
-.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-.seg button{padding:12px;border-radius:14px;border:1px solid var(--line);background:transparent;color:var(--txt);font:600 15px inherit;font-family:inherit;cursor:pointer}
-.seg button.on{border-color:var(--ac);color:var(--ac);background:rgba(255,255,255,.04)}
-label{display:block;font-size:13px;color:var(--mut);margin:10px 0 6px}
-input[type=number]{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--txt);font:600 16px 'JetBrains Mono',monospace}
-a{color:var(--ac)}
-.drop{display:block;border:1px dashed var(--line);border-radius:14px;padding:18px;text-align:center;color:var(--mut);cursor:pointer;font-size:14px}
-.drop img{max-width:100%;border-radius:10px;display:block;margin:0 auto}
-.go{width:100%;margin-top:14px;padding:14px;border:0;border-radius:14px;background:var(--ac);color:#0A0F1C;font:800 16px 'Plus Jakarta Sans',sans-serif;cursor:pointer}
-.go:disabled{opacity:.45;cursor:default}
-.msg{font-size:14px;color:var(--mut);margin-top:10px}.err{color:var(--r)}
-.tag{font-size:12px;letter-spacing:3px;color:var(--ac);font-weight:700}
-.head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.sym{font-size:28px;font-weight:800;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.pill{font-size:13px;padding:4px 10px;border-radius:99px;font-weight:700}
-.long{background:rgba(34,197,94,.15);color:var(--g)}.short{background:rgba(239,68,68,.15);color:var(--r)}
-.lot{text-align:right}.lot b{font:700 28px 'JetBrains Mono',monospace;display:block}.lot span{font-size:12px;color:var(--mut)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
-.mini{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:10px;font-size:13px;line-height:1.4}
-.mini h4{margin:0 0 4px;font-size:12px;color:var(--ac)}
-svg{width:100%;height:auto;display:block;background:var(--bg);border-radius:14px}.b{padding:10px 12px;border-radius:14px;margin:8px 0;font-size:14px;line-height:1.5;white-space:pre-wrap}.b.u{background:var(--bg);border:1px solid var(--line)}.b.a{background:rgba(255,255,255,.04)}#tabs{display:flex;gap:8px;overflow-x:auto;padding:6px 0;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg)}.tb{flex:none;padding:8px 12px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--txt);font:600 13px 'Plus Jakarta Sans',sans-serif;cursor:pointer;white-space:nowrap}.tb.on{border-color:var(--ac);color:var(--ac)}.tb.on{background:rgba(255,255,255,.12);font-weight:800}.tb.run{border-color:#22c55e;color:#22c55e}.tb.wait{border-color:#f59e0b;color:#f59e0b}#q{flex:1;min-width:0;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--txt);font:15px 'Plus Jakarta Sans',sans-serif}
-.pulse{animation:p 2s ease-in-out infinite}@keyframes p{0%,100%{opacity:1}50%{opacity:.25}}
-@media(prefers-reduced-motion:reduce){.pulse{animation:none}}
-.out{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
-.o{border-radius:14px;padding:12px;border:1px solid}.o.t{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.08)}.o.s{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.08)}
-.o small{display:block;color:var(--mut);font-size:12px}.o b{font:700 22px 'JetBrains Mono',monospace;display:block;margin:4px 0}
-.rr{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);margin-bottom:6px}.rr b{color:var(--txt)}
-.bar{display:flex;height:8px;border-radius:99px;overflow:hidden}
-.foot{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:14px;display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between}
-.warn{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.4);border-radius:12px;padding:10px;font-size:13px;margin-top:12px}
-.amp{border:1px solid;border-radius:14px;padding:10px 12px;margin:12px 0 0;font-size:13px;line-height:1.45}.amp.g{border-color:rgba(34,197,94,.5);background:rgba(34,197,94,.08);color:#86efac}.amp.y{border-color:rgba(245,158,11,.5);background:rgba(245,158,11,.08);color:#fcd34d}.amp.r{border-color:rgba(239,68,68,.6);background:rgba(239,68,68,.12);color:#fca5a5}.amp b{font-size:14px}.lights{display:inline-flex;gap:6px;vertical-align:middle}.lights i{width:16px;height:16px;border-radius:50%;opacity:.22;display:inline-block}.lights i.r{background:#ef4444;color:#ef4444}.lights i.y{background:#f59e0b;color:#f59e0b}.lights i.g{background:#22c55e;color:#22c55e}.lights i.on{opacity:1;box-shadow:0 0 8px currentColor}.hr{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:99px;background:#ef4444;color:#fff;font-size:11px;font-weight:800;letter-spacing:.5px;vertical-align:middle}.mnav{display:flex;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:4px}.mt{flex:1;background:transparent;border:0;color:var(--mut);padding:10px 8px;border-radius:10px;font:600 13px 'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:background .2s,color .2s}.mt.on{background:var(--ac);color:#0A0F1C}.pane{display:grid;gap:14px;animation:fd .22s ease}@keyframes fd{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){.pane{animation:none}}details.j{border:1px solid var(--line);border-radius:12px;margin:0 0 8px;background:var(--bg)}details.j>summary{padding:10px 12px;cursor:pointer;font-size:13px;display:flex;justify-content:space-between;gap:8px;list-style:none}details.j>summary::-webkit-details-marker{display:none}details.j .jb{padding:0 12px 12px;font-size:12px;color:var(--mut);line-height:1.6}details.j textarea,details.j input[type=number]{margin-top:4px}.jg{color:#22c55e}.jrd{color:#ef4444}.jm{color:var(--mut)}textarea{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--txt);font:14px 'Plus Jakarta Sans',sans-serif;resize:vertical}.mt{font-size:12px;padding:10px 4px}input[type=password],input.tx{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--txt);font:600 14px 'JetBrains Mono',monospace}</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ICT Sniper - Premium Trading App</title>
+  <!-- Tailwind CSS CDN für modernes Design -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom Glassmorphism Styles */
+    body {
+      background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+    }
+    
+    .glass-card {
+      background: rgba(30, 41, 59, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      border-radius: 1rem;
+    }
+
+    .glass-card-accent {
+      background: rgba(234, 179, 8, 0.05);
+      border: 1px solid rgba(234, 179, 8, 0.2);
+    }
+
+    .glass-input {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #f8fafc;
+      transition: all 0.2s ease;
+    }
+
+    .glass-input:focus {
+      border-color: #eab308;
+      box-shadow: 0 0 10px rgba(234, 179, 8, 0.2);
+      outline: none;
+    }
+
+    .glow-gold {
+      box-shadow: 0 0 20px rgba(234, 179, 8, 0.15);
+    }
+  </style>
 </head>
-<body>
-<div class="wrap">
-<h1>ICT Sniper</h1><div class="mnav" role="tablist"><button class="mt on" id="mtA" role="tab" onclick="mainTab('A')">Challenge &amp; Analyse</button><button class="mt" id="mtB" role="tab" onclick="mainTab('B')">Historie / Journal</button><button class="mt" id="mtC" role="tab" onclick="mainTab('C')">Einstellungen</button></div><div class="amp y" id="apiHint" style="display:none"><b>Zuerst: API-Schlüssel eintragen</b><br>Ohne eigenen Anthropic-API-Schlüssel kann die App nichts auswerten.<br><button class="tb" style="margin-top:8px" onclick="mainTab('C')">Einstellungen öffnen</button></div><div class="pane" id="paneA"><div class="panel" id="ch"><div class="tag" style="letter-spacing:2px">12-TAGE-CHALLENGE</div><div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:6px"><b id="chT" style="font:700 20px 'JetBrains Mono',monospace"></b><span id="chD" style="font-weight:800;color:var(--ac)"></span></div><div class="bar" style="height:12px;margin-top:10px"><div id="chBar" style="width:0%;background:var(--ac)"></div><div style="flex:1;background:var(--line)"></div></div><div class="msg" id="chI" style="margin:8px 0 0;white-space:pre-line"></div><label for="chS">Startkapital (€)</label><input id="chS" type="number" inputmode="decimal" step="any" value="100"><label for="chB">Aktueller Kontostand (€)</label><input id="chB" type="number" inputmode="decimal" step="any" placeholder="z. B. 100"><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button class="tb" id="chU">Kontostand aktualisieren</button><button class="tb" id="chK">Challenge neu starten</button></div><div class="msg" id="chZ" style="margin:8px 0 0"></div><div class="msg" style="margin:4px 0 0;font-size:12px">Einzahlung? Erhöhe das Startkapital um den gleichen Betrag, sonst zählt sie als Gewinn.</div></div><div class="panel" id="clk"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap"><b id="clkT" style="font:700 28px 'JetBrains Mono',monospace">--:--:--</b><span id="clkS" style="font-weight:700"></span></div><div class="msg" id="clkI" style="margin:6px 0 0"></div><div id="kzb" class="amp r" style="margin-top:10px"></div><div class="msg" id="clkB" style="margin:8px 0 0"></div></div>
-<div class="panel">
-  <div class="seg"><button id="bG" class="on">Gold · XAUUSD</button><button id="bB">Bitcoin · BTCUSD</button><button id="bO">Brent · UKOUSD</button><button id="bX">Anderes</button></div>
-  <label for="cap">Kontostand in € (wird gespeichert)</label>
-  <input id="cap" type="number" inputmode="decimal" min="1" placeholder="z. B. 1000"><label for="fx">EUR/USD-Kurs (1 € = ? $)</label><input id="fx" type="number" inputmode="decimal" step="any" placeholder="aus MT5, Symbol EURUSD"><button class="tb" id="fxb" style="margin-top:8px" onclick="getFx(false)">Kurs automatisch holen</button><div class="msg" id="fxn" style="margin-top:6px"></div><div id="cust" style="display:none"><label for="nm">Name des Instruments (wie im Chart)</label><input id="nm" type="text" placeholder="z. B. EURUSD" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--txt);font:600 16px 'JetBrains Mono',monospace"></div><label for="ks">Kontraktgröße (1 Lot = wie viele Einheiten)</label><input id="ks" type="number" inputmode="decimal" min="0.0001" step="any"><div class="msg">Prüfe den Wert in MT5 am Handy: Preise, Symbol antippen, Details, Kontraktgröße. Er unterscheidet sich je nach Broker. Bei Vantage geprüft: Gold 100, Bitcoin 1, Brent 1000.</div><label for="spr">Spread (Ask minus Bid, in Preiseinheiten)</label><input id="spr" type="number" inputmode="decimal" step="any" placeholder="0"><div class="msg">Aus der Preisliste in MT5: Ask minus Bid, zum Beispiel 17 bei Bitcoin. Der Spread schwankt, trag einen typischen Wert ein. Leer oder 0 rechnet ohne Spread.</div>
-  <label for="file5">M5-Chart (für den Bias)</label><div class="msg" style="margin:0 0 6px">Tipp: etwa 10 bis 16 Stunden sichtbar (Überblick). Preisachse, Zeitachse und Symbol im Bild lassen. Querformat hilft.</div><label class="drop" for="file5"><span id="dropTxt5">M5-Screenshot auswählen</span><input id="file5" type="file" accept="image/*" hidden></label><label style="margin-top:10px">M1-Chart (Entry, SL, TP) – <a id="tv" target="_blank" rel="noopener">Chart öffnen</a></label>
-  <div class="msg" style="margin:0 0 6px">Tipp: etwa 1,5 bis 3 Stunden sichtbar (90 bis 180 Kerzen). Zu viel: Kerzen zu klein. Zu wenig: Zusammenhang fehlt. Linien offener Trades bei Bedarf ausblenden.</div><label class="drop" for="file"><span id="dropTxt">M1-Screenshot auswählen</span><input id="file" type="file" accept="image/*" hidden></label>
-  <button class="go" id="go" disabled>Trade Card erstellen</button>
-  <div class="msg" id="msg"></div>
-</div>
-<div id="tabs"></div><div id="tmenu" style="display:none"></div><div id="out"></div><div class="panel" id="chat" style="display:none"><div id="log"></div><div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><label class="tb" for="fu" id="fuL">Update-Screenshot (M1) anhängen</label><input id="fu" type="file" accept="image/*" hidden><button class="tb" id="chk" style="display:none">Einstieg prüfen</button></div><div style="display:flex;gap:8px;margin-top:10px"><input id="q" type="text" placeholder="Frage zum Trade …"><button class="go" id="send" style="width:auto;margin:0;padding:12px 16px">Senden</button></div></div>
-</div><div class="pane" id="paneB" style="display:none"><div class="msg" id="stat" style="white-space:pre-line"></div><button class="tb" id="rs" style="display:none;margin:0 0 8px" onclick="resetHist()">Bilanz zurücksetzen</button><div class="panel" id="jr"><div class="tag" style="letter-spacing:2px">JOURNAL</div><div class="msg" id="jrS" style="margin:6px 0 10px"></div><div id="jrL"></div><label for="jrN">Allgemeine Notizen</label><textarea id="jrN" rows="4" placeholder="Beobachtungen, Regeln, Lehren …"></textarea></div><div class="panel" id="day"><div class="tag" style="letter-spacing:2px">TAGESBILANZ</div><label for="dayS">Startsumme heute (€)</label><input id="dayS" type="number" inputmode="decimal" step="any"><label for="dayE">Endsumme (€)</label><input id="dayE" type="number" inputmode="decimal" step="any"><div class="msg" id="dayR"></div><button class="tb" id="dayK" style="margin-top:8px">Endsumme als Kontostand übernehmen</button><div class="msg" id="dayH" style="white-space:pre-line"></div></div></div><div class="pane" id="paneC" style="display:none"><div class="panel"><div class="tag" style="letter-spacing:2px">API-ZUGANG</div><div class="msg" id="apiS" style="margin:6px 0 10px"></div><label for="apiKey">Anthropic-API-Schlüssel</label><input id="apiKey" type="password" autocomplete="off" placeholder="sk-ant-..."><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="tb" id="apiSave">Speichern &amp; testen</button><button class="tb" id="apiDel">Schlüssel löschen</button></div><div class="msg" id="apiT" style="margin:8px 0 0"></div><div class="msg" style="margin:8px 0 0;font-size:12px">Schlüssel erstellen: <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>. Der Schlüssel bleibt nur auf diesem Gerät im Browser und wird nur an die Anthropic-API gesendet. Die Nutzung wird über dein Anthropic-Konto abgerechnet. Setz dort ein Ausgabenlimit. Für die Nachrichtensuche muss die Websuche in deiner Anthropic-Konsole aktiviert sein.</div></div><div class="panel"><div class="tag" style="letter-spacing:2px">MODELLE</div><label for="mdC">Chart-Analyse (Bilder)</label><input id="mdC" class="tx" type="text" autocomplete="off"><label for="mdD">Nachrichten und Chat</label><input id="mdD" class="tx" type="text" autocomplete="off"><div class="msg" style="margin:8px 0 0;font-size:12px">Leer lassen setzt die Standardwerte. Ein stärkeres Modell liest Charts besser, kostet aber mehr.</div></div><div class="panel"><div class="tag" style="letter-spacing:2px">WICHTIGER HINWEIS</div><div class="msg" style="margin:6px 0 0">Diese App ist ein Hilfsmittel und keine Anlageberatung. Die Auswertungen stammen von einer KI und können falsch sein. Trading mit CFDs, Krypto und Hebel kann zum Verlust des gesamten eingesetzten Kapitals führen. Nutze die App zuerst auf einem Demokonto.</div></div></div></div>
-<script>
-/* Eigenstaendige Version: Der Kunde traegt seinen eigenen Anthropic-API-Schluessel unter "Einstellungen" ein.
-   Die Anfragen gehen direkt vom Geraet an die Anthropic-API. Es gibt keinen Server dazwischen. */
-if(typeof claude==='undefined'){(function(){
- var touched=false;['pointerdown','keydown','touchstart'].forEach(function(ev){window.addEventListener(ev,function(){touched=true},{once:true,capture:true})});
- function ls(k){try{return localStorage.getItem(k)||''}catch(e){return ''}}
- function models(){var m={};try{m=JSON.parse(ls('ict-models')||'{}')}catch(e){}return{complex:m.complex||'claude-opus-5-5',normal:m.normal||'claude-sonnet-5-5'}}
- function toB64(file){return new Promise(function(res,rej){var img=new Image(),u=URL.createObjectURL(file);img.onload=function(){var m=2000,k=Math.min(1,m/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);res(c.toDataURL('image/jpeg',0.9).split(',')[1])};img.onerror=function(){rej(new Error('Bild konnte nicht gelesen werden'))};img.src=u})}
- async function sample(input,opts){
-  opts=opts||{};
-  var k=ls('ict-apikey');
-  if(!k){if(touched&&window.__goSettings)window.__goSettings();throw new Error('Kein API-Schlüssel hinterlegt. Trag ihn unter Einstellungen ein')}
-  var imgs=await Promise.all((opts.images||[]).map(toB64));
-  var msgs=typeof input==='string'?[{role:'user',content:input}]:input.map(function(m){return{role:m.role,content:m.content}});
-  var first=msgs.findIndex(function(m){return m.role==='user'});
-  if(imgs.length&&first>=0){var t=msgs[first].content;msgs[first]={role:'user',content:imgs.map(function(d){return{type:'image',source:{type:'base64',media_type:'image/jpeg',data:d}}}).concat([{type:'text',text:t}])}}
-  var body={model:opts.modelTier==='complex'?models().complex:models().normal,max_tokens:4000,messages:msgs};
-  if(opts.tools)body.tools=[{type:'web_search_20250305',name:'web_search',max_uses:4}];
-  var r,j;
-  for(var n=0;n<3;n++){
-   try{r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify(body)})}catch(e){throw new Error('Keine Verbindung zur Anthropic-API')}
-   j={};try{j=await r.json()}catch(e){}
-   if(r.ok&&j.stop_reason==='pause_turn'){body.messages=body.messages.concat([{role:'assistant',content:j.content}]);continue}
-   break;
-  }
-  if(r.status===401)throw new Error('API-Schlüssel ungültig')
-  if(r.status===429||r.status===529)throw Object.assign(new Error('too often'),{code:'rate_limited'});
-  if(!r.ok)throw new Error((j.error&&j.error.message)||('API-Fehler '+r.status));
-  var parts=[];(j.content||[]).forEach(function(b){if(b.type==='text'){if(b.text)parts.push(b.text)}else{parts=[]}});
-  var text=parts.join('');
-  if(opts.onText){try{opts.onText({text:text})}catch(e){}}
-  return{text:text};
- }
- sample.limits=async function(){return{images:true,tools:true}};
- window.claude={use:async function(n){if(n==='sample')return sample;if(n==='mcp')return{callTool:async function(){throw new Error('nicht verfügbar')}};return null}};
-})()}
-</script>
-<script>
-const INS={
- XAUUSD:{name:'XAUUSD',tag:'GOLD · M1',k:100,ac:'#D4AF37',url:'https://www.tradingview.com/chart/8KubV0nu/?symbol=VANTAGE%3AXAUUSD',unit:'Gold (1 Lot = 100 oz)'},
- BTCUSD:{name:'BTCUSD',tag:'BTC · M1',k:1,ac:'#F7931A',url:'https://www.tradingview.com/chart/8KubV0nu/?symbol=VANTAGE%3ABTCUSD',unit:'Bitcoin (1 Lot = 1 BTC)'},
- UKOIL:{name:'UKOUSD',tag:'BRENT · M1',k:1000,ac:'#38bdf8',url:'https://www.tradingview.com/chart/8KubV0nu/?symbol=VANTAGE%3AUKOUSD',unit:'Brent'},
- CUSTOM:{name:'',tag:'M1',k:1,ac:'#a78bfa',url:'https://www.tradingview.com/chart/8KubV0nu/',unit:'Anderes'}
-};
-// Hinterlegte Anweisung (Baustein)
-const BAUSTEIN=`Du bist ein ICT-Trading-Assistent für XAUUSD (Gold) und BTCUSD (Bitcoin) auf dem M1-Chart. Ausgabe komplett auf Deutsch. RR zwischen 1:1,8 und 1:4.
-ANALYSE (4 ICT-Säulen aus dem Screenshot):
-① Struktur (HH / HL / LH / LL, M1-Trend)
-② Liquidität (BSL / SSL — gesweept ✓ oder noch offen)
-③ Nicht mitigierter FVG (bullisch / bärisch)
-④ Premium / Discount (Range, EQ 50%)
-BERECHNUNG: HTF Bias: aus dem M5-Chart bestimmen (bullish, bearish oder neutral). Richtung: Long bei bullischem Bias, Short bei bärischem Bias; bei neutralem Bias die wahrscheinlichere Richtung wählen und das in bias_note sagen. Einstieg: Prüfe, ob jetzt ein Einstieg sinnvoll ist (Liquidität gesweept, Struktur-Shift auf M1 bestätigt, Preis im Discount bei Long bzw. Premium bei Short, Preis am FVG). Dann entry_type "jetzt" und Entry = aktueller Preis. Wenn der Preis erst zu einem FVG oder Order Block zurücklaufen sollte: entry_type "limit" und Entry = dieser Preis. Fehlen Bedingungen (z. B. Liquidität noch nicht gesweept): entry_type "warten", Entry = der Preis, ab dem der Einstieg gilt, und entry_note nennt die Bedingung. Bevorzuge entry_type "limit", wenn ein sauberer Rücklauf-Einstieg an einem FVG oder Order Block möglich ist und kein hohes Nachrichtenrisiko besteht, damit der Nutzer nicht dauernd prüfen muss; Entry ist dann der Limit-Preis, und ungueltig_ab ist der Preis, bei dessen Erreichen VOR dem Fill das Setup nicht mehr gilt. Bei Limit-Orders liegt er in Gewinnrichtung vom aktuellen Preis aus (Long: über dem aktuellen Preis, Short: unter dem aktuellen Preis), also wenn der Preis ohne Rücklauf wegläuft, und niemals auf der Stop-Loss-Seite, weil die Order dort längst gefüllt wäre. Bei Stop-Orders liegt er auf der Gegenseite des Ausbruchs (Long: unter dem Entry, Short: über dem Entry). Nachrichten prüft die App separat; ignoriere sie und setze entry_type nie wegen Nachrichten auf "warten". Gilt die Bedingung nur als Ausbruch über oder unter einen Preis ohne Rücklauf, nutze entry_type "stop" (Buy Stop bei Long, Sell Stop bei Short) mit Entry am Auslösepreis; das löst beim Berühren aus, nenne in entry_note kurz das Risiko eines Fehlausbruchs. Bei neutralem M5-Bias wähle die Richtung nach der M1-Struktur und warte nicht allein deshalb. entry_note ist ein klarer Satz: erst die Bedingung, dann was der Nutzer tun soll. SL = hinter dem Strukturpunkt, der das Setup ungültig macht (bei Long unter dem Sweep-Tief oder letzten Swing-Tief, bei Short über dem Sweep-Hoch oder letzten Swing-Hoch), plus Puffer von etwa 1 bis 2 typischen M1-Kerzenspannen. Wähle den SL nach dem Chart und lieber etwas weiter weg als zu eng; der Abstand darf beliebig groß sein, weil die Lot-Größe das Risiko trotzdem begrenzt. Passt dann kein TP mit RR von 1,8 bis 4 an eine Liquidität, setze entry_type "warten" und sage es in entry_note. TP = erste Liquidität mit RR zwischen 1,8 und 4,0.`;
-let cur='XAUUSD',img=null,img5=null,chat=[],ctx=null,imgU=null;
-const $=id=>document.getElementById(id);
-function sel(k){cur=k;const i=INS[k];[['bG','XAUUSD'],['bB','BTCUSD'],['bO','UKOIL'],['bX','CUSTOM']].forEach(([b,n])=>$(b).classList.toggle('on',k==n));$('tv').href=i.url;$('ks').value=i.k;$('cust').style.display=k=='CUSTOM'?'block':'none';document.documentElement.style.setProperty('--ac',i.ac);bestTimes();try{$('spr').value=(store.sp&&store.sp[k])||''}catch(e){}check()}
-function check(){$('go').disabled=!(img&&img5&&+$('cap').value>0&&+$('fx').value>0&&+$('ks').value>0&&(cur!='CUSTOM'||$('nm').value.trim()))}
-$('bG').onclick=()=>sel('XAUUSD');$('bB').onclick=()=>sel('BTCUSD');$('bO').onclick=()=>sel('UKOIL');$('bX').onclick=()=>sel('CUSTOM');$('cap').oninput=$('fx').oninput=$('ks').oninput=$('nm').oninput=check;$('cap').addEventListener('input',()=>{store.cap=$('cap').value;$('chB').value=$('cap').value;persist();chUpdate()});$('fx').addEventListener('input',()=>{store.fx=$('fx').value;store.fxT=Date.now();persist()});
-$('file').onchange=e=>{img=e.target.files[0]||null;if(img){const u=URL.createObjectURL(img);$('dropTxt').innerHTML='<img src="'+u+'" alt="Chart-Vorschau">'}check()};
-$('file5').onchange=e=>{img5=e.target.files[0]||null;if(img5){const u=URL.createObjectURL(img5);$('dropTxt5').innerHTML='<img src="'+u+'" alt="M5-Vorschau">'}check()};
-sel('XAUUSD');
-const de=(n,d=2)=>n.toLocaleString('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d});
-const pr=n=>n.toFixed(window.__dec||2);
-$('go').onclick=async()=>{
- const i={...INS[cur],k:+$('ks').value},fx=+$('fx').value,cap=(+$('cap').value)*fx;if(cur=='CUSTOM'){i.name=$('nm').value.trim().toUpperCase();i.tag=i.name+' · M1'}
- $('go').disabled=true;$('msg').className='msg';$('msg').textContent=(kzAt(Date.now()).on?'':'⚠ Außerhalb der Killzone: erhöhtes Fakeout-Risiko. Die Auswertung läuft trotzdem. ')+'Chart wird ausgewertet …';$('out').innerHTML='';
- try{
-  const sample=await claude.use('sample');
-  if(!sample)throw new Error('Die KI-Auswertung ist in dieser Ansicht nicht verfügbar.');
-  const prompt=BAUSTEIN+`\n\nInstrument: ${i.name}. Kapital: ${cap} $. Das erste Bild ist der M5-Chart (Bias, größere Liquidität), das zweite der M1-Chart (Entry, SL, TP und alle Preise aus dem M1-Chart). CHART LESEN: Lies zuerst Symbol, Zeitrahmen und die Preisachse rechts ab. Der aktuelle Preis ist das hervorgehobene Preisschild an der Achse. Zeigt der Chart ein Fadenkreuz mit hervorgehobenem Preis- und Zeitlabel, sind das ein exakter Preis und eine exakte Uhrzeit; nutze sie. Die vier Zahlen in der Kopfzeile sind Open, High, Low und Close der Kerze am Fadenkreuz, nicht automatisch der aktuelle Preis. Nutze nur Preise, die du an der Achse ablesen oder zwischen zwei Gitterlinien sauber interpolieren kannst, und rate nie. Linien und Pfeile mit BUY, SELL, TP oder SL sind bestehende Positionen und keine Marktstruktur: ignoriere sie für die Analyse und erwähne sie in chart_note. Passt das Symbol nicht zu ${i.name} oder ist ein Chart unleserlich, schreibe das in chart_note und setze entry_type auf "warten". Gib zuerst die Lesefelder aus, dann die Analyse. Nenne im M5-Chart das letzte bedeutende Hoch und Tief mit Preis und ungefährer Uhrzeit; die Zeit liest du an der Zeitachse ab und gibst sie als ungefähr an. ZUSATZ MUSTER (nur Bestätigung, ändert Entry, SL, TP und entry_type nicht): Prüfe im M1- und M5-Chart klassische Formationen (Keile, Dreiecke, Flaggen, Doppel-Top oder Doppel-Boden, Kopf-Schulter-Formation), Kerzenmuster am Entry (Hammer, Shooting Star, Hanging Man, Engulfing, Morning Star, Evening Star, Three Inside Up, Three Outside Down) und Marken wie Angebots- oder Nachfragezone, Tageshoch und Tagestief, Pivot-Punkte, Fibonacci 50 bis 79 Prozent. Nenne nur, was du sicher erkennst, und rate nicht. muster_urteil ist bestätigt, neutral oder widerspricht, je nachdem ob die erkannten Muster die gewählte Richtung stützen. Nachrichten werden separat geprüft: setze entry_type nie wegen Nachrichten auf "warten".\nAntworte NUR mit JSON, ohne Text und ohne Markdown, in diesem Format:\n{"chart_symbol":"Symbol laut M1-Chart","m1_zeitrahmen":"z. B. M1","axis_min":Zahl,"axis_max":Zahl,"letzte_swings":"2 bis 3 Swing-Punkte mit Preis aus dem M1-Chart","chart_note":"was unsicher oder ungewöhnlich ist, höchstens 15 Wörter, sonst leer","muster":"erkannte Formation oder Kerzenmuster mit Zeitrahmen, höchstens 20 Wörter, sonst leer","sr":"wichtige Unterstützung oder Widerstand mit Preis, höchstens 15 Wörter, sonst leer","muster_urteil":"bestätigt"|"neutral"|"widerspricht","saeulen":{"struktur":true|false,"liquiditaet":true|false,"fvg":true|false,"pd":true|false} (true = Saeule spricht für die gewählte Richtung),"m5_hoch":"letztes bedeutendes Hoch im M5-Chart mit Preis und ungefährer Uhrzeit","m5_tief":"letztes bedeutendes Tief im M5-Chart mit Preis und ungefährer Uhrzeit","bias":"bullish"|"bearish"|"neutral","bias_note":"Begründung höchstens 12 Wörter","direction":"long"|"short","entry_type":"jetzt"|"limit"|"stop"|"warten","entry_note":"Bedingung, höchstens 15 Wörter","alarm_preis":Zahl oder null,"ungueltig_ab":Zahl oder null,"trail_note":"Hinweis, hinter welchen Strukturpunkt der SL nach Break-even weiter nachgezogen wird, höchstens 15 Wörter","entry":Zahl,"sl":Zahl,"tp":Zahl,"structure":"kurzes Ergebnis","liquidity":"kurzes Ergebnis","fvg":"kurzes Ergebnis","pd":"kurzes Ergebnis","price_now":Zahl (aktueller Preis aus dem M1-Chart),"range_high":Zahl,"range_low":Zahl,"path":[etwa 20 ungefähre letzte Preise aus dem Chart, alt nach neu, letzter = aktueller Preis]}\nPreise mit Dezimalpunkt. Ergebnisse höchstens 12 Wörter, Deutsch.`;
-  const o={images:[img5,img],modelTier:'complex',cache:false};const r=await sample(prompt,o);
-  const m=r.text.replace(/```json|```/g,'').match(/\{[\s\S]*\}/);
-  const d=JSON.parse(m[0]);d.ts=Date.now();d.spr=+$('spr').value||0;d.news='Nachrichten nicht geprüft';d.news_risk='unbekannt';
-  try{const tl=await mkTools(function(t){$('msg').textContent=t});if(tl){$('msg').textContent='Nachrichten werden geprüft …';const np='Prüfe mit dem Werkzeug web_suche tagesaktuelle Nachrichten (nur von heute oder gestern) für '+i.name+'. Jetzt ist '+new Date().toLocaleString('de-DE')+' (Ortszeit des Nutzers). Mach zwei getrennte Suchen: eine zum Instrument, eine zu Terminen und Makrodaten von heute (Zinsentscheide, US-Inflation, Arbeitsmarktdaten, Dollar, Geopolitik; bei Brent OPEC und Lagerbestände, bei Bitcoin ETF-Zuflüsse und Regulierung). Nenne nur Meldungen mit Datum und Quelle, ignoriere ältere oder undatierte Treffer und erfinde nichts. Geplanter Trade: '+d.direction+', Order-Typ '+d.entry_type+', Entry '+d.entry+'. Antworte NUR mit JSON: {"news":"Einfluss, höchstens 20 Wörter, mit Quelle","news_risk":"niedrig"|"mittel"|"hoch","sperre":true|false,"sperre_bis":"Uhrzeit oder leer"}. sperre ist nur dann true, wenn ein konkreter Termin in den nächsten 30 Minuten liegt oder vor weniger als 15 Minuten war.';const nr=await sample(np,{cache:false,tools:tl,modelTier:'default'});const nm=nr.text.replace(/```json|```/g,'').match(/\{[\s\S]*\}/);const nj=JSON.parse(nm[0]);d.news=nj.news||d.news;d.news_risk=nj.news_risk||'unbekannt';if(nj.sperre===true&&d.entry_type!=='warten'){d.entry_type='warten';d.entry_note='Nachrichtentermin: erst '+(nj.sperre_bis||'nach dem Termin')+' wieder einsteigen. '+(d.entry_note||'')}}}catch(en){d.news='Nachrichten nicht geprüft ('+((en&&en.message)||'Fehler')+')'}
-  const id='t'+Date.now();try{const oa=opens().slice();oa.push({id,d,i,cap,fx,cur,t:Date.now()});saveOpens(oa)}catch(es){}act=id;fold=false;$('out').style.display='';render(d,i,cap,fx);tabs();IM[id]={m5:img5,m1:img};img=null;img5=null;$('file').value='';$('file5').value='';$('dropTxt').textContent='M1-Screenshot auswählen';$('dropTxt5').textContent='M5-Screenshot auswählen';$('msg').textContent='';
- }catch(e){$('msg').className='msg err';$('msg').textContent=(e&&(e.code==='rate_limited'||/too often/i.test(e.message||'')))?'Zu viele Anfragen in kurzer Zeit. Warte ein bis zwei Minuten und tippe dann erneut auf Trade Card erstellen.':'Fehler: '+(e.message||'Auswertung fehlgeschlagen')+(/Schlüssel|Modell|API|Verbindung|model/i.test(e.message||'')?'.':'. Prüfe den Screenshot und versuche es erneut.')}
- check();
-};
-function render(d,i,cap,fx){if(!Array.isArray(d.path)||d.path.length<2)d.path=[d.entry,d.entry];const E=fx||1,SY=fx?' €':' $';imgU=null;$('fu').value='';$('fuL').textContent='Update-Screenshot (M1) anhängen';$('chk').style.display='none';window.__dec=i.name==='UKOUSD'?3:2;ctx={d,i,cap,fx};chat=[];$('log').innerHTML='';$('chat').style.display='block';
- const X=spX(d);const dist=Math.abs(X.ent-X.sl);
- if(!dist)throw new Error('Ungültiger Stop-Loss');
- const lot=Math.max(0.01,Math.round(cap*0.10/(dist*i.k)*100)/100);
- const risk=lot*dist*i.k,pt=Math.abs(X.tp-X.ent),gain=lot*pt*i.k,rr=pt/dist;
- const long=d.direction==='long';
- const hi=Math.max(d.tp,d.sl,d.range_high||0,...d.path),lo=Math.min(d.tp,d.sl,d.range_low||1e12,...d.path);
- const W=580,H=220,top=26,bot=H-26,xr=440,pad=(hi-lo)*.06;
- const y=v=>top+(hi+pad-v)/(hi-lo+2*pad)*(bot-top),n=d.path.length,x=k=>10+k/(n-1)*(xr*.62-10);
- const xn=x(n-1),pts=d.path.map((v,k)=>x(k).toFixed(1)+','+y(v).toFixed(1)).join(' ');
- const ex=xr,ey=y(d.tp);
- const L=(v,c,t)=>`<line x1="6" x2="${xr+6}" y1="${y(v)}" y2="${y(v)}" stroke="${c}" stroke-dasharray="5 4"/><text x="${xr+12}" y="${y(v)+4}" fill="${c}" font-size="11" font-family="JetBrains Mono">${t} · ${pr(v)}</text>`;
- const warn=(rr<1.8||rr>4)?`<div class="warn">RR liegt mit 1 : ${de(rr)} außerhalb von 1 : 1,8 bis 1 : 4. Prüfe die Level selbst oder mach einen neuen Screenshot.</div>`:'';
- const rp=risk/(risk+gain)*100;const hh=hist().filter(x=>x.sym===i.name&&(x.r==='TP'||x.r==='SL')),tpn=hh.filter(x=>x.r==='TP').length,hr=hh.length?' Deine bisherige Quote bei '+i.name+': '+de(tpn/hh.length*100,0)+' % ('+tpn+' von '+hh.length+')'+(hh.length<20?', noch zu wenige Trades für eine sichere Aussage.':'.'):'';const sa=d.saeulen||{},ks4=[['Struktur',sa.struktur],['Liquidität',sa.liquiditaet],['FVG',sa.fvg],['Premium/Discount',sa.pd]],n4=ks4.filter(k=>k[1]===true).length,sq=d.saeulen?'Setup-Qualität: '+n4+' von 4 Säulen passen ('+(n4===4?'stark':n4===3?'brauchbar':'schwach')+') · '+ks4.map(k=>(k[1]===true?'✓ ':'✗ ')+k[0]).join('  '):'';const kzi=d.ts?kzAt(d.ts):null,kzb=kzi?(kzi.on?'<div class="amp g"><b>🟢 Innerhalb der aktiven Killzone (Optimale Liquidität)</b><br>'+kzi.name+' · Karte erstellt um '+hm(new Date(d.ts))+' Uhr</div>':'<div class="amp r"><b>🔴 Außerhalb der Killzone / Ruhige Phase (Erhöhtes Fakeout-Risiko – Trade nicht empfohlen)</b><br>'+(kzi.wk?'Wochenende. ':'')+'Karte erstellt um '+hm(new Date(d.ts))+' Uhr. Nächste Killzone: '+fmtNext(nextKz(d.ts))+' Uhr</div>'):'';const lvl=d.saeulen?(n4>=4?'g':n4===3?'y':'r'):'',lock=lvl==='r'&&!(window.__ul&&window.__ul[act]),amp=d.saeulen?'<div class="amp '+lvl+'"><span class="lights"><i class="r'+(lvl==='r'?' on':'')+'"></i><i class="y'+(lvl==='y'?' on':'')+'"></i><i class="g'+(lvl==='g'?' on':'')+'"></i></span> <b style="margin-left:6px">Setup-Qualität: '+(lvl==='g'?'stark':lvl==='y'?'brauchbar':'schwach')+' ('+n4+' von 4 Säulen)</b><div style="margin-top:6px">'+ks4.map(k=>(k[1]===true?'✓ ':'✗ ')+k[0]).join(' · ')+'</div>'+(lvl==='r'?'<div style="margin-top:8px"><b>Unzureichende Setup-Qualität – Trade wird nicht empfohlen</b><br>High-Risk-Trade: Der Lot-Vorschlag ist gesperrt.'+(lock?'<br><button class="tb" style="margin-top:8px" onclick="unlockLot()">Lot trotzdem anzeigen</button>':'')+'</div>':'')+'</div>':'';const ck=checks(d,i).map(t=>'<div class="warn">'+t+'</div>').join('');const be=long?d.entry+dist:d.entry-dist,et=d.entry_type||'jetzt',etl=et==='jetzt'?'JETZT EINSTEIGEN (Market-Order)':et==='limit'?(long?'Buy Limit':'Sell Limit')+' bei '+pr(d.entry)+' setzen':et==='stop'?(long?'Buy Stop':'Sell Stop')+' bei '+pr(d.entry)+' setzen':'WARTEN: noch keine Order',etc=et==='jetzt'?'#22c55e':(et==='limit'||et==='stop')?'#3b82f6':'#f59e0b';const over=risk>cap*0.11?`<div class="warn">Mit der kleinsten Lot-Größe (0,01) liegt dein Verlust bei ${de(risk/cap*100,1)}% des Kapitals, also über 10%. Prüfe den Trade.</div>`:'';
- $('out').innerHTML=`<div class="card"><div class="head"><div><div class="tag">${i.tag}</div><div class="sym">${i.name}<span class="pill ${long?'long':'short'}">${long?'↑ Long':'↓ Short'}</span>${lvl==='r'?'<span class="hr">HIGH-RISK</span>':''}</div></div><div class="lot">${lock?'<b style="font-size:20px">Gesperrt</b><span>Lot · High-Risk-Trade</span>':'<b>'+de(lot)+'</b><span>Lot · Risiko 10%'+(lvl==='r'?' · High-Risk':'')+'</span>'}</div></div>
- ${amp}${kzb}<div class="mini" style="margin-top:14px;border-color:${etc}"><h4 style="color:${etc}">${etl}</h4>${d.entry_note||''}${(et==='limit'||et==='stop')&&d.ungueltig_ab?'<br>Order löschen, falls der Preis '+pr(+d.ungueltig_ab)+' erreicht, bevor sie gefüllt wurde.':''}${et==='warten'&&d.alarm_preis?'<br>Preisalarm auf '+pr(+d.alarm_preis)+' setzen (z. B. in der TradingView-App).':''}${(et==='limit'||et==='stop')&&d.ts?'<br>Ablaufzeit in MT5 setzen: '+new Date(d.ts+3600000).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+' Uhr (60 Minuten nach der Auswertung), dann löscht MT5 die Order selbst.':''}${et==='warten'?' Danach Update-Screenshot im Chat senden.':''}</div><div class="out" style="margin:10px 0 0"><div class="o t"><small>▲ Take Profit</small><b>${pr(X.tp)}</b><small>${lock?'':'+'+de(gain/E)+SY+' · '}+${de(pt)} Pts</small></div><div class="o s"><small>▼ Stop Loss</small><b>${pr(X.sl)}</b><small>${lock?'':'−'+de(risk/E)+SY+' · '}−${de(dist)} Pts</small></div></div>${X.sp?'<div class="msg" style="margin:6px 0 0">Spread '+pr(X.sp)+' eingerechnet: '+(long?(d.entry_type==='jetzt'?'Market-Kauf füllt zum Ask, der Entry ist um den Spread teurer.':'Long: SL und TP lösen am Bid aus, hier wird nichts verschoben.'):'Short: SL und TP sind um den Spread nach oben verschoben, weil sie am Ask auslösen. Trag diese Werte in MT5 ein.')+'</div>':''}<div class="grid"><div class="mini"><h4>① Struktur</h4>${d.structure}</div><div class="mini"><h4>② Liquidität</h4>${d.liquidity}</div><div class="mini"><h4>③ FVG</h4>${d.fvg}</div><div class="mini"><h4>④ Premium / Discount</h4>${d.pd}</div><div class="mini" style="grid-column:1/-1"><h4>M5-Bias · ${d.bias||'unbekannt'}</h4>${d.bias_note||''}${d.m5_hoch?'<br>Hoch: '+d.m5_hoch:''}${d.m5_tief?'<br>Tief: '+d.m5_tief:''}${d.m5_hoch||d.m5_tief?' (ungefähr, bitte prüfen)':''}</div>${d.muster_urteil?'<div class="mini" style="grid-column:1/-1"><h4>Muster · '+d.muster_urteil+'</h4>'+(d.muster||'Kein klares Muster erkannt')+(d.sr?'<br>Marken: '+d.sr:'')+'</div>':''}<div class="mini" style="grid-column:1/-1"><h4>Nachrichten · Risiko ${d.news_risk||'unbekannt'}</h4>${d.news||'Nachrichten nicht geprüft'}</div></div>
- <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Mini-Chart mit Entry, TP und SL">
- <rect x="0" y="0" width="${W}" height="20" fill="rgba(239,68,68,.18)"/><text x="8" y="14" fill="#ef4444" font-size="11">Premium</text>
- <rect x="0" y="${H-20}" width="${W}" height="20" fill="rgba(34,197,94,.18)"/><text x="8" y="${H-6}" fill="#22c55e" font-size="11">Discount</text>
- ${L(d.tp,'#22c55e','TP')}${L(d.entry,'#3b82f6','Entry')}${L(d.sl,'#ef4444','SL')}
- <line x1="${xn}" x2="${xn}" y1="22" y2="${H-22}" stroke="#6b7280" stroke-dasharray="3 4"/><text x="${xn-10}" y="${H-24}" fill="#6b7280" font-size="10">now</text>
- <polyline points="${pts}" fill="none" stroke="#fff" stroke-width="2"/>
- <path d="M${xn} ${y(d.entry)} C ${xn+60} ${y(d.entry)}, ${ex-70} ${ey}, ${ex-8} ${ey}" fill="none" stroke="#22c55e" stroke-width="2" stroke-dasharray="6 4"/>
- <path d="M${ex-14} ${ey-5} L${ex-6} ${ey} L${ex-14} ${ey+5}" fill="none" stroke="#22c55e" stroke-width="2"/>
- <circle class="pulse" cx="${xn}" cy="${y(d.entry)}" r="5" fill="#3b82f6"/></svg>
- 
- <div class="rr"><span>Risiko ${de(rp,0)}%</span><b>RR 1 : ${de(rr)}</b><span>Gewinn ${de(100-rp,0)}%</span></div>
- <div class="bar"><div style="width:${rp}%;background:#ef4444"></div><div style="width:${100-rp}%;background:#22c55e"></div></div><div class="msg" style="margin-top:6px">Break-even-Quote bei diesem RR: ${de(100/(1+rr),0)} % Gewinntrades.${hr}</div>
- <div class="mini" style="margin-top:14px"><h4>SL nachziehen</h4>Bei ${pr(be)} (1R im Plus): SL auf Break-even ${pr(d.entry)} setzen. ${d.trail_note||''} Den SL nie weiter weg setzen. Mindestabstand deines Brokers beachten.</div>${warn}${over}${ck}<button class="go" id="rn" style="margin:14px 0 0;background:var(--bg);color:var(--txt);border:1px solid var(--line)" onclick="refreshNews()">Nachrichten neu prüfen</button><div class="msg"><b>${i.name} ${long?'Long':'Short'}</b> (${d.st==='laeuft'?'läuft':d.st==='wartet'?'Order wartet':'Status nicht gesetzt'}) beenden: Wie ging er aus?</div><div id="why"></div><div class="seg" style="margin:8px 0 0"><button onclick="closeTrade('TP')">TP erreicht</button><button onclick="askWhy()">SL getroffen</button><button onclick="closeTrade('BE')">Break-even</button><button onclick="closeTrade('Manuell')">Manuell beendet</button><button onclick="closeTrade('Nicht')">Nicht eingestiegen</button></div>
- <div class="foot" style="${lock?'display:none':''}"><span>Kapital ${de(cap/E)}${SY}</span><span><span style="color:#22c55e">→ ${de((cap+gain)/E)}${SY}</span> · <span style="color:#ef4444">${de((cap-risk)/E)}${SY}</span></span></div></div>
- <div class="msg">Der Screenshot ist eine Momentaufnahme: Prüfe vor der Order den aktuellen Preis in MT5. Brauchst du Hilfe beim Platzieren im MetaTrader? Schick mir im Chat einen Screenshot deiner MT4/MT5-Oberfläche, dann führe ich dich Schritt für Schritt durch die Order-Eingabe.</div>`;
-}
-let store={open:[],hist:[],cap:''},DB=null,pt=null;
-function hist(){return store.hist}
-let rsT=null;
-function resetHist(){const b=$('rs');if(b.dataset.s!=='1'){b.dataset.s='1';b.textContent='Wirklich löschen? Nochmal tippen';rsT=setTimeout(()=>{b.dataset.s='';b.textContent='Bilanz zurücksetzen'},5000);return}clearTimeout(rsT);b.dataset.s='';b.textContent='Bilanz zurücksetzen';store.hist=[];persist();stats();$('msg').textContent='Bilanz gelöscht.'}
-function persist(){try{localStorage.setItem('ict-store',JSON.stringify(store))}catch(e){}clearTimeout(pt);pt=setTimeout(()=>{if(DB)DB.set(store).catch(()=>{})},600)}
-async function initStore(){try{const l=JSON.parse(localStorage.getItem('ict-store')||'null');if(l)store=Object.assign(store,l);else{store.open=JSON.parse(localStorage.getItem('ict-open')||'[]');store.hist=JSON.parse(localStorage.getItem('ict-hist')||'[]');store.cap=localStorage.getItem('ict-cap')||''}}catch(e){}
- try{const db=await claude.use('db'),user=await claude.use('user');const uid=user?await user.id():null;if(db&&uid){DB=db.doc('data/users/'+uid+'/state');const s=await DB.get();if(s.exists){const r=s.data();store={open:JSON.parse(JSON.stringify(r.open||[])),hist:JSON.parse(JSON.stringify(r.hist||[])),cap:r.cap||'',fx:r.fx||'',fxT:r.fxT||0,days:r.days||{},ch:r.ch||null,note:r.note||'',sp:r.sp||{}}}else{persist()}}}catch(e){DB=null}}
-function perSym(h){const by={};h.forEach(x=>{if(x.r==='Nicht')return;const s=x.sym||'?';by[s]=by[s]||{};by[s][x.r]=(by[s][x.r]||0)+1;if(x.w==='TP')by[s].wtp=(by[s].wtp||0)+1;if(x.w==='gegen')by[s].wg=(by[s].wg||0)+1});return Object.keys(by).map(s=>'\n'+s+': TP '+(by[s].TP||0)+' · SL '+(by[s].SL||0)+(by[s].wtp||by[s].wg?' (danach TP '+(by[s].wtp||0)+', weiter gegen mich '+(by[s].wg||0)+')':'')+' · BE '+(by[s].BE||0)+' · Manuell '+(by[s].Manuell||0)).join('')}
-function stats(){const h=hist(),c=k=>h.filter(x=>x.r==k).length,n=h.length-c('Nicht');$('rs').style.display=h.length?'inline-block':'none';$('stat').textContent=h.length?'Bilanz: '+n+' Trades · TP '+c('TP')+' · SL '+c('SL')+' · Break-even '+c('BE')+' · Manuell '+c('Manuell')+(c('Nicht')?' · Nicht eingestiegen '+c('Nicht'):'')+perSym(h):'';jrRender()}
-function closeTrade(r,w){const a=opens(),x=a.find(y=>y.id===act);const st=x&&x.d.st,bad=(st==='wartet'&&r!=='Nicht')||(st==='laeuft'&&r==='Nicht'),key=act+r+(w||'');if(bad&&window.__cf!==key){window.__cf=key;setTimeout(()=>{if(window.__cf===key)window.__cf=null},6000);fold=false;applyFold();const wd=$('why');if(wd){wd.insertAdjacentHTML('afterbegin','<div class="warn">'+(st==='wartet'?'Diese Karte steht auf "Order wartet", die Order wurde also noch nicht gefüllt. Wirklich als '+r+' schließen? Tippe nochmal zur Bestätigung.':'Diese Karte steht auf "Trade läuft". Wirklich als nicht eingestiegen schließen? Tippe nochmal zur Bestätigung.')+'</div>');wd.scrollIntoView({block:'center'})}return}window.__cf=null;try{const h=hist();h.push({r,w:w||'',t:Date.now(),sym:x?x.i.name:'',dir:x?x.d.direction:'',q:x&&x.d.saeulen?Object.values(x.d.saeulen).filter(v=>v===true).length:null,et:x?x.d.entry_type||'':'',nr:x?x.d.news_risk||'':'',rr:x?+(Math.abs(spX(x.d).tp-spX(x.d).ent)/Math.abs(spX(x.d).ent-spX(x.d).sl)).toFixed(2):null,ts:x?x.t:null,mu:x?x.d.muster_urteil||'':'',kz:x&&x.d.ts?(kzAt(x.d.ts).on?1:0):null,en:x?+x.d.entry:null,sl:x?spX(x.d).sl:null,tp:x?spX(x.d).tp:null,lot:x&&Math.abs(spX(x.d).ent-spX(x.d).sl)>0?Math.max(0.01,Math.round(x.cap*0.10/(Math.abs(spX(x.d).ent-spX(x.d).sl)*x.i.k)*100)/100):null});store.hist=h.slice(-200);persist()}catch(e){}const rest=a.filter(y=>y.id!==act);saveOpens(rest);act=null;$('chat').style.display='none';$('out').innerHTML='';stats();if(rest.length){showTrade(rest[rest.length-1].id)}else{tabs()}$('msg').textContent=(r==='Nicht'?'Karte geschlossen, nicht eingestiegen.':'Trade als '+r+' abgelegt.')}
-async function mkTools(st){try{const s=await claude.use('sample');const L=await s.limits();const mcp=L&&L.tools?await claude.use('mcp'):null;if(!mcp)return null;return[{name:'web_suche',description:'Sucht im Internet nach tagesaktuellen Nachrichten. Zurückgegeben werden nur Meldungen der letzten 48 Stunden mit Alter in Stunden, neueste zuerst; undatierte Treffer sind unsicher. Nimm in mindestens einen Suchbegriff das heutige Datum auf, zum Beispiel Gold news '+new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+'. Eine leere Antwort heißt: nichts Tagesaktuelles gefunden.',inputSchema:{type:'object',properties:{frage:{type:'string',description:'Was gesucht wird, ein Satz'},suchbegriffe:{type:'array',items:{type:'string'},description:'2 bis 3 kurze Suchbegriffe mit 3 bis 6 Wörtern'}},required:['frage','suchbegriffe']},execute:async a=>{st('Suche im Internet …');const r=await mcp.callTool('Parallel Search','web_search',{objective:a.frage,search_queries:a.suchbegriffe});let p=r.payload;if(typeof p==='string'){try{p=JSON.parse(p)}catch(e3){return[{text:p.slice(0,1500)}]}}return((p&&p.results)||[]).map(x=>{const t=x.publish_date?Date.parse(x.publish_date):NaN;return{titel:x.title,datum:x.publish_date||'undatiert',alter_stunden:isNaN(t)?null:Math.round((Date.now()-t)/36e5),url:x.url,text:(x.excerpts||[]).join(' ').slice(0,450)}}).filter(x=>x.alter_stunden===null||x.alter_stunden<=48).sort((a,b)=>(a.alter_stunden===null)-(b.alter_stunden===null)||a.alter_stunden-b.alter_stunden).slice(0,6)}}]}catch(e){return null}}
-async function refreshNews(){const b=$('rn');b.disabled=true;b.textContent='Prüfe Nachrichten …';try{const sample=await claude.use('sample');const tl=await mkTools(t=>{b.textContent=t});if(!tl)throw new Error('Suche nicht verfügbar');const o={cache:false,tools:tl,modelTier:'default'};const p='Prüfe mit dem Werkzeug web_suche tagesaktuelle Nachrichten (nur von heute oder gestern) für '+ctx.i.name+'. Mach zwei getrennte Suchen: eine zum Instrument, eine zu Terminen und Makrodaten von heute. Ältere oder undatierte Treffer ignorieren, in news nur Meldungen mit Datum und Quelle. Heute ist '+new Date().toLocaleDateString('de-DE')+'. Trade Card: '+JSON.stringify({direction:ctx.d.direction,entry:ctx.d.entry,sl:ctx.d.sl,tp:ctx.d.tp,entry_type:ctx.d.entry_type})+'. Antworte NUR mit JSON: {"news":"Einfluss, höchstens 20 Wörter, mit Quelle","news_risk":"niedrig"|"mittel"|"hoch","entry_type":"jetzt"|"limit"|"warten","entry_note":"Bedingung, höchstens 15 Wörter"}. Erfinde nichts.';const r=await sample(p,o);const m=r.text.replace(/```json|```/g,'').match(/\{[\s\S]*\}/);const n=JSON.parse(m[0]);const c=ctx;Object.assign(c.d,n);render(c.d,c.i,c.cap,c.fx);try{const a=opens();const y=a.find(z=>z.id===act);if(y){y.d=c.d;saveOpens(a)}}catch(e5){}}catch(e){b.disabled=false;b.textContent='Fehler: '+(e.message||'keine Antwort')+'. Nochmal versuchen'}}
-let act=null,fold=false;const IM={};
-function applyFold(){$('out').style.display=fold?'none':'';$('chat').style.display=fold?'none':(ctx?'block':'none')}
-function tabClick(id){if(id===act){fold=!fold;applyFold();tabs()}else{showTrade(id)}}
-function opens(){return store.open}
-function saveOpens(a){store.open=a.slice(-12);persist()}
-function tabs(){const a=opens();$('tabs').innerHTML=a.map(x=>'<button class="tb'+(x.id===act?' on':'')+(x.d.st==='laeuft'?' run':x.d.st==='wartet'?' wait':'')+'" onclick="tabClick(\''+x.id+'\')">'+x.i.name+' '+(x.d.direction==='long'?'↑':'↓')+' · '+new Date(x.t).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+(x.d.st==='laeuft'?' ● läuft':x.d.st==='wartet'?' ⏳ wartet':' ○ neu')+(x.id===act&&fold?' ▸':'')+'</button>'+(x.id===act?'<button class="tb on" aria-label="Menü" onclick="tabMenu()">▾</button>':'')).join('')}
-function showTrade(id){const x=opens().find(y=>y.id===id);if(!x)return;act=id;fold=false;$('out').style.display='';try{render(x.d,x.i,x.cap,x.fx)}catch(er){$('out').innerHTML='<div class="card">Diese Karte lässt sich nicht anzeigen. Schließe sie über das Menü (▾) neben dem Reiter.</div>'}$('msg').textContent='Auswertung vom '+new Date(x.t).toLocaleString('de-DE')+'. Der Preis kann sich seitdem verändert haben.';tabs()}
-function checks(d,i){const w=[];try{const L=d.direction==='long';const ok=L?(d.sl<d.entry&&d.entry<d.tp):(d.tp<d.entry&&d.entry<d.sl);if(!ok)w.push('Die Level passen nicht zur Richtung ('+(L?'Long':'Short')+'): SL, Entry und TP stehen in falscher Reihenfolge. Diese Auswertung nicht verwenden.');if(d.chart_symbol&&i.name&&!String(d.chart_symbol).toUpperCase().includes(i.name.toUpperCase().slice(0,3)))w.push('Der Chart zeigt laut KI '+d.chart_symbol+', gewählt ist '+i.name+'. Prüfe die Auswahl.');const lo=+d.axis_min,hi=+d.axis_max;if(lo&&hi&&hi>lo){const sp=hi-lo;[['Entry',d.entry],['SL',d.sl]].forEach(([n,v])=>{if(v<lo-sp*.1||v>hi+sp*.1)w.push(n+' liegt außerhalb der sichtbaren Preisachse. Prüfe den Wert im Chart.')});if(d.price_now&&(d.price_now<lo||d.price_now>hi))w.push('Der erkannte aktuelle Preis liegt außerhalb der Achse. Lesefehler möglich.')}if(d.entry_type==='limit'&&d.ungueltig_ab){const u=+d.ungueltig_ab;if(L?u<=d.entry:u>=d.entry)w.push('Der Lösch-Preis der Limit-Order liegt auf der falschen Seite. Er muss in Gewinnrichtung vom Entry liegen, sonst ist die Order dort schon gefüllt.')}if(d.chart_note)w.push('Hinweis zum Chart: '+d.chart_note)}catch(e){}return w}
-async function getFx(auto){const b=$('fxb');b.disabled=true;b.textContent='Suche Kurs …';try{const sample=await claude.use('sample');const tl=await mkTools(()=>{});if(!tl)throw new Error('Suche nicht verfügbar');const r=await sample('Suche mit dem Werkzeug web_suche den aktuellen EUR/USD-Kurs (1 Euro in US-Dollar) von heute, '+new Date().toLocaleDateString('de-DE')+'. Antworte NUR mit JSON: {"kurs":Zahl mit Punkt,"quelle":"Name","stand":"Zeitangabe"}. Wenn du keinen aktuellen Kurs findest, setze kurs auf null. Erfinde nichts.',{cache:false,tools:tl,modelTier:'default'});const m=r.text.match(/\{[\s\S]*\}/);const j=JSON.parse(m[0]);const k=+j.kurs;if(!(k>0.8&&k<1.6))throw new Error('Kein Kurs gefunden');$('fx').value=k.toFixed(4);store.fx=$('fx').value;store.fxT=Date.now();persist();check();$('fxn').textContent='Kurs '+k.toFixed(4)+' ('+(j.quelle||'Web')+', '+(j.stand||'heute')+'). Bitte grob prüfen.'}catch(e){if(!auto)$('fxn').textContent='Kurs nicht gefunden: '+(e.message||'Fehler')+'. Trag ihn von Hand ein.'}b.disabled=false;b.textContent='Kurs automatisch holen'}
-function today(){return new Date().toLocaleDateString('sv-SE')}
-function dayShow(){const days=store.days||{},k=today();const f=n=>n.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2});const s=parseFloat($('dayS').value),e=parseFloat($('dayE').value);$('dayR').textContent=(!isNaN(s)&&!isNaN(e)&&s>0)?'Heute: '+(e-s>=0?'+':'')+f(e-s)+' € ('+(e-s>=0?'+':'')+f((e-s)/s*100)+' %)':'Trag Start- und Endsumme ein.';const ks=Object.keys(days).filter(x=>x!==k&&days[x].s!=null&&days[x].e!=null).sort().reverse().slice(0,7);$('dayH').textContent=ks.map(x=>x.slice(8)+'.'+x.slice(5,7)+'. '+f(days[x].s)+' → '+f(days[x].e)+' € ('+(days[x].e-days[x].s>=0?'+':'')+f(days[x].e-days[x].s)+' €)').join('\n')}
-function dayUp(){const k=today();store.days=store.days||{};const s=parseFloat($('dayS').value),e=parseFloat($('dayE').value);store.days[k]={s:isNaN(s)?null:s,e:isNaN(e)?null:e};const ks=Object.keys(store.days).sort();while(ks.length>60)delete store.days[ks.shift()];persist();dayShow()}
-function dayInit(){const days=store.days||{},k=today(),d=days[k]||{};let s=d.s;if(s==null){const p=Object.keys(days).filter(x=>x<k&&days[x].e!=null).sort().pop();if(p)s=days[p].e}$('dayS').value=s==null?'':s;$('dayE').value=d.e==null?'':d.e;dayShow()}
-function askWhy(){$('why').innerHTML='<div class="msg">Was passierte nach dem SL?</div><div class="seg" style="margin:8px 0 0"><button onclick="closeTrade(\'SL\',\'TP\')">Lief danach zum TP</button><button onclick="closeTrade(\'SL\',\'gegen\')">Lief weiter gegen mich</button><button onclick="closeTrade(\'SL\',\'seit\')">Seitwärts</button><button onclick="closeTrade(\'SL\',\'unklar\')">Weiß nicht</button></div>'}
-function neuOrder(o){const e=+o.entry,s=+o.sl,t=+o.tp,L=o.richtung==='long';const nah=(a,b)=>Math.abs(a-b)<=Math.abs(b)*0.00005;if(nah(e,ctx.d.entry)&&nah(s,ctx.d.sl)&&nah(t,ctx.d.tp)&&o.richtung===ctx.d.direction&&o.typ===ctx.d.entry_type){add('a','Die Order auf der Karte bleibt unverändert.');return}const w=checks({direction:o.richtung,entry:e,sl:s,tp:t,entry_type:o.typ,ungueltig_ab:o.ungueltig_ab},ctx.i);const XO=spX({direction:o.richtung,entry:e,sl:s,tp:t,entry_type:o.typ,spr:ctx.d.spr}),dd=Math.abs(XO.ent-XO.sl),lot=Math.max(0.01,Math.round(ctx.cap*0.10/(dd*ctx.i.k)*100)/100),E=ctx.fx||1,sy=ctx.fx?' €':' $',rk=lot*dd*ctx.i.k/E,gn=lot*Math.abs(XO.tp-XO.ent)*ctx.i.k/E,rr=Math.abs(XO.tp-XO.ent)/dd;const od=ctx.d,tol=Math.max(Math.abs(e-s)*0.03,1e-6),same=od.direction===o.richtung&&od.entry_type===o.typ&&Math.abs(+od.entry-e)<=tol&&Math.abs(+od.sl-s)<=tol&&Math.abs(+od.tp-t)<=tol,ch=[];if(!same){if(od.direction!==o.richtung)ch.push('Richtung '+od.direction+' → '+o.richtung);if(od.entry_type!==o.typ)ch.push('Typ '+od.entry_type+' → '+o.typ);if(Math.abs(+od.entry-e)>tol)ch.push('Entry '+pr(+od.entry)+' → '+pr(e));if(Math.abs(+od.sl-s)>tol)ch.push('SL '+pr(+od.sl)+' → '+pr(s));if(Math.abs(+od.tp-t)>tol)ch.push('TP '+pr(+od.tp)+' → '+pr(t))}const redL=ctx.d.saeulen&&Object.values(ctx.d.saeulen).filter(v=>v===true).length<3&&!(window.__ul&&window.__ul[act]);const typ=o.typ==='jetzt'?'Market-Order':o.typ==='limit'?(L?'Buy Limit':'Sell Limit'):(L?'Buy Stop':'Sell Stop');add('a',(same?'Order unverändert: ':'Geänderte Order: ')+typ+' bei '+pr(e)+(ch.length?'\nÄnderung: '+ch.join(', '):'')+'\nSL '+pr(XO.sl)+' · TP '+pr(XO.tp)+(redL?'\nLot gesperrt (High-Risk-Trade, weniger als 3 Säulen) · RR 1 : '+de(rr):'\nLot '+de(lot)+' · Verlust bei SL '+de(rk)+sy+' · Gewinn bei TP '+de(gn)+sy+' · RR 1 : '+de(rr))+(o.ungueltig_ab?'\nOrder löschen, falls der Preis '+pr(+o.ungueltig_ab)+' vor dem Fill erreicht wird.':'')+(w.length?'\n⚠ '+w.join('\n⚠ '):''));if(same||w.some(x=>x.startsWith('Die Level passen')))return;const bt=document.createElement('button');bt.className='tb';bt.textContent='In Karte übernehmen';bt.onclick=()=>{const a=opens(),x=a.find(y=>y.id===act);if(!x)return;Object.assign(x.d,{direction:o.richtung,entry:e,sl:s,tp:t,entry_type:o.typ,ungueltig_ab:o.ungueltig_ab||null,entry_note:'Aktualisiert per Update-Screenshot'});saveOpens(a);render(x.d,x.i,x.cap,x.fx);tabs()};$('log').appendChild(bt)}
-function tabMenu(){const m=$('tmenu');if(m.style.display==='block'){m.style.display='none';return}m.innerHTML='<div class="panel" style="padding:10px;display:grid;gap:8px;margin-bottom:8px"><div class="msg" style="margin:0">Status dieser Karte:</div><button class="tb wait" onclick="menuSt(\'wartet\')">⏳ Order gesetzt, wartet</button><button class="tb run" onclick="menuSt(\'laeuft\')">● Trade läuft</button><button class="tb" onclick="menuSt(\'\')">○ Zurück auf neu</button><div class="msg" style="margin:6px 0 0">Karte schließen als:</div><button class="tb" onclick="menuAct(\'TP\')">TP erreicht</button><button class="tb" onclick="menuAct(\'SL\')">SL getroffen</button><button class="tb" onclick="menuAct(\'BE\')">Break-even</button><button class="tb" onclick="menuAct(\'Manuell\')">Manuell beendet</button><button class="tb" onclick="menuAct(\'Nicht\')">Nicht eingestiegen</button><button class="tb" onclick="menuAct(\'fold\')">Nur ein- oder ausklappen</button></div>';m.style.display='block'}
-function menuAct(r){$('tmenu').style.display='none';if(r==='fold'){tabClick(act);return}if(r==='SL'){fold=false;applyFold();askWhy();const w=$('why');if(w)w.scrollIntoView({block:'center'});return}closeTrade(r)}
-function menuSt(s){const a=opens(),x=a.find(y=>y.id===act);if(!x)return;x.d.st=s;saveOpens(a);$('tmenu').style.display='none';render(x.d,x.i,x.cap,x.fx);tabs()}
-function zp(z,d){const f=new Intl.DateTimeFormat('en-US',{timeZone:z,hourCycle:'h23',weekday:'short',hour:'2-digit',minute:'2-digit'}).formatToParts(d).reduce((a,p)=>(a[p.type]=p.value,a),{});return{w:f.weekday,m:(+f.hour)*60+(+f.minute)}}
-function zoff(z,d){const f=new Intl.DateTimeFormat('en-US',{timeZone:z,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'}).formatToParts(d).reduce((a,p)=>(a[p.type]=p.value,a),{});return(Date.UTC(+f.year,+f.month-1,+f.day,+f.hour,+f.minute,+f.second)-d.getTime())/60000}
-function atZ(z,h,m,dd,base){const n=new Date((base||Date.now())+(dd||0)*864e5),f=new Intl.DateTimeFormat('en-CA',{timeZone:z,year:'numeric',month:'2-digit',day:'2-digit'}).format(n).split('-'),g=Date.UTC(+f[0],+f[1]-1,+f[2],h,m);return new Date(g-zoff(z,new Date(g))*60000)}
-function hm(d){return d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})}
-function inR(x,a,b){return x>=a&&x<b}
-function clk(){const n=new Date();$('clkT').textContent=n.toLocaleTimeString('de-DE');const L=zp('Europe/London',n),N=zp('America/New_York',n),T=zp('Asia/Tokyo',n);const lon=inR(L.m,480,990),ny=inR(N.m,480,1020),tok=inR(T.m,540,1080);const wk=N.w==='Sat'||(N.w==='Sun'&&N.m<1020)||(N.w==='Fri'&&N.m>=1020);const good=!wk&&(inR(L.m,480,660)||inR(L.m,780,990)||inR(N.m,570,720)||(cur==='BTCUSD'&&ny));const s=wk?(cur==='BTCUSD'?'Wochenende: dünner Handel':'Markt zu (Wochenende)'):good?'Gute Zeit':(lon||ny||tok?'Mittlere Zeit':'Ruhige Zeit');const c=wk?'#8b97b3':good?'#22c55e':(lon||ny||tok?'#f59e0b':'#8b97b3');$('clkS').textContent=s;$('clkS').style.color=c;$('clkI').textContent='London '+(lon?'●':'○')+' · New York '+(ny?'●':'○')+' · Tokio '+(tok?'●':'○')+' (● = offen)';kzBanner()}
-function bestTimes(){const hint={XAUUSD:'Gold ist meist zur London-Eröffnung und ab New York bis Ende der Überlappung am lebhaftesten. Vorsicht um US-Daten.',BTCUSD:'Bitcoin handelt rund um die Uhr, ist aber meist in den US-Stunden am lebhaftesten. Am Wochenende dünner.',UKOIL:'Brent ist zu London- und New-York-Zeiten am aktivsten. Lagerbestände (EIA) kommen mittwochs um 10:30 New Yorker Zeit.',CUSTOM:'Die meisten Märkte bewegen sich zur London- und New-York-Eröffnung am stärksten.'}[cur]||'';$('clkB').innerHTML='<b>Beste Zeiten heute (deine Ortszeit)</b><br>London-Eröffnung '+hm(atZ('Europe/London',8,0))+' bis '+hm(atZ('Europe/London',10,0))+'<br>New-York-Eröffnung '+hm(atZ('America/New_York',9,30))+' bis '+hm(atZ('America/New_York',11,30))+'<br>Überlappung London und New York '+hm(atZ('Europe/London',13,0))+' bis '+hm(atZ('Europe/London',16,30))+'<br>US-Daten meist um '+hm(atZ('America/New_York',8,30))+'<br>'+hint+' Das sind Richtwerte und keine Garantie.'}
-clk();setInterval(clk,1000);
-function unlockLot(){window.__ul=window.__ul||{};window.__ul[act]=true;showTrade(act)}
-function kzWins(t){return[['London-Eröffnung',atZ('Europe/London',8,0,0,t),atZ('Europe/London',10,0,0,t)],['New-York-Eröffnung',atZ('America/New_York',9,30,0,t),atZ('America/New_York',11,30,0,t)],['Überlappung London/New York',atZ('Europe/London',13,0,0,t),atZ('Europe/London',16,30,0,t)]]}
-function kzAt(t){const N=zp('America/New_York',new Date(t)),wk=N.w==='Sat'||(N.w==='Sun'&&N.m<1020)||(N.w==='Fri'&&N.m>=1020);const act=wk?[]:kzWins(t).filter(w=>t>=w[1].getTime()&&t<w[2].getTime());return{on:act.length>0,wk,name:act.map(w=>w[0]).join(' + '),end:act.length?new Date(Math.max(...act.map(w=>w[2].getTime()))):null}}
-function nextKz(t){const Ls=[];for(let d=0;d<=5;d++){const base=t+d*864e5,W=zp('Europe/London',new Date(base));if(W.w==='Sat'||W.w==='Sun')continue;kzWins(base).forEach(w=>{if(w[1].getTime()>t)Ls.push(w[1].getTime())})}return new Date(Math.min(...Ls))}
-function fmtNext(d){return(d.toDateString()===new Date().toDateString()?'':d.toLocaleDateString('de-DE',{weekday:'short'})+' ')+hm(d)}
-function kzBanner(){const t=Date.now(),k=kzAt(t);$('clkS').textContent='';$('kzb').className='amp '+(k.on?'g':'r');$('kzb').innerHTML=k.on?'<b>🟢 Innerhalb der aktiven Killzone (Optimale Liquidität)</b><br>'+k.name+' · noch bis '+hm(k.end)+' Uhr':'<b>🔴 Außerhalb der Killzone / Ruhige Phase (Erhöhtes Fakeout-Risiko – Trade nicht empfohlen)</b><br>'+(k.wk?'Wochenende. ':'')+'Nächste Killzone: '+fmtNext(nextKz(t))+' Uhr'}
-function chSave(){persist();try{localStorage.setItem('ict-ch',JSON.stringify(store.ch))}catch(e){}}
-function chInit(){const ch=store.ch=store.ch||{};if(!(ch.s>0))ch.s=100;if(!ch.t){if(ch.d){ch.t=Date.parse(ch.d+'T00:00:00');ch.tx=1}else{ch.t=Date.now()}}if(!ch.d)ch.d=today();$('chS').value=ch.s;const c=parseFloat($('cap').value);$('chB').value=c>0?$('cap').value:(ch.b>0?ch.b:'')}
-function chUpdate(){const f=function(n,d){return n.toLocaleString('de-DE',{minimumFractionDigits:0,maximumFractionDigits:d==null?2:d})};const ch=store.ch=store.ch||{s:100,t:Date.now(),d:today()};const sv=parseFloat($('chS').value),start=sv>0?sv:(ch.s>0?ch.s:100);const bv=parseFloat($('chB').value),have=bv>0,bal=have?bv:0;ch.s=start;ch.b=have?bal:null;if(!ch.t){ch.t=Date.now();ch.d=today()}const goal=start*25,pct=have?Math.max(0,Math.min(100,(bal-start)/(goal-start)*100)):0,mult=have?bal/start:1;const dayBal=have&&bal>start?Math.max(1,Math.min(12,Math.ceil(12*Math.log(bal/start)/Math.log(25)))):1;const dayCal=Math.max(1,Math.floor((Date.now()-ch.t)/864e5)+1);const plan=start*Math.pow(25,Math.min(dayCal,12)/12);$('chT').textContent=have?f(bal)+' \u20ac von '+f(goal)+' \u20ac':'Kontostand fehlt';$('chD').textContent='Tag '+dayBal+' von 12';$('chBar').style.width=pct+'%';$('chI').textContent='Zielerreichung '+f(pct,1)+' % \u00b7 '+f(mult,2)+'-fach \u00b7 Start '+f(start)+' \u20ac \u2192 Ziel '+f(goal)+' \u20ac\nTag '+(dayCal>12?'12 (Zeit abgelaufen)':dayCal+' von 12')+' seit Start \u00b7 Soll am Tagesende: '+f(plan)+' \u20ac'+(have?(bal>=plan?' (im Plan)':' (hinter dem Plan, es fehlen '+f(plan-bal)+' \u20ac)'):'')+'\nBen\u00f6tigt: im Schnitt +'+f((Math.pow(25,1/12)-1)*100,1)+' % pro Tag';const d0=new Date(ch.t);$('chZ').textContent='Gestartet am '+d0.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})+(ch.tx?' (Uhrzeit nicht erfasst)':' um '+d0.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+' Uhr');chSave()}
-$('chS').addEventListener('input',function(){chUpdate()});
-$('chB').addEventListener('input',function(){const v=$('chB').value;$('cap').value=v;store.cap=v;check();chUpdate()});
-$('chU').onclick=function(){const v=$('chB').value;if(parseFloat(v)>0){$('cap').value=v;store.cap=v;check()}chUpdate();$('chU').textContent='\u2713 Aktualisiert';setTimeout(function(){$('chU').textContent='Kontostand aktualisieren'},1500)};
-let chT2=null;
-$('chK').onclick=function(){const b=$('chK');if(b.dataset.s!=='1'){b.dataset.s='1';b.textContent='Wirklich neu starten? Nochmal tippen';chT2=setTimeout(function(){b.dataset.s='';b.textContent='Challenge neu starten'},5000);return}clearTimeout(chT2);b.dataset.s='';b.textContent='Challenge neu starten';const v=parseFloat($('chB').value||$('cap').value);if(!(v>0))return;$('chS').value=v;store.ch={s:v,b:v,t:Date.now(),d:today()};chUpdate()};
-function mainTab(n){['A','B','C'].forEach(function(x){var e=$('pane'+x);if(e)e.style.display=n===x?'':'none';var t=$('mt'+x);if(t)t.classList.toggle('on',n===x)});if(n==='B'){dayShow();stats()}window.scrollTo(0,0)}
-function esc(v){return String(v==null?'':v).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-function jrSum(){const h=store.hist||[];let sum=0,n=0;h.forEach(function(x){const v=parseFloat(x.pnl);if(!isNaN(v)){sum+=v;n++}});$('jrS').textContent=h.length?h.length+' Eintr\u00e4ge'+(n?' \u00b7 eingetragene Ergebnisse: '+(sum>=0?'+':'')+sum.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' \u20ac ('+n+' Trades)':''):'Noch keine geschlossenen Trades. Sie erscheinen hier, sobald du eine Karte schlie\u00dft.'}
-function jrRender(){const L=$('jrL');if(!L)return;const h=store.hist||[];const nm={TP:'TP erreicht',SL:'SL getroffen',BE:'Break-even',Manuell:'Manuell beendet',Nicht:'Nicht eingestiegen'};const cl={TP:'jg',SL:'jrd'};const wm={TP:'lief danach zum TP',gegen:'lief weiter gegen mich',seit:'lief seitw\u00e4rts',unklar:'unklar'};const km=function(n){return(+n).toLocaleString('de-DE',{maximumFractionDigits:3})};let out='';for(let i=h.length-1;i>=Math.max(0,h.length-60);i--){const x=h[i],d=new Date(x.t),pn=parseFloat(x.pnl);out+='<details class="j"><summary><span>'+d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+' \u00b7 '+esc(x.sym||'?')+' '+(x.dir==='long'?'\u2191':x.dir==='short'?'\u2193':'')+'</span><span class="'+(cl[x.r]||'jm')+'">'+(nm[x.r]||esc(x.r))+'<span id="jp'+i+'">'+(isNaN(pn)?'':' \u00b7 '+(pn>=0?'+':'')+km(pn)+' \u20ac')+'</span></span></summary><div class="jb">'+(x.en?'Order: '+esc(x.et||'-')+' \u00b7 Entry '+km(x.en)+' \u00b7 SL '+km(x.sl)+' \u00b7 TP '+km(x.tp)+(x.lot?' \u00b7 Lot '+km(x.lot):'')+(x.rr?' \u00b7 RR 1 : '+km(x.rr):'')+'<br>':(x.rr?'RR 1 : '+km(x.rr)+'<br>':''))+'Setup: '+(x.q!=null?x.q+' von 4 S\u00e4ulen':'-')+' \u00b7 Killzone: '+(x.kz===1?'ja':x.kz===0?'nein':'-')+' \u00b7 Muster: '+esc(x.mu||'-')+' \u00b7 Nachrichten: '+esc(x.nr||'-')+(x.w&&wm[x.w]?'<br>Nach dem SL: '+wm[x.w]:'')+'<label for="jv'+i+'">Ergebnis in \u20ac (optional)</label><input id="jv'+i+'" type="number" inputmode="decimal" step="any" value="'+esc(x.pnl||'')+'" oninput="jrSet('+i+',\'pnl\',this.value)"><label for="jn'+i+'">Notiz</label><textarea id="jn'+i+'" rows="2" placeholder="Was lief gut oder schlecht?" oninput="jrSet('+i+',\'note\',this.value)">'+esc(x.note||'')+'</textarea><button class="tb" id="jd'+i+'" style="margin-top:8px" onclick="jrDel('+i+')">Eintrag l\u00f6schen</button></div></details>'}L.innerHTML=out;jrSum();const g=$('jrN');if(g&&document.activeElement!==g)g.value=store.note||''}
-function jrSet(i,k,v){const x=store.hist[i];if(!x)return;x[k]=v;persist();if(k==='pnl'){const n=parseFloat(v),e=document.getElementById('jp'+i);if(e)e.textContent=isNaN(n)?'':' \u00b7 '+(n>=0?'+':'')+n.toLocaleString('de-DE',{maximumFractionDigits:3})+' \u20ac';jrSum()}}
-function jrDel(i){const b=document.getElementById('jd'+i);if(!b)return;if(b.dataset.s!=='1'){b.dataset.s='1';b.textContent='Wirklich l\u00f6schen? Nochmal tippen';setTimeout(function(){if(b.isConnected){b.dataset.s='';b.textContent='Eintrag l\u00f6schen'}},4000);return}store.hist.splice(i,1);persist();stats()}
-$('jrN').addEventListener('input',function(){store.note=$('jrN').value;persist()});
-function spX(o){const sp=+o.spr||0,e=+o.entry,s=+o.sl,t=+o.tp;if(!sp)return{sl:s,tp:t,ent:e,sp:0};if(o.direction==='short')return{sl:s+sp,tp:t+sp,ent:e,sp:sp};return{sl:s,tp:t,ent:e+(o.entry_type==='jetzt'?sp:0),sp:sp}}
-$('spr').addEventListener('input',function(){store.sp=store.sp||{};store.sp[cur]=$('spr').value;persist()});
-function add(c,t){const e=document.createElement('div');e.className='b '+c;e.textContent=t;$('log').appendChild(e);e.scrollIntoView({block:'nearest'});return e}
-async function ask(pre){const q=(typeof pre==='string'?pre:$('q').value.trim());if(!q||!ctx)return;$('q').value='';add('u',q);chat.push({role:'user',content:q});$('send').disabled=true;const el=add('a','…');
- try{const sample=await claude.use('sample');if(!sample)throw new Error('KI-Funktion nicht verfügbar');const bi=IM[act]||{},ims=[bi.m5,bi.m1].filter(Boolean),ims2=imgU?ims.concat([imgU]):ims;
-  const XC=spX(ctx.d),dd=Math.abs(XC.ent-XC.sl),lt=Math.max(0.01,Math.round(ctx.cap*0.10/(dd*ctx.i.k)*100)/100),nums={lt:lt.toFixed(2),rk:(lt*dd*ctx.i.k).toFixed(2),gn:(lt*Math.abs(XC.tp-XC.ent)*ctx.i.k).toFixed(2),rr:(Math.abs(XC.tp-XC.ent)/dd).toFixed(2)};
-  const sys='Du bist ein ICT-Trading-Assistent und beantwortest Rückfragen zu dieser Trade Card auf Deutsch, ohne Garantien und ohne Finanzberatung. Antworte präzise im festen Format, höchstens 120 Wörter, bei einfachen Fragen kürzer: 1) Urteil in einem Satz: Ja, Bedingt oder Nein, mit dem wichtigsten Grund. 2) Zahlen: Entry, SL, TP, RR, Lot, Verlust und Gewinn in EUR (falls angegeben, sonst in $) exakt aus den Berechnungen unten, nichts neu schätzen und vor dem Nennen nachrechnen. 3) Einstiegsbedingung mit konkretem Preislevel und M1-Signal. 4) Ungültig, wenn: ein konkreter Preis. 5) Teilgewinn: ein konkretes Preislevel, falls sinnvoll. 6) Nachrichten nur mit Datum und Quelle, sonst weglassen. Keine Floskeln und keine Wiederholung allgemeiner Warnungen; das 10%-Risiko erwähnst du nur in einem Satz, wenn es die Lot-Größe oder den Verlust betrifft. Ist etwas aus dem Chart unsicher, sage es in einem Satz. Bleibt die Order der Karte unverändert, schreibe KEINE ORDER-Zeile. Gilt eine Order (auch unverändert die bestehende) oder empfiehlst du eine neue oder geänderte, schließe mit genau einer letzten Zeile ab: ORDER:{"typ":"jetzt"|"limit"|"stop"|"keine","richtung":"long"|"short","entry":Zahl,"sl":Zahl,"tp":Zahl,"ungueltig_ab":Zahl oder null}. Typ keine heißt: kein Trade mehr. Der Löschpreis einer Limit-Order liegt in Gewinnrichtung vom Entry und nie auf der SL-Seite. Bei einem neuen Setup gelten die Regeln der Anweisung: SL hinter dem Strukturpunkt plus Puffer, RR zwischen 1,8 und 4. Rechne Lot und Beträge nicht selbst, die App berechnet sie aus der ORDER-Zeile. Trade Card als JSON: '+JSON.stringify(ctx.d)+'. Instrument: '+ctx.i.name+', Kontraktgröße '+ctx.i.k+', Kapital '+ctx.cap.toFixed(2)+' $'+(ctx.fx?' ('+(ctx.cap/ctx.fx).toFixed(2)+' EUR)':'')+', Risiko 10% vom Kapital. Berechnet: Lot '+nums.lt+', Verlust bei SL '+nums.rk+' $'+(ctx.fx?' ('+(nums.rk/ctx.fx).toFixed(2)+' EUR)':'')+', Gewinn bei TP '+nums.gn+' $'+(ctx.fx?' ('+(nums.gn/ctx.fx).toFixed(2)+' EUR)':'')+', RR 1:'+nums.rr+', aktueller Preis '+(ctx.d.price_now||'unbekannt')+'. '+(ims.length?'Die mitgelieferten Bilder sind der M5-Chart (zuerst) und der M1-Chart (danach) zu diesem Trade. Schau bei Fragen zum Chart darauf.':'Die Chart-Screenshots liegen nicht mehr vor, du siehst nur die Trade-Card-Daten.')+(imgU?' Das letzte Bild ist ein neuer M1-Update-Screenshot von jetzt. Prüfe damit, ob die Einstiegsbedingung ('+(ctx.d.entry_note||'')+') jetzt erfüllt ist. Antworte in diesem Format: 1) Bedingung aus der Karte in einem Satz. 2) Was du im Update-Screenshot abliest: Preis und Uhrzeit der letzten Kerzen (Fadenkreuz oder Preisschild nutzen) und ob die Kerze schon geschlossen ist. 3) Erfüllt: ja, nein oder unklar; bei unklar sag genau, was fehlt (zum Beispiel näher zoomen). 4) Urteil: Einstieg jetzt, Weiter warten oder Setup ungültig, mit konkretem Preis. Ist die Bedingung erfüllt und spricht nichts Neues dagegen, entscheide dich für Einstieg jetzt und füge keine zusätzlichen Bedingungen hinzu. Nachrichtenrisiko zählt nur, wenn ein konkreter Termin in den nächsten 30 Minuten liegt oder gerade erschienen ist. Nenne Entry, SL und TP neu, wenn sie sich geändert haben.':'')+' Du kannst mit dem Werkzeug web_suche aktuelle Nachrichten im Internet suchen, wenn die Frage aktuelle Ereignisse betrifft. Nenne dann Quelle und Datum. Heute ist '+new Date().toLocaleDateString('de-DE')+'. Wenn dir etwas fehlt, sag es.';
-  const msgs=chat.map((m,k)=>k==0?{role:'user',content:sys+'\n\nFrage: '+m.content}:m);
-  const o={cache:false,onText:({text})=>{el.textContent=text}};try{const L=await sample.limits();if(L&&L.images&&ims2.length)o.images=ims2;const mcp=L&&L.tools?await claude.use('mcp'):null;if(mcp)o.tools=[{name:'web_suche',description:'Sucht im Internet nach aktuellen Nachrichten und Marktdaten, zum Beispiel zu Gold, Bitcoin, Brent, Zinsen, Dollar oder Wirtschaftsdaten.',inputSchema:{type:'object',properties:{frage:{type:'string',description:'Was gesucht wird, ein Satz'},suchbegriffe:{type:'array',items:{type:'string'},description:'2 bis 3 kurze Suchbegriffe mit 3 bis 6 Wörtern'}},required:['frage','suchbegriffe']},execute:async a=>{el.textContent='Suche im Internet …';const r=await mcp.callTool('Parallel Search','web_search',{objective:a.frage,search_queries:a.suchbegriffe});let p=r.payload;if(typeof p==='string'){try{p=JSON.parse(p)}catch(e3){return[{text:p.slice(0,1500)}]}}return((p&&p.results)||[]).slice(0,5).map(x=>({titel:x.title,datum:x.publish_date,url:x.url,text:(x.excerpts||[]).join(' ').slice(0,500)}))}}]}catch(e2){}
-  const r=await sample(msgs,o);
-  let txt=r.text;const mo=txt.match(/ORDER:\s*(\{[\s\S]*\})\s*$/);let ord=null;if(mo){try{ord=JSON.parse(mo[1])}catch(e4){}txt=txt.replace(mo[0],'').trim()}el.textContent=txt;chat.push({role:'assistant',content:txt});if(ord&&ord.typ&&ord.typ!=='keine'&&+ord.entry&&+ord.sl&&+ord.tp)neuOrder(ord);
- }catch(e){chat.pop();el.textContent='Fehler: '+(e.message||'keine Antwort')+'. Versuche es erneut.'}
- $('send').disabled=false}
-$('fu').onchange=e=>{imgU=e.target.files[0]||null;$('fuL').textContent=imgU?'Update: '+imgU.name:'Update-Screenshot (M1) anhängen';$('chk').style.display=imgU?'inline-block':'none'};$('chk').onclick=()=>ask('Prüfe mit dem Update-Screenshot, ob ich jetzt einsteigen kann.');$('dayS').addEventListener('input',dayUp);$('dayE').addEventListener('input',dayUp);$('dayK').onclick=()=>{$('cap').value=$('dayE').value;store.cap=$('cap').value;$('chB').value=$('cap').value;persist();check();chUpdate()};$('send').onclick=ask;$('q').onkeydown=e=>{if(e.key==='Enter')ask()};
-stats();
-initStore().then(()=>{stats();dayInit();try{const s=JSON.parse(localStorage.getItem('ict-last')||'null');if(s){const a=opens();a.push({id:'t'+s.t,d:s.d,i:s.i,cap:s.cap,cur:s.cur,t:s.t});saveOpens(a);localStorage.removeItem('ict-last')}}catch(e){}
-{const a=opens();tabs();if(a.length)showTrade(a[a.length-1].id)}
-if(store.cap&&store.fx){$('cap').value=store.cap}if(store.fx)$('fx').value=store.fx;check();if(!store.fx||!store.fxT||Date.now()-store.fxT>432e5)getFx(true);
-chInit();chUpdate();$('spr').value=(store.sp&&store.sp[cur])||'';if(!DB)$('stat').textContent=($('stat').textContent+' Hinweis: Gespeichert wird nur in diesem Browser.').trim()});
-</script>
-<script>
-(function(){
- var $=function(i){return document.getElementById(i)};
- function ls(k){try{return localStorage.getItem(k)||''}catch(e){return ''}}
- function models(){var m={};try{m=JSON.parse(ls('ict-models')||'{}')}catch(e){}return{complex:m.complex||'claude-opus-5-5',normal:m.normal||'claude-sonnet-5-5'}}
- function show(){var k=ls('ict-apikey'),m=models();$('apiS').textContent=k?'Schlüssel gespeichert (endet auf …'+k.slice(-4)+')':'Noch kein Schlüssel gespeichert';$('apiS').style.color=k?'#22c55e':'#f59e0b';$('mdC').value=m.complex;$('mdD').value=m.normal;$('apiKey').value='';$('apiHint').style.display=k?'none':'block'}
- window.__goSettings=function(){mainTab('C')};
- $('apiSave').onclick=async function(){
-  var k=$('apiKey').value.trim()||ls('ict-apikey');
-  if(!k){$('apiT').textContent='Bitte zuerst einen Schlüssel eintragen.';return}
-  try{localStorage.setItem('ict-apikey',k);localStorage.setItem('ict-models',JSON.stringify({complex:$('mdC').value.trim(),normal:$('mdD').value.trim()}))}catch(e){}
-  show();$('apiT').textContent='Teste Verbindung …';
-  try{
-   var r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:models().normal,max_tokens:16,messages:[{role:'user',content:'Antworte nur mit OK.'}]})});
-   var j={};try{j=await r.json()}catch(e){}
-   $('apiT').textContent=r.ok?'Verbindung erfolgreich ✓':(r.status===401?'Der Schlüssel wurde abgelehnt. Prüfe ihn bitte.':'Test fehlgeschlagen: '+((j.error&&j.error.message)||('Fehler '+r.status)));
-  }catch(e){$('apiT').textContent='Keine Verbindung zur Anthropic-API. Prüfe deine Internetverbindung.'}
- };
- $('apiDel').onclick=function(){try{localStorage.removeItem('ict-apikey')}catch(e){}$('apiT').textContent='Schlüssel gelöscht.';show()};
- show();
-})();
-</script>
+<body class="pb-24 pt-4 px-3 sm:px-6">
+
+  <!-- Header & Navigation -->
+  <header class="max-w-xl mx-auto mb-5">
+    <div class="flex items-center justify-between mb-4">
+      <h1 class="text-2xl font-bold tracking-tight bg-gradient-to-r from-yellow-400 to-amber-200 bg-clip-text text-transparent">
+        ICT Sniper
+      </h1>
+      <span class="text-xs px-2.5 py-1 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 font-medium">
+        v2.0 Glass Edition
+      </span>
+    </div>
+
+    <!-- Tabs -->
+    <nav class="grid grid-cols-3 gap-1.5 p-1 glass-card rounded-xl text-center text-xs font-medium">
+      <button class="py-2.5 rounded-lg bg-yellow-500 text-slate-950 font-bold shadow-md transition">
+        Challenge & Analyse
+      </button>
+      <button class="py-2.5 rounded-lg text-slate-400 hover:text-white transition">
+        Historie / Journal
+      </button>
+      <button class="py-2.5 rounded-lg text-slate-400 hover:text-white transition">
+        Einstellungen
+      </button>
+    </nav>
+  </header>
+
+  <main class="max-w-xl mx-auto space-y-4">
+
+    <!-- 12-Tage-Challenge Card (Kompakt) -->
+    <section class="glass-card p-4 glow-gold relative overflow-hidden">
+      <div class="flex justify-between items-start mb-2">
+        <div>
+          <span class="text-xs uppercase font-bold tracking-wider text-yellow-500">12-Tage-Challenge</span>
+          <div class="text-2xl font-black text-white mt-0.5">
+            668 € <span class="text-sm font-normal text-slate-400">von 25.000 €</span>
+          </div>
+        </div>
+        <span class="px-2.5 py-1 text-xs font-bold rounded-lg bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">
+          Tag 1 von 12
+        </span>
+      </div>
+
+      <!-- Fortschrittsbalken -->
+      <div class="w-full bg-slate-800 rounded-full h-2 mb-3 overflow-hidden border border-slate-700">
+        <div class="bg-gradient-to-r from-yellow-500 to-amber-300 h-2 rounded-full" style="width: 2.67%"></div>
+      </div>
+
+      <!-- Schnell-Felder -->
+      <div class="grid grid-cols-2 gap-2 mt-3">
+        <div>
+          <label class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold block mb-1">Startkapital (€)</label>
+          <input type="number" value="1000" class="w-full glass-input rounded-lg px-3 py-1.5 text-sm font-medium">
+        </div>
+        <div>
+          <label class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold block mb-1">Aktuell (€)</label>
+          <input type="number" value="668" class="w-full glass-input rounded-lg px-3 py-1.5 text-sm font-medium">
+        </div>
+      </div>
+    </section>
+
+    <!-- Session & Killzone Status -->
+    <section class="glass-card p-4">
+      <div class="flex items-center justify-between mb-3">
+        <div class="text-lg font-bold text-white tracking-wide" id="live-time">19:27:31</div>
+        <div class="flex gap-2 text-xs font-medium text-slate-400">
+          <span>London <span class="text-emerald-400">●</span></span>
+          <span>NY <span class="text-emerald-400">●</span></span>
+          <span>Tokio <span class="text-slate-600">○</span></span>
+        </div>
+      </div>
+
+      <!-- Killzone Warning Badge -->
+      <div class="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs flex items-center gap-2.5">
+        <span class="text-base">🔴</span>
+        <div>
+          <div class="font-bold">Außerhalb der Killzone / Ruhige Phase</div>
+          <div class="text-[11px] text-red-300/80 mt-0.5">Erhöhtes Fakeout-Risiko – Trade nicht empfohlen. Nächste Killzone: Do 09:00 Uhr</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trading-Parameter & Chart-Upload -->
+    <section class="glass-card p-4 space-y-3">
+      <span class="text-xs uppercase font-bold tracking-wider text-slate-400 block mb-1">Asset & Parameter</span>
+      
+      <!-- Asset Selector Buttons -->
+      <div class="grid grid-cols-3 gap-2">
+        <button class="py-2 px-3 rounded-lg text-xs font-bold bg-yellow-500/20 text-yellow-400 border border-yellow-500/40">Gold (XAU)</button>
+        <button class="py-2 px-3 rounded-lg text-xs font-medium glass-input text-slate-300 hover:text-white">Bitcoin</button>
+        <button class="py-2 px-3 rounded-lg text-xs font-medium glass-input text-slate-300 hover:text-white">Brent Oil</button>
+      </div>
+
+      <!-- Parameter Grid (Kompakt nebeneinander) -->
+      <div class="grid grid-cols-3 gap-2 pt-2">
+        <div>
+          <label class="text-[10px] text-slate-400 block mb-1">Kontostand (€)</label>
+          <input type="number" value="668" class="w-full glass-input rounded-lg px-2.5 py-1.5 text-xs">
+        </div>
+        <div>
+          <label class="text-[10px] text-slate-400 block mb-1">EUR/USD</label>
+          <input type="number" value="1.12" step="0.01" class="w-full glass-input rounded-lg px-2.5 py-1.5 text-xs">
+        </div>
+        <div>
+          <label class="text-[10px] text-slate-400 block mb-1">Spread</label>
+          <input type="number" value="100" class="w-full glass-input rounded-lg px-2.5 py-1.5 text-xs">
+        </div>
+      </div>
+
+      <!-- Chart Uploads -->
+      <div class="grid grid-cols-2 gap-2 pt-2">
+        <button class="p-3 rounded-xl border border-dashed border-slate-600 hover:border-yellow-500/50 text-slate-400 text-xs flex flex-col items-center justify-center gap-1 transition">
+          <span>📷 M5-Chart wählen</span>
+          <span class="text-[9px] text-slate-500">Überblick & Bias</span>
+        </button>
+        <button class="p-3 rounded-xl border border-dashed border-slate-600 hover:border-yellow-500/50 text-slate-400 text-xs flex flex-col items-center justify-center gap-1 transition">
+          <span>🎯 M1-Chart wählen</span>
+          <span class="text-[9px] text-slate-500">Entry, SL, TP</span>
+        </button>
+      </div>
+
+      <!-- Main Action Button -->
+      <button class="w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-500 to-amber-500 text-slate-950 font-black text-sm uppercase tracking-wider shadow-lg hover:brightness-110 active:scale-[0.99] transition mt-2">
+        Trade Card erstellen
+      </button>
+    </section>
+
+  </main>
+
+  <!-- Fixierter Mobile Floating Bar unten -->
+  <div class="fixed bottom-3 left-0 right-0 px-4 max-w-xl mx-auto pointer-events-none">
+    <div class="glass-card p-2 backdrop-blur-xl border border-white/10 rounded-2xl flex justify-between items-center shadow-2xl pointer-events-auto">
+      <div class="px-3 text-xs">
+        <span class="text-slate-400">Status:</span> 
+        <span class="text-emerald-400 font-semibold ml-1">Bereit</span>
+      </div>
+      <button class="px-4 py-2 rounded-xl bg-yellow-500 text-slate-950 font-bold text-xs shadow-md hover:bg-yellow-400 transition">
+        ⚡ Schnellanalyse
+      </button>
+    </div>
+  </div>
+
 </body>
 </html>
