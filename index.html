@@ -57,7 +57,7 @@ svg{width:100%;height:auto;display:block;background:var(--bg);border-radius:14px
 .ah.on .ahb{border-color:var(--ac);background:linear-gradient(135deg,rgba(212,175,55,.14),var(--panel))}.ah.run .ahb{border-color:#22c55e}.ah.wait .ahb{border-color:#f59e0b}
 .ahL{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0;flex:1 1 auto}.ahL b{font-size:16px;font-weight:800;line-height:1.4}.ahd{font-size:12px;font-weight:800;line-height:1.4;padding:3px 9px;border-radius:99px;white-space:nowrap}.ahd.l{background:var(--g);color:#04210f}.ahd.s{background:var(--r);color:#fff}
 .ahR{display:flex;align-items:center;gap:10px;flex:none}.ahT{display:flex;flex-direction:column;align-items:flex-end;gap:2px}.aht{font:600 13px/1.4 'JetBrains Mono',monospace;color:var(--txt);white-space:nowrap}.ahs{font-size:12px;font-weight:700;line-height:1.4;color:var(--mut);white-space:nowrap}.ah.run .ahs{color:#22c55e}.ah.wait .ahs{color:#f59e0b}.ahc{font-size:16px;line-height:1;color:var(--ac)}
-.ahm{display:block;width:100%;margin-top:6px;padding:10px 16px;border-radius:12px;border:1px solid rgba(45,212,191,.4);background:rgba(20,184,166,.15);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:#2dd4bf;transition:box-shadow .2s;font:600 13px/1.4 'Plus Jakarta Sans',sans-serif;text-align:center;cursor:pointer}
+.ahm{display:block;width:100%;margin-top:6px;padding:10px 16px;border-radius:12px;border:1px solid #8b5cf6;background:rgba(99,102,241,.12);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:#e0e7ff;box-shadow:0 0 12px rgba(139,92,246,.25);transition:box-shadow .2s;font:600 13px/1.4 'Plus Jakarta Sans',sans-serif;text-align:center;cursor:pointer}
 
 body{padding:12px 12px 96px}.wrap{gap:12px;padding-bottom:120px}.panel,.card{padding:14px;border-radius:18px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;align-items:end}.g2>div{min-width:0}.g2 label{margin:8px 0 4px;font-size:12px;line-height:1.25;min-height:30px;display:flex;align-items:flex-end}
@@ -74,7 +74,7 @@ body{padding:12px 12px 96px}.wrap{gap:12px;padding-bottom:120px}.panel,.card{pad
 .card .grid .mini:nth-child(1){border-left-color:#3b82f6}.card .grid .mini:nth-child(1) h4{color:#60a5fa}.card .grid .mini:nth-child(2){border-left-color:#a855f7}.card .grid .mini:nth-child(2) h4{color:#c084fc}.card .grid .mini:nth-child(3){border-left-color:#f59e0b}.card .grid .mini:nth-child(3) h4{color:#fbbf24}.card .grid .mini:nth-child(4){border-left-color:#14b8a6}.card .grid .mini:nth-child(4) h4{color:#2dd4bf}
 .fab{position:fixed;left:50%;transform:translateX(-50%) translateY(0);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:30;width:min(calc(100% - 28px),420px);padding:15px 18px;border:0;border-radius:99px;background:var(--ac);color:#0A0F1C;font:800 16px 'Plus Jakarta Sans',sans-serif;box-shadow:0 10px 28px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.18) inset;cursor:pointer;transition:opacity .2s,transform .2s}.fab.off{opacity:.55;background:#3a4560;color:#cbd5e1}.fab.hide{opacity:0;pointer-events:none;transform:translateX(-50%) translateY(20px)}
 .ahm.warn{border-color:rgba(245,158,11,.55);background:rgba(245,158,11,.14);color:#fbbf24}.ahm.warn:active{box-shadow:0 0 10px rgba(245,158,11,.3)}
-.ahm:hover,.ahm:active,.ahm:focus-visible{box-shadow:0 0 10px rgba(45,212,191,.2);outline:none}
+.ahm:hover,.ahm:active,.ahm:focus-visible{box-shadow:0 0 18px rgba(139,92,246,.4);outline:none}
 </style>
 </head>
 <body>
@@ -240,7 +240,7 @@ function menuSt(s){const a=opens(),x=a.find(y=>y.id===act);if(!x)return;x.d.st=s
 function zp(z,d){const f=new Intl.DateTimeFormat('en-US',{timeZone:z,hourCycle:'h23',weekday:'short',hour:'2-digit',minute:'2-digit'}).formatToParts(d).reduce((a,p)=>(a[p.type]=p.value,a),{});return{w:f.weekday,m:(+f.hour)*60+(+f.minute)}}
 function zoff(z,d){const f=new Intl.DateTimeFormat('en-US',{timeZone:z,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'}).formatToParts(d).reduce((a,p)=>(a[p.type]=p.value,a),{});return(Date.UTC(+f.year,+f.month-1,+f.day,+f.hour,+f.minute,+f.second)-d.getTime())/60000}
 /* MT5-Serverzeit: UTC+2, im US-Sommer (Zeitumstellung wie New York) UTC+3. Unabhaengig von der Geraetezeitzone. */
-function srvOff(t){return 120+(zoff('America/New_York',new Date(t))===-240?60:0)}
+function srvOff(t){return 120+(Math.round(zoff('America/New_York',new Date(t)))===-240?60:0)}
 function expTxt(ts){const e=ts+3600000,hm2={hour:'2-digit',minute:'2-digit'},loc=new Date(e).toLocaleTimeString('de-DE',hm2),s=new Date(e+srvOff(e)*60000),sv=s.toLocaleTimeString('de-DE',Object.assign({timeZone:'UTC'},hm2)),dl=new Date(e).toLocaleDateString('sv-SE'),ds=s.toLocaleDateString('sv-SE',{timeZone:'UTC'});return 'Ablaufzeit in MT5 setzen (60 Minuten nach der Auswertung): '+loc+' Uhr (deine Ortszeit) / '+sv+' Uhr (MT5-Serverzeit'+(ds!==dl?', Folgetag':'')+'), dann löscht MT5 die Order selbst.'}
 function atZ(z,h,m,dd,base){const n=new Date((base||Date.now())+(dd||0)*864e5),f=new Intl.DateTimeFormat('en-CA',{timeZone:z,year:'numeric',month:'2-digit',day:'2-digit'}).format(n).split('-'),g=Date.UTC(+f[0],+f[1]-1,+f[2],h,m);return new Date(g-zoff(z,new Date(g))*60000)}
 function hm(d){return d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})}
@@ -381,6 +381,50 @@ chInit();chUpdate();$('spr').value=(store.sp&&store.sp[cur])||'';if(!DB)$('stat'
  }
  var a=$('exCsv'),b=$('exJson'),c=$('imFile');
  if(a)a.onclick=csv;if(b)b.onclick=backup;if(c)c.onchange=function(){if(c.files[0])imp(c.files[0]);c.value=''};
+})();
+</script>
+<script>
+/* ===== LIZENZPRUEFUNG (Gumroad) =====
+   Trag hier deine Gumroad-Produkt-ID ein (Gumroad: Produkt > Inhalt/Lizenzschluessel > Produkt-ID).
+   Solange productId leer ist, ist die Pruefung AUS und die App laeuft ohne Schluessel. */
+(function(){
+ var CFG={
+  productId:'',        /* <- hier die Gumroad-Produkt-ID eintragen */
+  buyUrl:'',           /* <- optional: Link zu deiner Gumroad-Produktseite (Kauf-Button) */
+  maxUses:3,           /* wie oft ein Schluessel freigeschaltet werden darf (Geraete) */
+  recheckDays:7,       /* Wie oft der Schluessel im Hintergrund erneut geprueft wird */
+  graceDays:30         /* So lange laeuft die App weiter, wenn die Pruefung offline nicht klappt */
+ };
+ if(!CFG.productId)return;
+ var KEY='ict-lic',DAY=864e5;
+ function get(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){return null}}
+ function put(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
+ function clear(){try{localStorage.removeItem(KEY)}catch(e){}}
+ function verify(key,inc){return fetch('https://api.gumroad.com/v2/licenses/verify',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'product_id='+encodeURIComponent(CFG.productId)+'&license_key='+encodeURIComponent(key)+'&increment_uses_count='+(inc?'true':'false')}).then(function(r){return r.json().catch(function(){return{}}).then(function(j){return{status:r.status,j:j||{}}})})}
+ function bad(j){var p=j.purchase||{};return !j.success?'Dieser Schlüssel ist ungültig.':(p.refunded?'Dieser Kauf wurde erstattet.':(p.chargebacked?'Dieser Kauf wurde zurückgebucht.':(p.subscription_cancelled_at?'Das Abonnement wurde beendet.':'')))}
+ function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+ function gate(msg){
+  var o=document.getElementById('licG');if(o){var m=o.querySelector('.lm');if(m&&msg)m.textContent=msg;return}
+  o=document.createElement('div');o.id='licG';o.setAttribute('role','dialog');o.setAttribute('aria-label','Lizenz');
+  o.style.cssText='position:fixed;inset:0;z-index:200;background:#0A0F1C;display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto';
+  o.innerHTML='<div style="width:100%;max-width:420px;background:#121a2e;border:1px solid #22304d;border-radius:20px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.4);color:#e8edf7;font-family:\'Plus Jakarta Sans\',system-ui,sans-serif"><div style="font-size:12px;letter-spacing:3px;color:#D4AF37;font-weight:700">ICT SNIPER</div><h2 style="margin:8px 0 6px;font-size:22px">App freischalten</h2><div style="color:#8b97b3;font-size:14px;line-height:1.5">Gib den Lizenzschlüssel aus deiner Kauf-E-Mail ein. Er wird einmal geprüft und bleibt dann auf diesem Gerät gespeichert.</div><input id="licK" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX" style="width:100%;margin-top:14px;padding:13px;border-radius:12px;border:1px solid #22304d;background:#0A0F1C;color:#e8edf7;font:600 15px \'JetBrains Mono\',monospace"><button id="licB" style="width:100%;margin-top:12px;padding:14px;border:0;border-radius:14px;background:#D4AF37;color:#0A0F1C;font:800 16px \'Plus Jakarta Sans\',sans-serif;cursor:pointer">Freischalten</button><div class="lm" style="min-height:20px;margin-top:10px;font-size:13px;color:#ef4444"></div>'+(CFG.buyUrl?'<div style="margin-top:8px;font-size:13px;color:#8b97b3">Noch keinen Schlüssel? <a href="'+esc(CFG.buyUrl)+'" target="_blank" rel="noopener" style="color:#D4AF37">Jetzt kaufen</a></div>':'')+'</div>';
+  document.body.appendChild(o);var m2=o.querySelector('.lm');if(msg)m2.textContent=msg;
+  var b=o.querySelector('#licB'),i=o.querySelector('#licK');
+  function go(){var k=i.value.trim();if(!k){m2.textContent='Bitte den Schlüssel eintragen.';return}
+   b.disabled=true;b.textContent='Prüfe …';m2.style.color='#8b97b3';m2.textContent='';
+   verify(k,true).then(function(r){var j=r.j,e=bad(j);
+    if(e){m2.style.color='#ef4444';m2.textContent=e;return}
+    if(+j.uses>CFG.maxUses){m2.style.color='#ef4444';m2.textContent='Dieser Schlüssel wurde schon auf zu vielen Geräten freigeschaltet (höchstens '+CFG.maxUses+').';return}
+    put({k:k,c:Date.now()});o.remove()
+   }).catch(function(){m2.style.color='#ef4444';m2.textContent='Keine Verbindung zur Lizenzprüfung. Prüfe dein Internet und versuche es nochmal.'}).then(function(){b.disabled=false;b.textContent='Freischalten'})}
+  b.onclick=go;i.addEventListener('keydown',function(e){if(e.key==='Enter')go()});setTimeout(function(){try{i.focus()}catch(e){}},50)
+ }
+ var s=get();
+ if(!s||!s.k){gate();return}
+ if(Date.now()-(s.c||0)>CFG.recheckDays*DAY){
+  verify(s.k,false).then(function(r){var e=bad(r.j);if(e){clear();gate(e);return}s.c=Date.now();put(s)})
+  .catch(function(){if(Date.now()-(s.c||0)>CFG.graceDays*DAY){clear();gate('Die Lizenz konnte lange nicht geprüft werden. Bitte mit Internet verbinden und erneut freischalten.')}})
+ }
 })();
 </script>
 <button class="fab hide" id="fab" type="button">Chart-Analyse starten</button>
