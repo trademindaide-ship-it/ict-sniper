@@ -89,7 +89,7 @@ body{padding:12px 12px 96px}.wrap{gap:12px;padding-bottom:120px}.panel,.card{pad
   <div class="msg" id="msg"></div>
 </div>
 <div id="tabs"></div><div id="tmenu" style="display:none"></div><div id="out"></div><div class="panel" id="chat" style="display:none"><div id="log"></div><div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><label class="tb" for="fu" id="fuL">Update-Screenshot (M1) anhängen</label><input id="fu" type="file" accept="image/*" hidden><button class="tb" id="chk" style="display:none">Einstieg prüfen</button></div><div style="display:flex;gap:8px;margin-top:10px"><input id="q" type="text" placeholder="Frage zum Trade …"><button class="go" id="send" style="width:auto;margin:0;padding:12px 16px">Senden</button></div></div>
-</div><div class="pane" id="paneB" style="display:none"><div class="msg" id="stat" style="white-space:pre-line"></div><button class="tb" id="rs" style="display:none;margin:0 0 8px" onclick="resetHist()">Bilanz zurücksetzen</button><div class="panel" id="jr"><div class="tag" style="letter-spacing:2px">JOURNAL</div><div class="msg" id="jrS" style="margin:6px 0 10px"></div><div id="jrL"></div><label for="jrN">Allgemeine Notizen</label><textarea id="jrN" rows="4" placeholder="Beobachtungen, Regeln, Lehren …"></textarea></div><div class="panel" id="day"><div class="tag" style="letter-spacing:2px">TAGESBILANZ</div><label for="dayS">Startsumme heute (€)</label><input id="dayS" type="number" inputmode="decimal" step="any"><label for="dayE">Endsumme (€)</label><input id="dayE" type="number" inputmode="decimal" step="any"><div class="msg" id="dayR"></div><button class="tb" id="dayK" style="margin-top:8px">Endsumme als Kontostand übernehmen</button><div class="msg" id="dayH" style="white-space:pre-line"></div></div></div><div class="pane" id="paneC" style="display:none"><div class="panel"><div class="tag" style="letter-spacing:2px">API-ZUGANG</div><div class="msg" id="apiS" style="margin:6px 0 10px"></div><label for="apiKey">Anthropic-API-Schlüssel</label><input id="apiKey" type="password" autocomplete="off" placeholder="sk-ant-..."><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="tb" id="apiSave">Speichern &amp; testen</button><button class="tb" id="apiDel">Schlüssel löschen</button></div><div class="msg" id="apiT" style="margin:8px 0 0"></div><div class="msg" style="margin:8px 0 0;font-size:12px">Schlüssel erstellen: <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>. Der Schlüssel bleibt nur auf diesem Gerät im Browser und wird nur an die Anthropic-API gesendet. Die Nutzung wird über dein Anthropic-Konto abgerechnet. Setz dort ein Ausgabenlimit. Für die Nachrichtensuche muss die Websuche in deiner Anthropic-Konsole aktiviert sein.</div></div><div class="panel"><div class="tag" style="letter-spacing:2px">WICHTIGER HINWEIS</div><div class="msg" style="margin:6px 0 0">Diese App ist ein Hilfsmittel und keine Anlageberatung. Die Auswertungen stammen von einer KI und können falsch sein. Trading mit CFDs, Krypto und Hebel kann zum Verlust des gesamten eingesetzten Kapitals führen. Nutze die App zuerst auf einem Demokonto.</div></div></div></div>
+</div><div class="pane" id="paneB" style="display:none"><div class="msg" id="stat" style="white-space:pre-line"></div><button class="tb" id="rs" style="display:none;margin:0 0 8px" onclick="resetHist()">Bilanz zurücksetzen</button><div class="panel" id="jr"><div class="tag" style="letter-spacing:2px">JOURNAL</div><div class="msg" id="jrS" style="margin:6px 0 10px"></div><div id="jrL"></div><label for="jrN">Allgemeine Notizen</label><textarea id="jrN" rows="4" placeholder="Beobachtungen, Regeln, Lehren …"></textarea></div><div class="panel" id="day"><div class="tag" style="letter-spacing:2px">TAGESBILANZ</div><label for="dayS">Startsumme heute (€)</label><input id="dayS" type="number" inputmode="decimal" step="any"><label for="dayE">Endsumme (€)</label><input id="dayE" type="number" inputmode="decimal" step="any"><div class="msg" id="dayR"></div><button class="tb" id="dayK" style="margin-top:8px">Endsumme als Kontostand übernehmen</button><div class="msg" id="dayH" style="white-space:pre-line"></div></div><div class="panel" id="ex"><div class="tag" style="letter-spacing:2px">DATEN &amp; SICHERUNG</div><div class="msg" style="margin:6px 0 10px">Exportiere dein Journal zur Auswertung oder als Sicherung. Die Sicherung enthält auch die Chart-Bilder und lässt sich wieder importieren.</div><div style="display:grid;gap:8px"><button class="tb" id="exCsv" style="text-align:center">📄 Journal exportieren (CSV)</button><button class="tb" id="exJson" style="text-align:center">💾 Sicherung mit Charts (JSON)</button><label class="tb" for="imFile" style="text-align:center;cursor:pointer">📥 Sicherung importieren</label><input id="imFile" type="file" accept=".json,application/json" hidden></div><div class="msg" id="exM" style="margin:8px 0 0"></div></div></div><div class="pane" id="paneC" style="display:none"><div class="panel"><div class="tag" style="letter-spacing:2px">API-ZUGANG</div><div class="msg" id="apiS" style="margin:6px 0 10px"></div><label for="apiKey">Anthropic-API-Schlüssel</label><input id="apiKey" type="password" autocomplete="off" placeholder="sk-ant-..."><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="tb" id="apiSave">Speichern &amp; testen</button><button class="tb" id="apiDel">Schlüssel löschen</button></div><div class="msg" id="apiT" style="margin:8px 0 0"></div><div class="msg" style="margin:8px 0 0;font-size:12px">Schlüssel erstellen: <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>. Der Schlüssel bleibt nur auf diesem Gerät im Browser und wird nur an die Anthropic-API gesendet. Die Nutzung wird über dein Anthropic-Konto abgerechnet. Setz dort ein Ausgabenlimit. Für die Nachrichtensuche muss die Websuche in deiner Anthropic-Konsole aktiviert sein.</div></div><div class="panel"><div class="tag" style="letter-spacing:2px">WICHTIGER HINWEIS</div><div class="msg" style="margin:6px 0 0">Diese App ist ein Hilfsmittel und keine Anlageberatung. Die Auswertungen stammen von einer KI und können falsch sein. Trading mit CFDs, Krypto und Hebel kann zum Verlust des gesamten eingesetzten Kapitals führen. Nutze die App zuerst auf einem Demokonto.</div></div></div></div>
 <script>
 /* Eigenstaendige Version: Der Kunde traegt seinen eigenen Anthropic-API-Schluessel unter "Einstellungen" ein.
    Die Anfragen gehen direkt vom Geraet an die Anthropic-API. Es gibt keinen Server dazwischen. */
@@ -317,6 +317,8 @@ chInit();chUpdate();$('spr').value=(store.sp&&store.sp[cur])||'';if(!DB)$('stat'
  function tx(m,f){return odb().then(function(d){return new Promise(function(res,rej){var t=d.transaction(ST,m),s=t.objectStore(ST),r=f(s);t.oncomplete=function(){res(r&&r.result)};t.onerror=t.onabort=function(){rej(t.error)}})})}
  function shrink(file){return new Promise(function(res){if(!file){res('');return}var im=new Image(),u=URL.createObjectURL(file);im.onload=function(){try{var m=1500,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',0.8))}catch(e){res('')}URL.revokeObjectURL(u)};im.onerror=function(){URL.revokeObjectURL(u);res('')};im.src=u})}
  window.imgSave=function(id,m5,m1){return Promise.all([shrink(m5),shrink(m1)]).then(function(a){return tx('readwrite',function(s){return s.put({k:id,m5:a[0],m1:a[1],t:Date.now()})})}).catch(function(){})};
+ window.imgGet=function(k){return tx('readonly',function(s){return s.get(k)}).catch(function(){return null})};
+ window.imgPut=function(rec){return tx('readwrite',function(s){return s.put(rec)}).catch(function(){})};
  window.imgGC=function(){try{var keep={};(store.hist||[]).forEach(function(x){if(x.ik)keep[x.ik]=1});opens().forEach(function(x){keep[x.id]=1});return odb().then(function(d){return new Promise(function(res){var t=d.transaction(ST,'readwrite'),s=t.objectStore(ST),q=s.openCursor();q.onsuccess=function(){var c=q.result;if(c){if(!keep[c.key])c.delete();c.continue()}};t.oncomplete=res;t.onerror=t.onabort=res})}).catch(function(){})}catch(e){}};
  function close(){var l=document.getElementById('lb');if(l)l.remove();document.removeEventListener('keydown',kd)}
  function kd(e){if(e.key==='Escape')close()}
@@ -330,6 +332,52 @@ chInit();chUpdate();$('spr').value=(store.sp&&store.sp[cur])||'';if(!DB)$('stat'
   }).catch(function(){var b=l.querySelector('.lbi');if(b)b.innerHTML='<div class="lbn">Die Charts konnten nicht geladen werden.</div>'})
  };
  setTimeout(function(){try{imgGC()}catch(e){}},3000);
+})();
+</script>
+<script>
+/* Journal-Export (CSV, JSON-Sicherung mit Charts) und Import */
+(function(){
+ var $=function(i){return document.getElementById(i)};
+ function say(t,err){var m=$('exM');if(m){m.textContent=t;m.style.color=err?'#ef4444':''}}
+ function stamp(){return new Date().toLocaleDateString('sv-SE')}
+ function save(name,blob){
+  try{var f=new File([blob],name,{type:blob.type});if(navigator.canShare&&navigator.canShare({files:[f]})&&/iPhone|iPad|Android/i.test(navigator.userAgent)){return navigator.share({files:[f],title:name}).then(function(){return true}).catch(function(e){if(e&&e.name==='AbortError')return false;return dl()})}}catch(e){}
+  return Promise.resolve(dl());
+  function dl(){var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){a.remove();URL.revokeObjectURL(u)},4000);return true}
+ }
+ function cell(v){v=v==null?'':String(v);return /[;"\n\r]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+ function num(v){return v==null||v===''?'':String(v).replace('.',',')}
+ var NM={TP:'TP erreicht',SL:'SL getroffen',BE:'Break-even',Manuell:'Manuell beendet',Nicht:'Nicht eingestiegen'},WM={TP:'lief danach zum TP',gegen:'lief weiter gegen mich',seit:'lief seitwaerts',unklar:'unklar'};
+ function csv(){
+  var h=store.hist||[];if(!h.length){say('Noch keine Einträge zum Exportieren.',1);return}
+  var cols=['Datum','Uhrzeit','Symbol','Richtung','Ergebnis','Nach dem SL','Ordertyp','Entry','SL','TP','Lot','RR','Saeulen','Killzone','Muster','Nachrichten','Setup-Basis','Status-Notiz','Ergebnis in EUR','Notiz'];
+  var rows=h.map(function(x){var d=new Date(x.t);return [d.toLocaleDateString('de-DE'),d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}),x.sym,x.dir==='long'?'Long':x.dir==='short'?'Short':'',NM[x.r]||x.r,WM[x.w]||'',x.et,num(x.en),num(x.sl),num(x.tp),num(x.lot),num(x.rr),x.q==null?'':x.q,x.kz===1?'ja':x.kz===0?'nein':'',x.mu,x.nr,x.sb,x.tg,num(x.pnl),x.note].map(cell).join(';')});
+  var txt='﻿'+cols.join(';')+'\r\n'+rows.join('\r\n')+'\r\n';
+  save('ict-journal-'+stamp()+'.csv',new Blob([txt],{type:'text/csv'})).then(function(ok){if(ok)say(h.length+' Einträge exportiert (CSV).')})
+ }
+ function backup(){
+  var h=store.hist||[];
+  var keys=h.map(function(x){return x.ik}).filter(Boolean);
+  Promise.all(keys.map(function(k){return window.imgGet?window.imgGet(k):null})).then(function(recs){
+   var out={app:'ict-sniper',version:1,exported:new Date().toISOString(),hist:h,note:store.note||'',days:store.days||{},ch:store.ch||null,images:recs.filter(Boolean)};
+   return save('ict-sicherung-'+stamp()+'.json',new Blob([JSON.stringify(out)],{type:'application/json'})).then(function(ok){if(ok)say(h.length+' Einträge inklusive '+out.images.length+' Chart-Paaren gesichert.')})
+  }).catch(function(){say('Die Sicherung ist fehlgeschlagen.',1)})
+ }
+ function imp(file){
+  var r=new FileReader();r.onerror=function(){say('Die Datei konnte nicht gelesen werden.',1)};
+  r.onload=function(){try{
+   var o=JSON.parse(r.result);if(!o||o.app!=='ict-sniper'||!Array.isArray(o.hist))throw new Error('x');
+   var have={};(store.hist||[]).forEach(function(x){have[x.t+'|'+(x.sym||'')]=1});var add=0;
+   o.hist.forEach(function(x){if(x&&x.t&&!have[x.t+'|'+(x.sym||'')]){store.hist.push(x);have[x.t+'|'+(x.sym||'')]=1;add++}});
+   store.hist.sort(function(a,b){return a.t-b.t});store.hist=store.hist.slice(-200);
+   if(!store.note&&o.note)store.note=o.note;
+   persist();
+   return Promise.all((o.images||[]).map(function(rec){return window.imgPut?window.imgPut(rec):null})).then(function(){stats();say(add+' neue Einträge importiert, '+(o.hist.length-add)+' waren schon vorhanden.')})
+  }catch(e){say('Das ist keine gültige Sicherungsdatei dieser App.',1)}};
+  r.readAsText(file)
+ }
+ var a=$('exCsv'),b=$('exJson'),c=$('imFile');
+ if(a)a.onclick=csv;if(b)b.onclick=backup;if(c)c.onchange=function(){if(c.files[0])imp(c.files[0]);c.value=''};
 })();
 </script>
 <button class="fab hide" id="fab" type="button">Chart-Analyse starten</button>
