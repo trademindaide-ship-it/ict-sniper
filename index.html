@@ -264,12 +264,12 @@ $('chB').addEventListener('input',function(){const v=$('chB').value;$('cap').val
 $('chU').onclick=function(){const v=$('chB').value;if(parseFloat(v)>0){$('cap').value=v;store.cap=v;check()}chUpdate();$('chU').textContent='\u2713 Aktualisiert';setTimeout(function(){$('chU').textContent='Kontostand aktualisieren'},1500)};
 let chT2=null;
 $('chK').onclick=function(){const b=$('chK');if(b.dataset.s!=='1'){b.dataset.s='1';b.textContent='Wirklich neu starten? Nochmal tippen';chT2=setTimeout(function(){b.dataset.s='';b.textContent='Challenge neu starten'},5000);return}clearTimeout(chT2);b.dataset.s='';b.textContent='Challenge neu starten';const v=parseFloat($('chB').value||$('cap').value);if(!(v>0))return;$('chS').value=v;store.ch={s:v,b:v,t:Date.now(),d:today()};chUpdate()};
-function mainTab(n){['A','B','C'].forEach(function(x){var e=$('pane'+x);if(e)e.style.display=n===x?'':'none';var t=$('mt'+x);if(t)t.classList.toggle('on',n===x)});if(n==='B'){dayShow();stats()}window.scrollTo(0,0)}
+function mainTab(n){['A','B','C'].forEach(function(x){var e=$('pane'+x);if(e)e.style.display=n===x?'':'none';var t=$('mt'+x);if(t)t.classList.toggle('on',n===x)});if(n==='B'){try{dayInit()}catch(e){}stats()}if(n==='A'){try{chInit();chUpdate();check()}catch(e){}}window.scrollTo(0,0)}
 function esc(v){return String(v==null?'':v).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-function jrSum(){const h=store.hist||[];let sum=0,n=0;h.forEach(function(x){const v=parseFloat(x.pnl);if(!isNaN(v)){sum+=v;n++}});$('jrS').textContent=h.length?h.length+' Eintr\u00e4ge'+(n?' \u00b7 eingetragene Ergebnisse: '+(sum>=0?'+':'')+sum.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' \u20ac ('+n+' Trades)':''):'Noch keine geschlossenen Trades. Sie erscheinen hier, sobald du eine Karte schlie\u00dft.'}
+function jrSum(){const h=store.hist||[];let sum=0,n=0;h.forEach(function(x){const v=parseFloat(x.pnl);if(isFinite(v)){sum+=v;n++}});$('jrS').textContent=h.length?h.length+' Eintr\u00e4ge'+(n?' \u00b7 eingetragene Ergebnisse: '+(sum>=0?'+':'')+sum.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' \u20ac ('+n+' Trades)':''):'Noch keine geschlossenen Trades. Sie erscheinen hier, sobald du eine Karte schlie\u00dft.'}
 function jrBadge(x){if(x.q==null)return'';const q=+x.q,off=x.kz===0;let t,i,c;if(off||q<=1){t='NIEDRIG';i='\ud83d\udd34';c='r'}else if(q>=4){t='HOCH';i='\ud83d\udfe2';c='g'}else{t='MITTEL';i='\ud83d\udfe1';c='y'}return'<span class="jbd '+c+'">'+i+' '+t+'</span>'}
 function jrRender(){const L=$('jrL');if(!L)return;const h=store.hist||[];const nm={TP:'TP erreicht',SL:'SL getroffen',BE:'Break-even',Manuell:'Manuell beendet',Nicht:'Nicht eingestiegen'};const cl={TP:'jg',SL:'jrd'};const wm={TP:'lief danach zum TP',gegen:'lief weiter gegen mich',seit:'lief seitw\u00e4rts',unklar:'unklar'};const km=function(n){return(+n).toLocaleString('de-DE',{maximumFractionDigits:3})};let out='';for(let i=h.length-1;i>=Math.max(0,h.length-60);i--){const x=h[i],d=new Date(x.t),pn=parseFloat(x.pnl);out+='<details class="j"><summary><span>'+d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+' \u00b7 '+esc(x.sym||'?')+' '+(x.dir==='long'?'\u2191':x.dir==='short'?'\u2193':'')+'</span>'+jrBadge(x)+'<span class="jst '+(cl[x.r]||'jm')+'">'+(nm[x.r]||esc(x.r))+'<span id="jp'+i+'">'+(isNaN(pn)?'':' \u00b7 '+(pn>=0?'+':'')+km(pn)+' \u20ac')+'</span></span></summary><div class="jb">'+(x.en?'Order: '+esc(x.et||'-')+' \u00b7 Entry '+km(x.en)+' \u00b7 SL '+km(x.sl)+' \u00b7 TP '+km(x.tp)+(x.lot?' \u00b7 Lot '+km(x.lot):'')+(x.rr?' \u00b7 RR 1 : '+km(x.rr):'')+'<br>':(x.rr?'RR 1 : '+km(x.rr)+'<br>':''))+(x.sb?'Setup-Basis: '+esc(x.sb)+'<br>':'')+(x.tg?'Status-Notiz: '+esc(x.tg)+'<br>':'')+(x.ik?'<button class="tb jimg" style="margin:0 0 8px" onclick="imgShow(\''+esc(x.ik)+'\')">🖼️ Charts anzeigen</button><br>':'')+'Setup: '+(x.q!=null?x.q+' von 4 S\u00e4ulen':'-')+' \u00b7 Killzone: '+(x.kz===1?'ja':x.kz===0?'nein':'-')+' \u00b7 Muster: '+esc(x.mu||'-')+' \u00b7 Nachrichten: '+esc(x.nr||'-')+(x.w&&wm[x.w]?'<br>Nach dem SL: '+wm[x.w]:'')+'<label for="jv'+i+'">Ergebnis in \u20ac (optional)</label><input id="jv'+i+'" type="number" inputmode="decimal" step="any" value="'+esc(x.pnl||'')+'" oninput="jrSet('+i+',\'pnl\',this.value)"><label for="jn'+i+'">Notiz</label><textarea id="jn'+i+'" rows="2" placeholder="Was lief gut oder schlecht?" oninput="jrSet('+i+',\'note\',this.value)">'+esc(x.note||'')+'</textarea><button class="tb" id="jd'+i+'" style="margin-top:8px" onclick="jrDel('+i+')">Eintrag l\u00f6schen</button></div></details>'}L.innerHTML=out;jrSum();const g=$('jrN');if(g&&document.activeElement!==g)g.value=store.note||''}
-function jrSet(i,k,v){const x=store.hist[i];if(!x)return;x[k]=v;persist();if(k==='pnl'){const n=parseFloat(v),e=document.getElementById('jp'+i);if(e)e.textContent=isNaN(n)?'':' \u00b7 '+(n>=0?'+':'')+n.toLocaleString('de-DE',{maximumFractionDigits:3})+' \u20ac';jrSum()}}
+function jrSet(i,k,v){const x=store.hist[i];if(!x)return;if(k==='pnl'){const q=parseFloat(String(v).replace(',','.'));x[k]=isFinite(q)?q:''}else x[k]=v;persist();if(k==='pnl'){const n=parseFloat(x.pnl),e=document.getElementById('jp'+i);if(e)e.textContent=isNaN(n)?'':' \u00b7 '+(n>=0?'+':'')+n.toLocaleString('de-DE',{maximumFractionDigits:3})+' \u20ac';jrSum()}}
 function jrDel(i){const b=document.getElementById('jd'+i);if(!b)return;if(b.dataset.s!=='1'){b.dataset.s='1';b.textContent='Wirklich l\u00f6schen? Nochmal tippen';setTimeout(function(){if(b.isConnected){b.dataset.s='';b.textContent='Eintrag l\u00f6schen'}},4000);return}store.hist.splice(i,1);persist();try{imgGC()}catch(eG){}stats()}
 $('jrN').addEventListener('input',function(){store.note=$('jrN').value;persist()});
 function lotOf(cap,dist,k){return Math.max(0.01,Math.floor(cap*0.10/(dist*k)*100+1e-9)/100)}
@@ -286,7 +286,7 @@ async function ask(pre){const q=(typeof pre==='string'?pre:$('q').value.trim());
   let txt=r.text;const mo=txt.match(/ORDER:\s*(\{[\s\S]*\})\s*$/);let ord=null;if(mo){try{ord=JSON.parse(mo[1])}catch(e4){}txt=txt.replace(mo[0],'').trim()}el.textContent=txt;chat.push({role:'assistant',content:txt});if(ord&&ord.typ&&ord.typ!=='keine'&&+ord.entry&&+ord.sl&&+ord.tp)neuOrder(ord);
  }catch(e){chat.pop();el.textContent='Fehler: '+(e.message||'keine Antwort')+'. Versuche es erneut.'}
  $('send').disabled=false}
-$('fu').onchange=e=>{imgU=e.target.files[0]||null;$('fuL').textContent=imgU?'Update: '+imgU.name:'Update-Screenshot (M1) anhängen';$('chk').style.display=imgU?'inline-block':'none'};$('chk').onclick=()=>ask('Prüfe mit dem Update-Screenshot, ob ich jetzt einsteigen kann.');$('dayS').addEventListener('input',dayUp);$('dayE').addEventListener('input',dayUp);$('dayK').onclick=()=>{$('cap').value=$('dayE').value;store.cap=$('cap').value;$('chB').value=$('cap').value;persist();check();chUpdate()};$('send').onclick=ask;$('q').onkeydown=e=>{if(e.key==='Enter')ask()};
+$('fu').onchange=e=>{imgU=e.target.files[0]||null;$('fuL').textContent=imgU?'Update: '+imgU.name:'Update-Screenshot (M1) anhängen';$('chk').style.display=imgU?'inline-block':'none'};$('chk').onclick=()=>ask('Prüfe mit dem Update-Screenshot, ob ich jetzt einsteigen kann.');$('dayS').addEventListener('input',dayUp);$('dayE').addEventListener('input',dayUp);$('dayK').onclick=()=>{const v=parseFloat($('dayE').value);if(!(v>0)){$('dayR').textContent='Trag zuerst eine Endsumme größer 0 ein.';return}$('cap').value=v;store.cap=String(v);$('chB').value=v;persist();check();chUpdate();dayShow()};$('send').onclick=ask;$('q').onkeydown=e=>{if(e.key==='Enter')ask()};
 stats();
 initStore().then(()=>{stats();dayInit();try{const s=JSON.parse(localStorage.getItem('ict-last')||'null');if(s){const a=opens();a.push({id:'t'+s.t,d:s.d,i:s.i,cap:s.cap,cur:s.cur,t:s.t});saveOpens(a);localStorage.removeItem('ict-last')}}catch(e){}
 {const a=opens();tabs();if(a.length)showTrade(a[a.length-1].id)}
@@ -437,6 +437,32 @@ function cpy(btn,val){
  function fb(){try{var t=document.createElement('textarea');t.value=val;t.setAttribute('readonly','');t.style.cssText='position:fixed;top:0;left:0;opacity:0';document.body.appendChild(t);t.focus();t.select();t.setSelectionRange(0,99);var ok=document.execCommand('copy');t.remove();done(ok)}catch(e){done(false)}}
  try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(val).then(function(){done(true)},fb)}else fb()}catch(e){fb()}
 }
+</script>
+<script>
+/* Daten neu laden, wenn die App wieder sichtbar wird oder ein anderes Fenster gespeichert hat */
+(function(){
+ var busy=false;
+ function typing(){var a=document.activeElement;return a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)}
+ function resync(){
+  if(busy||typing())return;busy=true;
+  try{
+   var raw=localStorage.getItem('ict-store');
+   if(raw&&raw!==JSON.stringify(store)){
+    var l=JSON.parse(raw);if(l&&typeof l==='object'){store=Object.assign(store,l)}
+    if(store.cap&&store.fx){$('cap').value=store.cap}if(store.fx)$('fx').value=store.fx;
+    try{check()}catch(e){}
+    try{chInit();chUpdate()}catch(e){}
+    try{stats()}catch(e){}
+    try{if(typeof showTrade==='function'&&act&&opens().find(function(y){return y.id===act}))showTrade(act);else if(typeof tabs==='function')tabs()}catch(e){}
+   }
+   try{dayInit()}catch(e){}
+  }catch(e){}
+  busy=false;
+ }
+ document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')resync()});
+ window.addEventListener('pageshow',function(e){if(e.persisted)resync()});
+ window.addEventListener('storage',function(e){if(e.key==='ict-store')resync()});
+})();
 </script>
 <button class="fab hide" id="fab" type="button">Chart-Analyse starten</button>
 <script>
