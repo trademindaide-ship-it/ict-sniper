@@ -145,7 +145,8 @@ BERECHNUNG: HTF Bias: aus dem M5-Chart bestimmen (bullish, bearish oder neutral)
 let cur='XAUUSD',img=null,img5=null,chat=[],ctx=null,imgU=null;
 const $=id=>document.getElementById(id);
 function sel(k){cur=k;const i=INS[k];[['bG','XAUUSD'],['bB','BTCUSD'],['bO','UKOIL'],['bX','CUSTOM']].forEach(([b,n])=>$(b).classList.toggle('on',k==n));$('tv').href=i.url;$('ks').value=i.k;$('cust').style.display=k=='CUSTOM'?'block':'none';document.documentElement.style.setProperty('--ac',i.ac);bestTimes();try{$('spr').value=(store.sp&&store.sp[k])||''}catch(e){}check()}
-function check(){$('go').disabled=!(img&&img5&&+$('cap').value>0&&+$('fx').value>0&&+$('ks').value>0&&(cur!='CUSTOM'||$('nm').value.trim()))}
+function check(){$('go').disabled=!(img&&img5&&+$('cap').value>0&&+$('fx').value>0&&+$('ks').value>0&&(cur!='CUSTOM'||$('nm').value.trim()));goHint()}
+function goHint(){try{const m=[];if(!img5)m.push(['M5-Screenshot','dropTxt5']);if(!img)m.push(['M1-Screenshot','dropTxt']);if(!(+$('cap').value>0))m.push(['Kontostand','cap']);if(!(+$('fx').value>0))m.push(['EUR/USD-Kurs','fx']);if(!(+$('ks').value>0))m.push(['Kontraktgröße','ks']);if(cur==='CUSTOM'&&!$('nm').value.trim())m.push(['Name des Instruments','nm']);let e=$('goH');if(!e){e=document.createElement('div');e.id='goH';e.className='msg';e.style.cssText='margin-top:8px;color:#fbbf24;font-weight:600';$('go').after(e)}const g=$('go');g.dataset.miss=m.length?m[0][1]:'';e.textContent=m.length&&g.disabled?'Noch nötig: '+m.map(x=>x[0]).join(', ')+'.':'';e.style.display=e.textContent?'':'none'}catch(er){}}
 $('bG').onclick=()=>sel('XAUUSD');$('bB').onclick=()=>sel('BTCUSD');$('bO').onclick=()=>sel('UKOIL');$('bX').onclick=()=>sel('CUSTOM');$('cap').oninput=$('fx').oninput=$('ks').oninput=$('nm').oninput=check;$('cap').addEventListener('input',()=>{store.cap=$('cap').value;$('chB').value=$('cap').value;persist();chUpdate()});$('fx').addEventListener('input',()=>{store.fx=$('fx').value;store.fxT=Date.now();persist()});
 $('file').onchange=e=>{img=e.target.files[0]||null;if(img){const u=URL.createObjectURL(img);$('dropTxt').innerHTML='<img src="'+u+'" alt="Chart-Vorschau">'}check()};
 $('file5').onchange=e=>{img5=e.target.files[0]||null;if(img5){const u=URL.createObjectURL(img5);$('dropTxt5').innerHTML='<img src="'+u+'" alt="M5-Vorschau">'}check()};
@@ -433,7 +434,7 @@ chInit();chUpdate();$('spr').value=(store.sp&&store.sp[cur])||'';if(!DB)$('stat'
  var f=document.getElementById('fab'),go=document.getElementById('go');if(!f||!go)return;
  function vis(){var r=go.getBoundingClientRect();return r.top<innerHeight&&r.bottom>0}
  function upd(){try{var pa=document.getElementById('paneA'),on=pa&&pa.style.display!=='none'&&go.offsetParent!==null;var t=go.textContent;f.textContent=(t==='Trade Card erstellen')?'Chart-Analyse starten':t;f.classList.toggle('off',go.disabled);var up=document.querySelector('.upg'),near=up&&up.getBoundingClientRect().top<innerHeight-60;var res=['tabs','out','chat','tmenu','ahm','ahmT'].some(function(k){var e=document.getElementById(k);if(!e||e.offsetParent===null)return false;var r=e.getBoundingClientRect();return r.height>0&&r.bottom>0&&r.top<innerHeight});f.classList.toggle('hide',!on||vis()||!near||res)}catch(e){}}
- f.onclick=function(){if(go.disabled){var d=document.getElementById('dropTxt5');if(d)d.scrollIntoView({block:'center',behavior:'smooth'});return}go.click()};
+ f.onclick=function(){if(go.disabled){var d=document.getElementById(go.dataset.miss||'dropTxt5')||document.getElementById('dropTxt5');if(d)d.scrollIntoView({block:'center',behavior:'smooth'});return}go.click()};
  setInterval(upd,300);addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
 })();
 </script>
