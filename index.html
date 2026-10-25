@@ -529,7 +529,7 @@ function jrShare(i,btn){var x=(store.hist||[])[i];if(!x)return;var k=jrIk(i);jrM
 
 <script>
 /* Rahmen des Auswertungs-Kastens folgt dem Status der gewaehlten Karte: lila = neu, blau = wartet, gruen = laeuft */
-function anSync(){try{var e=document.getElementById('anP');if(!e)return;var x=act?opens().find(function(y){return y.id===act}):null,s=x&&x.d?x.d.st:'';e.classList.toggle('st-run',s==='laeuft');e.classList.toggle('st-wait',s==='wartet');var h=e.querySelector('.anH');if(h)h.textContent=s==='laeuft'?'CHART-AUSWERTUNG \u00b7 TRADE L\u00c4UFT':s==='wartet'?'CHART-AUSWERTUNG \u00b7 ORDER WARTET':'CHART-AUSWERTUNG'}catch(er){}}
+function anSync(){try{var e=document.getElementById('anP');if(!e)return;var x=act?opens().find(function(y){return y.id===act}):null,s=x&&x.d?x.d.st:'';e.classList.remove('st-run');e.classList.remove('st-wait');var h=e.querySelector('.anH');if(h)h.textContent='CHART-AUSWERTUNG'}catch(er){}}
 (function(){var t=window.tabs;if(typeof t==='function'){window.tabs=function(){var r=t.apply(this,arguments);anSync();return r}}document.addEventListener('DOMContentLoaded',anSync);setTimeout(anSync,300)})();
 </script>
 <script>
