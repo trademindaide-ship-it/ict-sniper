@@ -113,7 +113,16 @@ if(typeof claude==='undefined'){(function(){
  function ls(k){try{return localStorage.getItem(k)||''}catch(e){return ''}}
  function models(){return{complex:'claude-sonnet-5-5',normal:'claude-sonnet-5-5'}}
  function toB64(file){return new Promise(function(res,rej){var img=new Image(),u=URL.createObjectURL(file);img.onload=function(){var m=2000,k=Math.min(1,m/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);res(c.toDataURL('image/jpeg',0.9).split(',')[1])};img.onerror=function(){rej(new Error('Bild konnte nicht gelesen werden'))};img.src=u})}
- async function sample(input,opts){
+ async function readStream(r){var rd=r.body.getReader(),dec=new TextDecoder(),buf='',bl=[],stop=null,err=null;
+  while(true){var x=await rd.read();if(x.done)break;buf+=dec.decode(x.value,{stream:true});var ix;
+   while((ix=buf.indexOf('\n\n'))>=0){var ch=buf.slice(0,ix);buf=buf.slice(ix+2);var ln=ch.split('\n').filter(function(l){return l.indexOf('data:')===0})[0];if(!ln)continue;var ev;try{ev=JSON.parse(ln.slice(5))}catch(e){continue}
+    if(ev.type==='content_block_start'){var b=JSON.parse(JSON.stringify(ev.content_block));if(b.type==='text'&&b.text===undefined)b.text='';if(b.type==='server_tool_use'||b.type==='tool_use')b._in='';bl[ev.index]=b}
+    else if(ev.type==='content_block_delta'){var c=bl[ev.index];if(!c)continue;var dl=ev.delta||{};if(dl.type==='text_delta')c.text=(c.text||'')+dl.text;else if(dl.type==='input_json_delta')c._in=(c._in||'')+dl.partial_json}
+    else if(ev.type==='content_block_stop'){var d2=bl[ev.index];if(d2&&d2._in!==undefined){try{d2.input=d2._in?JSON.parse(d2._in):{}}catch(e){d2.input={}}delete d2._in}}
+    else if(ev.type==='message_delta'){if(ev.delta&&ev.delta.stop_reason)stop=ev.delta.stop_reason}
+    else if(ev.type==='error'){err=ev.error}}}
+  return{content:bl.filter(Boolean),stop_reason:stop,error:err}}
+  async function sample(input,opts){
   opts=opts||{};
   var k=ls('ict-apikey');
   if(!k){if(touched&&window.__goSettings)window.__goSettings();throw new Error('Kein API-Schlüssel hinterlegt. Trag ihn unter Einstellungen ein')}
@@ -122,12 +131,12 @@ if(typeof claude==='undefined'){(function(){
   var first=msgs.findIndex(function(m){return m.role==='user'});
   if(imgs.length&&first>=0){var t=msgs[first].content;msgs[first]={role:'user',content:imgs.map(function(d){return{type:'image',source:{type:'base64',media_type:'image/jpeg',data:d}}}).concat([{type:'text',text:t}])}}
   var body={model:opts.modelTier==='complex'?models().complex:models().normal,max_tokens:4000,messages:msgs};
-  if(opts.tools)body.tools=[{type:'web_search_20250305',name:'web_search',max_uses:4}];
+  if(opts.tools){body.tools=[{type:'web_search_20250305',name:'web_search',max_uses:4}];body.stream=true}
   if(typeof opts.temp==='number')body.temperature=opts.temp;
   var r,j;
   var nf=0;for(var n=0;n<8;n++){
-   try{r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify(body)})}catch(e){if(nf<2){nf++;await new Promise(function(z){setTimeout(z,1500)});continue}throw new Error('Keine Verbindung zur Anthropic-API')}
-   j={};try{j=await r.json()}catch(e){}
+   try{r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify(body)});if(body.stream&&r.ok){j=await readStream(r)}else{j={};try{j=await r.json()}catch(e){}}}catch(e){if(nf<2){nf++;await new Promise(function(z){setTimeout(z,1500)});continue}throw new Error('Keine Verbindung zur Anthropic-API')}
+   if(j&&j.error&&r.ok)throw new Error(j.error.message||'API-Fehler');
    if(r.status===400&&body.temperature!==undefined&&/temperature/i.test(JSON.stringify(j))){delete body.temperature;continue}
    if(r.ok&&j.stop_reason==='pause_turn'){body.messages=body.messages.concat([{role:'assistant',content:j.content}]);continue}
    break;
