@@ -90,7 +90,10 @@ body{padding:12px 12px 96px}.wrap{gap:12px;padding-bottom:120px}.panel,.card{pad
 .ahm.ovr{margin-top:8px;border-color:rgba(180,110,20,.6);background:rgba(120,70,10,.22);color:#e0a040}.ahm.ovr:active{box-shadow:0 0 10px rgba(224,160,64,.3)}.ahm.warn{border-color:rgba(245,158,11,.55);background:rgba(245,158,11,.14);color:#fbbf24}.ahm.warn:active{box-shadow:0 0 10px rgba(245,158,11,.3)}
 .ahm:hover,.ahm:active,.ahm:focus-visible{box-shadow:0 0 18px rgba(139,92,246,.4);outline:none}
 .out .o{display:flex;flex-direction:column}.out .o small+small{font-size:11px;line-height:1.3}.out .cb{margin-top:auto}.out .o b+small,.out .o b+.cb{margin-top:auto}.kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.kp{border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:rgba(255,255,255,.03)}.kp small{display:block;font-size:11px;color:var(--mut);line-height:1.3}.kp b{display:block;font:700 20px 'JetBrains Mono',monospace;margin:3px 0}.kp .kx{font-size:11px}.kp>small:first-child{white-space:nowrap;font-size:10.5px;letter-spacing:-.1px}.o.n{border-color:rgba(139,92,246,.55);background:rgba(99,102,241,.12)}.o b{font-size:19px;margin:2px 0}.cb{display:block;width:100%;margin-top:8px;padding:6px 8px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#e0e7ff;font:600 12px inherit;font-family:inherit;cursor:pointer}.cb.ok{border-color:#22c55e;background:rgba(34,197,94,.18);color:#86efac}
-.fz{margin:10px 0 0;padding:10px 12px;border:1px solid;border-radius:12px;font-size:14px;line-height:1.4}.sd{margin:10px 0 0;border:1px solid #1e2a44;border-radius:12px;padding:8px 12px;font-size:13px}.sd summary{cursor:pointer;font-weight:600;color:#9ca3af}.sdr{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid #1e2a4455}.sdr small{display:block;color:#9ca3af}.sdr b{white-space:nowrap}.sdt{border-bottom:0;font-weight:700}.sd p{margin:6px 0 2px;color:#9ca3af;font-size:12px}</style>
+.fz{margin:10px 0 0;padding:10px 12px;border:1px solid;border-radius:12px;font-size:14px;line-height:1.4}.sd{margin:10px 0 0;border:1px solid #1e2a44;border-radius:12px;padding:8px 12px;font-size:13px}.sd summary{cursor:pointer;font-weight:600;color:#9ca3af}.sdr{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid #1e2a4455}.sdr small{display:block;color:#9ca3af}.sdr b{white-space:nowrap}.sdt{border-bottom:0;font-weight:700}.sd p{margin:6px 0 2px;color:#9ca3af;font-size:12px}button.ib{position:absolute;top:7px;right:7px;width:22px;height:22px;min-width:0;padding:0;margin:0;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);color:#c3cbe0;font:italic 700 12px/1 Georgia,'Times New Roman',serif;display:flex;align-items:center;justify-content:center;opacity:.8;cursor:pointer;z-index:3;-webkit-tap-highlight-color:transparent}button.ib::after{content:'';position:absolute;inset:-9px}button.ib:active{background:rgba(255,255,255,.18)}
+.hib{position:relative}.hib>h4,.panel.hib>.tag,.o.hib>small:first-child,.kp.hib>small:first-child{padding-right:26px}.fz.hib,.amp.hib{padding-right:38px}.chK1.hib>button.ib{top:4px;right:4px;width:18px;height:18px;font-size:11px}.chK1.hib{padding-top:20px}.chK1.hib small:first-child{padding:0;font-size:11px}.chK1.hib>button.ib{top:3px;right:3px;width:17px;height:17px;font-size:10px}.upg>div.hib>label:first-of-type{padding-right:28px}.upg>div.hib>button.ib{top:8px}
+#ibp{position:fixed;inset:0;z-index:9999;display:flex;align-items:flex-end;justify-content:center;padding:14px 12px calc(14px + env(safe-area-inset-bottom,0px));background:rgba(5,8,16,.72);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}#ibp[hidden]{display:none}.ibs{width:100%;max-width:460px;max-height:75vh;max-height:75dvh;overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 20px 60px rgba(0,0,0,.6)}.ibh{display:flex;justify-content:space-between;align-items:center;gap:10px}.ibh b{font-size:17px}#ibx{width:34px;height:34px;padding:0;border-radius:50%;font-size:22px;line-height:1;color:var(--mut)}.ibl{margin:12px 0 2px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ac);font-weight:700}.ibs p{margin:0;font-size:14.5px;line-height:1.5;color:var(--txt)}
+@media print{button.ib,#ibp{display:none!important}}</style>
 </head>
 <body>
 <div class="wrap">
@@ -742,5 +745,75 @@ function balAsk(r,ex){
 }
 </script>
 <script>try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}</script>
+<script>
+/* Info-Symbole: kleines "i" in der Ecke wichtiger Kacheln, Tipp öffnet eine kurze Erklärung */
+(function(){
+var I={
+challenge:['15-Werktage-Challenge','Dein persönlicher Fortschrittsplan. Aus Startkapital und Ziel rechnet die App aus, wie dein Konto Werktag für Werktag wachsen müsste.','Trag den Kontostand selbst nach (die App bucht nichts automatisch). Bei Einzahlungen das Startkapital um denselben Betrag erhöhen. Das Ziel ist sehr ehrgeizig und nur eine Orientierung.'],
+kP:['Tagesziel','So viel sollte dein Konto am Ende des aktuellen Werktags haben, wenn du auf Plan liegst.','Am Wochenende bleibt das Tagesziel auf dem Stand des letzten Werktags stehen, bis der nächste beginnt.'],
+kD:['Abweichung','Dein Kontostand minus das Tagesziel. Grün heißt vor dem Plan, rot heißt dahinter.','Das stimmt nur, wenn dein Kontostand aktuell ist. Tippe nach jedem geschlossenen Trade auf „Kontostand aktualisieren“.'],
+kN:['Benötigt pro Tag','Wie viel Prozent dein Konto an jedem der übrigen Werktage wachsen müsste, um das Ziel zu erreichen.','Je höher der Wert, desto riskanter müsstest du handeln. Über 10 % pro Tag ist auf Dauer kaum durchzuhalten.'],
+zeiten:['Uhrzeit und Handelszeiten','Zeigt die aktuelle Zeit, welche Märkte (London, New York, Tokio) offen sind und ob gerade eine Killzone läuft. Wochenenden und Feiertage sind berücksichtigt.','Eine Killzone ist die Zeit mit viel Handelsvolumen. Außerhalb davon gibt es mehr Fehlausbrüche.'],
+auswertung:['Chart-Auswertung','Hier startest du eine Auswertung: Instrument wählen, Kontostand eintragen, M5- und M1-Screenshot hochladen und die Analyse starten.','Beide Bilder müssen vom selben Symbol stammen. Preisachse, Zeitachse und die Bid- und Ask-Linie sollten im Bild sichtbar sein. Die Auswertung kann bis zu einer Minute dauern, lass die App dabei geöffnet.'],
+m5:['M5-Screenshot','Gibt der KI den Überblick über die größere Richtung (Bias).','Zeig etwa 10 bis 16 Stunden mit Preisachse, Zeitachse und Symbolname im Bild. Querformat hilft.'],
+m1:['M1-Screenshot','Daraus liest die KI Entry, Stop Loss und Take Profit.','Zeig etwa 1,5 bis 3 Stunden (90 bis 180 Kerzen). Zu viel: die Kerzen werden zu klein. Zu wenig: der Zusammenhang fehlt. Linien offener Trades am besten ausblenden.'],
+chat:['Frage zum Trade','Hier kannst du der KI Fragen zur aktuellen Karte stellen oder einen Update-Screenshot (M1) senden. Dann prüft sie, ob ein Einstieg noch passt.','Die KI kennt nur die Karte und deine Bilder. Prüfe den aktuellen Preis immer selbst in MT5.'],
+urteil:['Gesamturteil','Die Ampel (HOCH, MITTEL, NIEDRIG) mit den wichtigsten Gründen in einem Satz. Sie kommt aus dem Setup-Score.','Es ist eine Orientierung, keine Anweisung. Du entscheidest selbst, ob du handelst.'],
+saeulen:['Säulen-Check','Die vier ICT-Kriterien: Struktur, Liquidität, FVG und Premium/Discount. Jede erfüllte Säule bringt Punkte.','4 von 4 ist stark, 3 brauchbar, weniger schwach. Bei zu wenigen Säulen gilt das Setup als High-Risk und der Lot-Vorschlag ist gesperrt.'],
+killzone:['Killzone','Die Handelszeit mit viel Volumen (London- und New-York-Session). Dann laufen Kurse sauberer.','Außerhalb ist der Markt ruhiger und Fehlausbrüche sind häufiger. Bei Bitcoin zählt das weniger, weil er rund um die Uhr läuft, am Wochenende ist das Volumen aber dünn.'],
+ordertyp:['Order-Typ','Zeigt, wie du einsteigst: Market (sofort zum aktuellen Preis), Limit (die Order wartet auf einen besseren Preis) oder Stop (sie löst bei einem Ausbruch aus).','Achte auf die Ablaufzeit und auf den Preis, ab dem du die Order löschen sollst, falls sie nicht gefüllt wurde.'],
+entry:['Entry','Der Preis, zu dem die Order eintreten soll.','Mit „kopieren“ übernimmst du den Wert und trägst ihn in MT5 ein. Prüfe vorher den aktuellen Preis in MT5, der Screenshot ist nur eine Momentaufnahme.'],
+lot:['Lot','Die Positionsgröße, berechnet aus deinem Kontostand und dem Risiko von 10 % pro Trade.','Steht dort „gesperrt“, hat die App das Setup als High-Risk eingestuft. Prüfe in MT5, dass du genau diese Größe einträgst.'],
+tp:['Take Profit','Bei diesem Preis schließt MT5 den Trade mit Gewinn. Darunter steht der mögliche Gewinn in Euro und Punkten.','Er liegt kurz vor dem nächsten klaren Ziel im Chart. Der Spread ist schon eingerechnet, trag den Wert genau so in MT5 ein.'],
+sl:['Stop Loss','Bei diesem Preis schließt MT5 den Trade mit Verlust und begrenzt damit dein Risiko. Darunter steht der mögliche Verlust.','Setze ihn immer und schiebe ihn nie weiter weg. Der Spread ist schon eingerechnet.'],
+struktur:['① Struktur','Hat der Kurs auf M1 die Richtung bestätigt, zum Beispiel mit einem tieferen Hoch nach einem Ausschlag?','Ein Häkchen heißt: Die Säule spricht für die gewählte Richtung.'],
+liquiditaet:['② Liquidität','Wo liegen die Stopps anderer Trader, über Hochs und unter Tiefs? Der Kurs holt sie sich oft zuerst („Sweep“) und dreht dann.','Ist die Liquidität schon geholt, ist der Einstieg meist sicherer.'],
+fvg:['③ FVG (Fair Value Gap)','Eine Preislücke im Chart, zu der der Kurs oft noch einmal zurückkehrt. Dort liegt häufig der Entry.','„Nicht mitigiert“ heißt: Die Lücke wurde noch nicht gefüllt, das Setup ist frisch.'],
+pd:['④ Premium / Discount','Oberhalb der Mitte einer Preisspanne ist der Kurs teuer (Premium, passt zu Short), darunter günstig (Discount, passt zu Long). EQ ist die Mitte.','Long sollte im Discount, Short im Premium eingestiegen werden.'],
+bias:['M5-Bias','Die größere Richtung aus dem M5-Chart: bullish (steigend), bearish (fallend) oder neutral.','Läuft dein Trade gegen den Bias, ist er riskanter. Hoch und Tief hat die KI geschätzt, prüfe sie bitte im Chart.'],
+muster:['Muster','Weitere Chart-Muster und wichtige Marken wie Widerstand und Unterstützung.','„bestätigt“ stützt deine Richtung, „widerspricht“ ist eine Warnung.'],
+news:['Nachrichten','Tagesaktuelle Meldungen und Termine zu deinem Instrument, zum Beispiel Zinsentscheide.','Bei hohem Risiko besser warten. Fehlt die Prüfung oder ist sie alt, tippe unten auf „Nachrichten neu prüfen“.'],
+trail:['SL nachziehen','Eine Regel, wie du den Stop Loss im Gewinn absicherst.','Ist der Trade 1R im Plus, setzt du den SL auf Break-even (den Einstiegspreis). Danach ziehst du ihn hinter die jeweils letzte Struktur nach, nie weiter weg.'],
+rr:['Chance-Risiko','Das Verhältnis von möglichem Gewinn zu möglichem Verlust. 1 : 2 heißt: Für 1 € Risiko winken 2 € Gewinn.','Die App verlangt mindestens 1 : 1,8. Liegt der Wert darunter, wird die Karte verworfen.'],
+score:['Setup-Score','Ein Regel-Score von 0 bis 100 aus Säulen, Killzone, M5-Bias, Nachrichten und Chance-Risiko.','Ab 80 HOCH, 50 bis 79 MITTEL, darunter NIEDRIG. Er ist eine Faustregel und keine Gewinnwahrscheinlichkeit. Unter der Kachel siehst du, wie er entsteht.'],
+journal:['Journal','Alle deine Auswertungen und Trades. Filtere nach Tag und Setup-Art, trag das Ergebnis und Notizen ein und hänge Bilder an.','Die App bucht Gewinne und Verluste nie selbst auf dein Konto. Trag den Betrag mit Vorzeichen ein (Verlust mit Minus).'],
+tagesbilanz:['Tagesbilanz','Du trägst Start- und Endsumme des Tages ein, die App zeigt Gewinn oder Verlust.','Die Werte ändert nur du. Mit dem Button übernimmst du die Endsumme als Kontostand.'],
+sicherung:['Daten und Sicherung','Hier exportierst du dein Journal als Sicherung, CSV, PDF oder HTML und kannst eine Sicherung wieder importieren.','Deine Daten liegen nur auf diesem Gerät. Mach regelmäßig eine JSON-Sicherung, sonst gehen sie beim Löschen der Browserdaten verloren.'],
+api:['API-Zugang','Dein persönlicher Anthropic-Schlüssel, mit dem die App die Auswertungen bei Anthropic abruft.','Er liegt nur in deinem Browser. Gib ihn niemals weiter. Die Kosten laufen über dein Anthropic-Konto, setz dort ein Ausgabenlimit.']
+};
+function has(el){for(var i=0;i<el.children.length;i++){if(el.children[i].className&&String(el.children[i].className).indexOf('ib')>-1&&el.children[i].tagName==='BUTTON')return true}return false}
+function put(el,key){if(!el||!I[key]||has(el))return;el.classList.add('hib');var b=document.createElement('button');b.type='button';b.className='ib';b.setAttribute('data-i',key);b.setAttribute('aria-label','Info zu '+I[key][0]);b.textContent='i';el.appendChild(b)}
+function q(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+function txt(e){return(e&&e.textContent||'').trim()}
+function decorate(){
+ try{
+  [['ch','challenge'],['clk','zeiten'],['anP','auswertung'],['chat','chat'],['jr','journal'],['day','tagesbilanz'],['ex','sicherung']].forEach(function(p){put(document.getElementById(p[0]),p[1])});
+  q('.panel>.tag').forEach(function(t){if(txt(t)==='API-ZUGANG')put(t.parentNode,'api')});
+  q('.chK1').forEach(function(k){var s=txt(k.querySelector('small'));put(k,s==='Tagesziel'?'kP':s==='Abweichung'?'kD':'kN')});
+  q('.upg>div').forEach(function(d,i){put(d,i===0?'m5':'m1')});
+  var o=document.getElementById('out');if(!o)return;
+  q('.fz',o).forEach(function(e){put(e,'urteil')});
+  q('.amp',o).forEach(function(e){var t=txt(e);if(t.indexOf('KILLZONE AKTIV')>-1||t.indexOf('RUHIGE PHASE')>-1)put(e,'killzone');else if(t.indexOf('Säulen-Check')>-1)put(e,'saeulen')});
+  q('.mini',o).forEach(function(e){var h=e.querySelector('h4'),t=txt(h);
+   if(!h){return}
+   var k=t.charAt(0)==='①'?'struktur':t.charAt(0)==='②'?'liquiditaet':t.charAt(0)==='③'?'fvg':t.charAt(0)==='④'?'pd':/^M5-Bias/i.test(t)?'bias':/^Muster/i.test(t)?'muster':/^Nachrichten/i.test(t)?'news':/^SL nachziehen/i.test(t)?'trail':(e.nextElementSibling&&e.nextElementSibling.classList.contains('out'))?'ordertyp':'';
+   if(k)put(e,k)});
+  q('.out .o',o).forEach(function(e,i){put(e,['entry','lot','tp','sl'][i])});
+  q('.kpi .kp',o).forEach(function(e,i){put(e,i===0?'rr':'score')});
+ }catch(e){}
+}
+var pend=false;function sched(){if(pend)return;pend=true;(window.requestAnimationFrame||setTimeout)(function(){pend=false;decorate()})}
+var sheet=null,last=null;
+function build(){if(sheet)return sheet;sheet=document.createElement('div');sheet.id='ibp';sheet.hidden=true;sheet.innerHTML='<div class="ibs" role="dialog" aria-modal="true" aria-labelledby="ibt"><div class="ibh"><b id="ibt"></b><button type="button" id="ibx" aria-label="Schließen">×</button></div><div class="ibl">Wozu dient das?</div><p id="ibd"></p><div class="ibl">Darauf achten</div><p id="ibw"></p></div>';document.body.appendChild(sheet);
+ sheet.addEventListener('click',function(e){if(e.target===sheet||e.target.id==='ibx')close()});return sheet}
+function open(key,btn){var d=I[key];if(!d)return;build();last=btn||null;document.getElementById('ibt').textContent=d[0];document.getElementById('ibd').textContent=d[1];document.getElementById('ibw').textContent=d[2];sheet.hidden=false;try{document.getElementById('ibx').focus()}catch(e){}}
+function close(){if(sheet)sheet.hidden=true;try{if(last)last.focus()}catch(e){}}
+document.addEventListener('click',function(e){var b=e.target&&e.target.closest?e.target.closest('button.ib'):null;if(!b)return;e.preventDefault();e.stopPropagation();open(b.getAttribute('data-i'),b)},true);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sheet&&!sheet.hidden)close()});
+try{new MutationObserver(sched).observe(document.body,{childList:true,subtree:true})}catch(e){setInterval(decorate,1500)}
+decorate();
+window.__ibKeys=Object.keys(I);
+})();
+</script>
 </body>
 </html>
