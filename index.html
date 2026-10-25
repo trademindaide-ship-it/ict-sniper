@@ -135,7 +135,7 @@ if(typeof claude==='undefined'){(function(){
   if(typeof opts.temp==='number')body.temperature=opts.temp;
   var r,j;
   var nf=0;for(var n=0;n<8;n++){
-   try{r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify(body)});if(body.stream&&r.ok){j=await readStream(r)}else{j={};try{j=await r.json()}catch(e){}}}catch(e){if(nf<2){nf++;await new Promise(function(z){setTimeout(z,1500)});continue}throw new Error('Keine Verbindung zur Anthropic-API')}
+   try{r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify(body)});if(body.stream&&r.ok){j=await readStream(r)}else{j={};try{j=await r.json()}catch(e){}}}catch(e){var em=String((e&&e.message)||e);if(body.stream){delete body.stream;nf++;continue}if(nf<2){nf++;await new Promise(function(z){setTimeout(z,1500)});continue}throw new Error('Keine Verbindung zur Anthropic-API ('+em+')')}
    if(j&&j.error&&r.ok)throw new Error(j.error.message||'API-Fehler');
    if(r.status===400&&body.temperature!==undefined&&/temperature/i.test(JSON.stringify(j))){delete body.temperature;continue}
    if(r.ok&&j.stop_reason==='pause_turn'){body.messages=body.messages.concat([{role:'assistant',content:j.content}]);continue}
