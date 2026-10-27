@@ -150,9 +150,9 @@ if(typeof claude==='undefined'){(function(){
   var msgs=typeof input==='string'?[{role:'user',content:input}]:input.map(function(m){return{role:m.role,content:m.content}});
   var first=msgs.findIndex(function(m){return m.role==='user'});
   if(imgs.length&&first>=0){var t=msgs[first].content;msgs[first]={role:'user',content:imgs.map(function(d){return{type:'image',source:{type:'base64',media_type:'image/jpeg',data:d}}}).concat([{type:'text',text:t}])}}
-  var body={model:opts.modelTier==='complex'?models().complex:models().normal,max_tokens:4000,messages:msgs};
+  var body={model:opts.modelTier==='complex'?models().complex:models().normal,max_tokens:8000,messages:msgs};
   if(opts.tools){body.tools=[{type:'web_search_20250305',name:'web_search',max_uses:2}];body.stream=true}
-  if(typeof opts.temp==='number')body.temperature=opts.temp;
+  /* Sonnet 5.5 lehnt temperature, top_p und top_k mit Fehler 400 ab, deshalb senden wir sie nicht. */
   var r,j;
   var nf=0;for(var n=0;n<8;n++){
    try{r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify(body),signal:opts.signal});if(body.stream&&r.ok){j=await readStream(r)}else{j={};try{j=await r.json()}catch(e){}}}catch(e){if((opts.signal&&opts.signal.aborted)||(e&&e.name==='AbortError'))throw Object.assign(new Error('Abgebrochen'),{code:'aborted'});var em=String((e&&e.message)||e);if(body.stream){delete body.stream;nf++;continue}if(nf<2){nf++;await new Promise(function(z){setTimeout(z,1500)});continue}throw new Error('Keine Verbindung zur Anthropic-API ('+em+')')}
