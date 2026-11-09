@@ -131,6 +131,62 @@ body{padding:12px 12px 96px}.wrap{gap:12px;padding-bottom:120px}.panel,.card{pad
 <div id="tabs"></div><div id="tmenu" style="display:none"></div><div id="out"></div><div class="panel" id="chat" style="display:none"><details id="logD" style="display:none"><summary id="logS" style="cursor:pointer;padding:10px 12px;border:1px solid var(--line);border-radius:14px;font-weight:600;margin-bottom:6px">\ud83d\udcac Verlauf &amp; Updates</summary><div id="log"></div></details><div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><label class="tb" for="fu" id="fuL">Update-Screenshot (M1) anhängen</label><input id="fu" type="file" accept="image/*" hidden><button class="tb" id="chk" style="display:none">Was ist jetzt zu tun?</button></div><div style="display:flex;gap:8px;margin-top:10px"><input id="q" type="text" placeholder="Eigene Frage stellen …"><button class="go" id="send" style="width:auto;margin:0;padding:12px 16px">Senden</button></div></div>
 </div><div class="pane" id="paneB" style="display:none"><div class="msg" id="stat" style="white-space:pre-line"></div><button class="tb" id="rs" style="display:none;margin:0 0 8px" onclick="resetHist()">Bilanz zurücksetzen</button><div class="panel"><div class="tag" style="letter-spacing:2px">KALENDER</div><div id="kal"></div></div><div class="panel" id="jr"><div class="tag" style="letter-spacing:2px">JOURNAL</div><div class="jdw"><label for="jrK">🏷️ Setup-Art</label><select id="jrK"><option value="">Alle Einträge</option><option value="set">Nur gesetzte Trades</option><option value="std">Standard (Killzone-Regeln)</option><option value="cw">Flex-Setup Krypto 24/7 (Wochenende)</option><option value="bad">Unbrauchbar (echte Sperre)</option><option value="warn">Trotz Warnung eingestiegen</option></select></div><div class="jdw"><label for="jrD">📅 Tag auswählen</label><select id="jrD"><option value="">Alle Tage</option></select></div><div class="msg" id="jrS" style="margin:6px 0 10px"></div><div id="jrL"></div><label for="jrN">Allgemeine Notizen</label><textarea id="jrN" rows="4" placeholder="Beobachtungen, Regeln, Lehren …"></textarea></div><div class="panel" id="day"><div class="tag" style="letter-spacing:2px">TAGESBILANZ</div><label for="dayS">Startsumme heute (€)</label><input id="dayS" type="number" inputmode="decimal" step="any"><label for="dayE">Endsumme (€)</label><input id="dayE" type="number" inputmode="decimal" step="any"><div class="msg" id="dayR"></div><button class="tb" id="dayK" style="margin-top:8px">Endsumme als Kontostand übernehmen</button><div class="msg" id="dayH" style="white-space:pre-line"></div></div><div class="panel" id="ex"><div class="tag" style="letter-spacing:2px">DATEN &amp; SICHERUNG</div><div class="msg" style="margin:6px 0 10px">Exportiere dein Journal zur Auswertung oder als Sicherung. Die Sicherung (JSON) enthält auch alle Bilder als Data-URL und lässt sich wieder importieren. Für Claude eignet sich die PDF-Analyse am besten, dort sieht er die Charts als Bilder unter den Trade-Daten. Der Export folgt den Filtern im Journal.</div><div style="display:grid;gap:8px"><button class="tb" id="exCsv" style="text-align:center">📄 Journal exportieren (CSV)</button><button class="tb" id="exJson" style="text-align:center">💾 Sicherung mit Charts (JSON)</button><button class="tb" id="exPdf" style="text-align:center">🖨️ Analyse als PDF (mit Charts)</button><button class="tb" id="exHtml" style="text-align:center">🌐 Analyse als HTML-Datei (mit Charts)</button><label class="tb" for="imFile" style="text-align:center;cursor:pointer">📥 Sicherung importieren</label><input id="imFile" type="file" accept=".json,application/json" hidden></div><div class="msg" id="exM" style="margin:8px 0 0"></div></div></div><div class="pane" id="paneC" style="display:none"><div class="panel"><div class="tag" style="letter-spacing:2px">API-ZUGANG</div><div class="msg" id="apiS" style="margin:6px 0 10px"></div><label for="apiKey">Anthropic-API-Schlüssel</label><input id="apiKey" type="password" autocomplete="off" placeholder="sk-ant-..."><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="tb" id="apiSave">Speichern &amp; testen</button><button class="tb" id="apiDel">Schlüssel löschen</button></div><div class="msg" id="apiT" style="margin:8px 0 0"></div><div class="msg" id="apiCost" style="margin:8px 0 0;font-size:12px"></div><div class="msg" style="margin:8px 0 0;font-size:12px">Schlüssel erstellen: <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>. Der Schlüssel bleibt nur auf diesem Gerät im Browser und wird nur an die Anthropic-API gesendet. Die Nutzung wird über dein Anthropic-Konto abgerechnet. Setz dort ein Ausgabenlimit. Für die Nachrichtensuche muss die Websuche in deiner Anthropic-Konsole aktiviert sein.</div></div><div class="panel" id="hlp"><div class="tag" style="letter-spacing:2px">FRAGEN ZUR APP</div><div class="msg" style="margin:6px 0 8px">Frag hier alles zur Bedienung, zum Beispiel: „Was bedeutet die Kurzvariante?“ oder „Wie exportiere ich mein Journal?“. Für Fragen zu einem konkreten Trade nutze die Frage-Funktion unter der Trade Card. Jede Frage kostet etwas API-Guthaben (meist 1 bis 3 Cent).</div><div id="hlpLog"></div><div style="display:flex;gap:8px;margin-top:10px"><input id="hlpQ" type="text" placeholder="Deine Frage zur App …" style="flex:1;min-width:0;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--txt);font:15px 'Plus Jakarta Sans',sans-serif"><button class="go" id="hlpB" style="width:auto;margin:0;padding:12px 16px">Fragen</button></div></div><div class="panel"><div class="tag" style="letter-spacing:2px">WICHTIGER HINWEIS</div><div class="msg" style="margin:6px 0 0">Diese App ist ein Hilfsmittel und keine Anlageberatung. Die Auswertungen stammen von einer KI und können falsch sein. Trading mit CFDs, Krypto und Hebel kann zum Verlust des gesamten eingesetzten Kapitals führen. Nutze die App zuerst auf einem Demokonto.</div></div></div></div>
 <script>
+/* Dateien speichern im Claude-Artefakt ueber die Download-Funktion von Claude (sonst normaler Browser-Download) */
+window.__inCl=function(){try{return !window.__shim&&typeof claude!=='undefined'&&claude&&typeof claude.use==='function'}catch(e){return false}};
+</script>
+<script>
+window.shareFile=function(name,blob){try{var f=new File([blob],name,{type:blob.type});if(navigator.canShare&&navigator.canShare({files:[f]})&&/iPhone|iPad|Android/i.test(navigator.userAgent)){return navigator.share({files:[f],title:name}).then(function(){return true}).catch(function(e){if(e&&e.name==='AbortError')return false;return dl()})}}catch(e){}return Promise.resolve(dl());function dl(){var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){a.remove();URL.revokeObjectURL(u)},60000);return true}};
+/* Fertige Datei als Knopf anbieten: frischer Fingertipp, damit das Teilen-Menue auf dem iPhone sicher aufgeht */
+window.offerFile=function(name,blob,txt){var m=document.getElementById('exM');if(!m)return;m.style.color='';m.textContent=txt+' ';var b=document.createElement('button');b.type='button';b.className='tb';b.style.cssText='display:block;width:100%;margin-top:8px;text-align:center;border-color:#22c55e;color:#86efac;background:rgba(34,197,94,.12)';b.textContent='\ud83d\udcc4 PDF öffnen / teilen / sichern';b.onclick=function(){shareFile(name,blob)};m.appendChild(b)};
+window.claudeDL=async function(name,data){try{var d=await claude.use('downloads');if(!d)return null;await d.save({filename:name,data:data});return true}catch(e){var c=e&&e.code,m=document.getElementById('exM');if(c==='declined')return false;if(c==='unavailable'||c==='not_granted'||c==='capability_disabled'||c==='capability_removed')return null;if(m){m.textContent='Speichern fehlgeschlagen ('+((e&&e.message)||c||'Fehler')+').';m.style.color='#ef4444'}return false}};
+</script>
+<script>
+/* Mini-PDF: erzeugt ein A4-PDF mit Text (Helvetica) und JPEG-Bildern, ohne externe Bibliothek */
+window.MiniPDF=function(){
+ var PW=595.28,PH=841.89,K=72/25.4,pages=[],cur=null,imgs=[];
+ var WD=[278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,278,278,278,469,556,333,556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,334,260,334,584];
+ function cw(c){var n=c.charCodeAt(0);if(n>=32&&n<=126)return WD[n-32];if(/[ÄÖÜ]/.test(c))return c==='Ä'?667:c==='Ö'?778:722;if(c==='ß')return 611;if(c==='·')return 278;return 556}
+ function enc(s){var o=[];for(var i=0;i<s.length;i++){var c=s.charCodeAt(i);if(c===0x20AC)c=0x80;else if(c>255)c=63;if(c===40||c===41||c===92)o.push(92);o.push(c)}return o}
+ function num(v){return (Math.round(v*100)/100).toString()}
+ var api={
+  addPage:function(){cur=[];pages.push(cur)},
+  width:function(s,size,bold){var w=0;for(var i=0;i<s.length;i++)w+=cw(s[i]);return w*size/1000*(bold?1.06:1)/K},
+  split:function(s,size,bold,maxw){var out=[],line='';s.split(' ').forEach(function(wd){var t=line?line+' '+wd:wd;if(api.width(t,size,bold)<=maxw||!line){if(api.width(t,size,bold)>maxw&&!line){var part='';for(var i=0;i<wd.length;i++){if(api.width(part+wd[i],size,bold)>maxw){out.push(part);part=''}part+=wd[i]}line=part}else line=t}else{out.push(line);line=wd}});if(line)out.push(line);return out},
+  text:function(s,x,y,size,bold,col,right){col=col||[17,17,17];if(right)x=x-api.width(s,size,bold);cur.push({t:'T',s:s,x:x,y:y,size:size,b:!!bold,c:col})},
+  line:function(x1,y1,x2,y2,col){cur.push({t:'L',x1:x1,y1:y1,x2:x2,y2:y2,c:col||[200,200,200]})},
+  image:function(bytes,pw,ph,x,y,w,h){imgs.push({b:bytes,w:pw,h:ph});cur.push({t:'I',i:imgs.length-1,x:x,y:y,w:w,h:h})},
+  pageCount:function(){return pages.length},
+  setPage:function(n){cur=pages[n-1]},
+  blob:function(){
+   var parts=[],off=0,xref=[],te=new TextEncoder();
+   function add(x){var b=typeof x==='string'?te.encode(x):x;parts.push(b);off+=b.length}
+   function obj(n,body){xref[n]=off;add(n+' 0 obj\n');body.forEach(add);add('\nendobj\n')}
+   add('%PDF-1.4\n%âãÏÓ\n');
+   var nP=pages.length,firstImg=5,firstPage=firstImg+imgs.length;
+   obj(1,['<< /Type /Catalog /Pages 2 0 R >>']);
+   var kids=[];for(var p=0;p<nP;p++)kids.push((firstPage+p*2)+' 0 R');
+   obj(2,['<< /Type /Pages /Count '+nP+' /Kids ['+kids.join(' ')+'] >>']);
+   obj(3,['<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>']);
+   obj(4,['<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>']);
+   imgs.forEach(function(im,i){obj(firstImg+i,['<< /Type /XObject /Subtype /Image /Width '+im.w+' /Height '+im.h+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+im.b.length+' >>\nstream\n',im.b,'\nendstream'])});
+   var xo=imgs.map(function(_,i){return '/Im'+i+' '+(firstImg+i)+' 0 R'}).join(' ');
+   pages.forEach(function(ops,p){
+    var cs=[];ops.forEach(function(o){
+     if(o.t==='T'){cs.push(te.encode('BT /F'+(o.b?2:1)+' '+num(o.size)+' Tf '+o.c.map(function(v){return num(v/255)}).join(' ')+' rg '+num(o.x*K)+' '+num(PH-o.y*K)+' Td ('));cs.push(new Uint8Array(enc(o.s)));cs.push(te.encode(') Tj ET\n'))}
+     else if(o.t==='L')cs.push(te.encode(o.c.map(function(v){return num(v/255)}).join(' ')+' RG 0.5 w '+num(o.x1*K)+' '+num(PH-o.y1*K)+' m '+num(o.x2*K)+' '+num(PH-o.y2*K)+' l S\n'));
+     else if(o.t==='I')cs.push(te.encode('q '+num(o.w*K)+' 0 0 '+num(o.h*K)+' '+num(o.x*K)+' '+num(PH-(o.y+o.h)*K)+' cm /Im'+o.i+' Do Q\n'))});
+    var len=cs.reduce(function(a,b){return a+b.length},0),pn=firstPage+p*2;
+    obj(pn,['<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+PW+' '+PH+'] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> /XObject << '+xo+' >> >> /Contents '+(pn+1)+' 0 R >>']);
+    obj(pn+1,['<< /Length '+len+' >>\nstream\n'].concat(cs).concat(['endstream']))});
+   var total=firstPage+nP*2,xs=off,x='xref\n0 '+total+'\n0000000000 65535 f \n';
+   for(var n=1;n<total;n++)x+=('0000000000'+xref[n]).slice(-10)+' 00000 n \n';
+   add(x+'trailer\n<< /Size '+total+' /Root 1 0 R >>\nstartxref\n'+xs+'\n%%EOF');
+   return new Blob(parts,{type:'application/pdf'})}
+ };return api};
+/* Bild (Data-URL) als JPEG-Bytes mit Groesse */
+window.toJpeg=function(src){return new Promise(function(res){var i=new Image();i.onload=function(){try{var c=document.createElement('canvas');c.width=i.naturalWidth;c.height=i.naturalHeight;var x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(i,0,0);var d=c.toDataURL('image/jpeg',0.85),b=atob(d.split(',')[1]),u=new Uint8Array(b.length);for(var k=0;k<b.length;k++)u[k]=b.charCodeAt(k);res({b:u,w:c.width,h:c.height})}catch(e){res(null)}};i.onerror=function(){res(null)};i.src=src})};
+</script>
+<script>
 /* Eigenstaendige Version: Der Kunde traegt seinen eigenen Anthropic-API-Schluessel unter "Einstellungen" ein.
    Die Anfragen gehen direkt vom Geraet an die Anthropic-API. Es gibt keinen Server dazwischen. */
 window.ICT_MODEL='claude-sonnet-5-5';
@@ -659,7 +715,8 @@ function jrShare(i,btn){var x=(store.hist||[])[i];if(!x)return;var k=jrIk(i);jrM
  var $=function(i){return document.getElementById(i)};
  function say(t,err){var m=$('exM');if(m){m.textContent=t;m.style.color=err?'#ef4444':''}}
  function stamp(){return new Date().toLocaleDateString('sv-SE')}
- function save(name,blob){
+ function save(name,blob){if(window.__inCl&&__inCl())return claudeDL(name,blob).then(function(r){return r===null?save0(name,blob):r});return save0(name,blob)}
+ function save0(name,blob){
   try{var f=new File([blob],name,{type:blob.type});if(navigator.canShare&&navigator.canShare({files:[f]})&&/iPhone|iPad|Android/i.test(navigator.userAgent)){return navigator.share({files:[f],title:name}).then(function(){return true}).catch(function(e){if(e&&e.name==='AbortError')return false;return dl()})}}catch(e){}
   return Promise.resolve(dl());
   function dl(){var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){a.remove();URL.revokeObjectURL(u)},4000);return true}
@@ -734,13 +791,42 @@ function jrThumbs(i){var b=document.getElementById('jt'+i);if(!b||!window.imgAll
    if(skip.length)h+='<p class="s">Nicht eingestiegen ('+skip.length+'): '+skip.map(function(o){var d=new Date(o.x.t);return E((o.x.sym||'?')+' '+d.toLocaleDateString('de-DE')+' '+d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}))}).join('; ')+'</p>';
    if(store.note)h+='<div class="t"><h2>Allgemeine Notizen</h2>'+E(store.note).replace(/\n/g,'<br>')+'</div>';
    return h+'</body></html>'})}
- function pdf(){var w=window.open('','_blank');say('Erstelle Analyse …');build().then(function(h){if(!h){if(w)w.close();say('Keine Einträge zum Exportieren (Filter prüfen).',1);return}
+ function pdf(){if(window.__inCl&&__inCl()||window.MiniPDF){pdfDoc();return}var w=window.open('','_blank');say('Erstelle Analyse …');build().then(function(h){if(!h){if(w)w.close();say('Keine Einträge zum Exportieren (Filter prüfen).',1);return}
    if(!w){html(h);say('Pop-up blockiert. Stattdessen als HTML-Datei gespeichert; öffne sie und wähle Drucken, dann Als PDF sichern.',1);return}
    w.document.open();w.document.write(h);w.document.close();say('Analyse geöffnet. Dort \"Drucken / Als PDF sichern\" tippen (iPhone: Teilen → Drucken → Zoomen → Sichern).')}).catch(function(){if(w)w.close();say('Der Export ist fehlgeschlagen.',1)})}
- function html(h){var name='ict-analyse-'+new Date().toLocaleDateString('sv-SE')+'.html',b=new Blob([h],{type:'text/html'});
+ function html(h){if(window.__inCl&&__inCl()){var nm='ict-analyse-'+new Date().toLocaleDateString('sv-SE')+'.html';return claudeDL(nm,new Blob([h],{type:'text/html'})).then(function(r){if(r===null)html0(h)})}return html0(h)}
+ function html0(h){var name='ict-analyse-'+new Date().toLocaleDateString('sv-SE')+'.html',b=new Blob([h],{type:'text/html'});
   try{var f=new File([b],name,{type:'text/html'});if(navigator.canShare&&navigator.canShare({files:[f]})&&/iPhone|iPad|Android/i.test(navigator.userAgent)){return navigator.share({files:[f],title:name}).catch(function(){})}}catch(e){}
   var u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){a.remove();URL.revokeObjectURL(u)},4000)}
  function htmlBtn(){say('Erstelle Analyse …');build().then(function(h){if(!h){say('Keine Einträge zum Exportieren (Filter prüfen).',1);return}html(h);say('HTML-Analyse erstellt. Hinweis: Claude sieht Bilder in HTML-Dateien nicht als Bild. Für die Charts nimm die PDF-Analyse.')}).catch(function(){say('Der Export ist fehlgeschlagen.',1)})}
+ function pdfDoc(){say('Erstelle PDF …');var L=list();if(!L.length){say('Keine Einträge zum Exportieren (Filter prüfen).',1);return Promise.resolve()}
+  var set=L.filter(function(o){return o.x.r!=='Nicht'}),skip=L.filter(function(o){return o.x.r==='Nicht'});
+  function T(s){return String(s==null?'':s).replace(/[−–—]/g,'-').replace(/…/g,'...').replace(/[→➜]/g,'->').replace(/[„“”]/g,'"').replace(/[‘’‚]/g,"'").replace(/[^\u0000-ÿ€]/g,'').replace(/\s+/g,' ').trim()}
+  return Promise.all(set.map(function(o){return imgAll(jrIk(o.i)).catch(function(){return[]})})).then(function(imgs){
+   var doc=MiniPDF(),W=210,H=297,M=12,CW=W-2*M,y=M;doc.addPage();
+   function need(h){if(y+h>H-M-6){doc.addPage();y=M}}
+   function txt(s,size,bold,col){var lh=size*0.42;doc.split(T(s),size,bold,CW).forEach(function(l){need(lh);doc.text(l,M,y+lh*0.8,size,bold,col);y+=lh})}
+   function row(a,b){if(b==null||b==='')return;var ls=doc.split(T(b),9.5,false,CW-42),lh=4.2;need(lh*ls.length+1);doc.text(T(a),M,y+3.4,9.5,false,[90,90,90]);ls.forEach(function(l,i){doc.text(l,M+42,y+3.4+i*lh,9.5,false)});y+=lh*ls.length+0.8;doc.line(M,y,W-M,y,[230,230,230]);y+=0.8}
+   var sum=0,n=0,tp=0,sl=0;set.forEach(function(o){var v=parseFloat(o.x.pnl);if(isFinite(v)){sum+=v;n++}if(o.x.r==='TP')tp++;if(o.x.r==='SL')sl++});
+   var fl=[jrDay?'Tag '+jrDe(jrDay):'',jrKat0?({std:'Standard',cw:'Flex-Setup Krypto 24/7',bad:'Unbrauchbar',warn:'Trotz Warnung eingestiegen',set:'Gesetzte Trades'}[jrKat0]||''):''].filter(Boolean).join(' · ')||'alle Einträge';
+   txt('ICT Sniper - Analyse-Export',17,true);y+=1;
+   txt('Erstellt am '+new Date().toLocaleString('de-DE')+' · Filter: '+fl+' · '+set.length+' gesetzte Trades (TP '+tp+', SL '+sl+')'+(n?' · eingetragene Ergebnisse: '+(sum>=0?'+':'')+sum.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' € ('+n+' Trades)':'')+'. Bilder: M5 = Bias, M1 = Entry/SL/TP.',9.5,false,[85,85,85]);y+=4;
+   var chain=Promise.resolve();
+   set.forEach(function(o,k){chain=chain.then(function(){var x=o.x,d=new Date(x.t),pn=parseFloat(x.pnl),WM={TP:'lief danach zum TP',gegen:'lief weiter gegen mich',seit:'lief seitwärts',unklar:'unklar'};
+     if(k%3===0)say('Erstelle PDF … Trade '+(k+1)+' von '+set.length);
+     need(40);doc.line(M,y,W-M,y,[190,190,190]);y+=3;
+     txt((x.sym||'?')+' '+(x.dir==='long'?'Long':x.dir==='short'?'Short':'')+' · '+d.toLocaleDateString('de-DE')+' '+d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}),12.5,true);y+=1;
+     var col=isFinite(pn)?(pn>0?[21,128,61]:pn<0?[185,28,28]:[17,17,17]):[17,17,17];
+     doc.text('Ergebnis',M,y+3.4,9.5,false,[90,90,90]);doc.split(T((NM[x.r]||x.r)+(isFinite(pn)?' · '+(pn>=0?'+':'')+pn.toLocaleString('de-DE')+' €':'')+(x.w&&WM[x.w]?' ('+WM[x.w]+')':'')),9.5,true,CW-42).forEach(function(l,i){doc.text(l,M+42,y+3.4+i*4.2,9.5,true,col)});y+=5;
+     row('Order',x.en?(x.et||'-')+' · Entry '+rnd(x.en)+' · SL '+rnd(x.sl)+' · TP '+rnd(x.tp)+(x.lot?' · Lot '+x.lot:'')+(x.rr?' · RR 1:'+x.rr:''):'');row('Setup-Basis',jrSb(x));row('Säulen',x.q!=null?x.q+' von 4':'');row('Killzone',x.kz===1?'ja':x.kz===0?'nein':'');row('Muster',x.mu);row('Nachrichtenrisiko',x.nr);row('Status-Notiz',jrTg(x));row('Notiz',x.note);y+=2;
+     return (imgs[k]||[]).reduce(function(p,im){return p.then(function(){return toJpeg(im.d).then(function(j){if(!j||!j.w)return;var w=CW,h=j.h*w/j.w,mh=H-2*M-10;if(h>mh){h=mh;w=j.w*h/j.h}need(h+3);doc.image(j.b,j.w,j.h,M,y,w,h);y+=h+3})})},Promise.resolve()).then(function(){y+=4})})});
+   return chain.then(function(){
+    if(skip.length){y+=2;txt('Nicht eingestiegen ('+skip.length+'): '+skip.map(function(o){var d=new Date(o.x.t);return (o.x.sym||'?')+' '+d.toLocaleDateString('de-DE')+' '+d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})}).join('; '),9,false,[85,85,85])}
+    if(store.note){y+=4;txt('Allgemeine Notizen',12,true);txt(store.note,9.5)}
+    var pc=doc.pageCount();for(var p=1;p<=pc;p++){doc.setPage(p);doc.text('Seite '+p+' von '+pc,W-M,H-5,8,false,[140,140,140],true)}
+    var name='ICT_Sniper_Analyse_'+new Date().toLocaleDateString('de-DE').replace(/\./g,'-')+'.pdf',bl=doc.blob();window.__lastPdf=bl;
+    if(!(window.__inCl&&__inCl())){offerFile(name,bl,'PDF fertig ('+pc+' Seiten).');return}return claudeDL(name,bl).then(function(r){if(r===true)say('PDF gespeichert ('+pc+' Seiten).');else if(r===null)offerFile(name,bl,'PDF fertig ('+pc+' Seiten).')})})
+  }).catch(function(e){say('PDF konnte nicht erstellt werden'+(e&&e.message?' ('+e.message+')':'')+'.',1)})}
  var a=$('exPdf'),b=$('exHtml');if(a)a.onclick=pdf;if(b)b.onclick=htmlBtn;
 })();
 </script>
