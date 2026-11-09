@@ -1103,7 +1103,7 @@ var OV='ÜBERBLICK ICT SNIPER\n'+
 'Feste Regeln: Risiko pro Trade 10 % des Kontos, der Lot wird darauf berechnet und auf den Volumenschritt abgerundet. Der TP liegt knapp vor dem nächsten Liquiditätsziel im Chart (Struktur-TP). Chance-Risiko mindestens 1 : 1,3, sonst wird die Karte verworfen. Der Spread wird eingerechnet. Konto in Euro, EUR/USD-Kurs von Hand oder automatisch.\n'+
 'Aufbau der App, drei Bereiche oben:\n'+
 '1) „Challenge & Analyse“: 15-Werktage-Challenge mit Startkapital, Kontostand, Tagesziel und Fortschritt; Uhr mit Handelszeiten und Killzones; Chart-Auswertung (Instrument wählen, Kontostand, EUR/USD-Kurs, Kontraktgröße, Spread, Volumenschritt, M5- und M1-Screenshot hochladen, „Chart-Analyse starten“). Darunter erscheinen die Trade Cards. Mehrere Karten können gleichzeitig offen sein, jede als eigene Zeile mit Status (neu = grau, Order gesetzt = orange, Trade läuft = grün). Über das Status-Menü setzt man eine Karte auf „Order gesetzt“, „läuft“ oder trägt das Ergebnis ein (TP, SL, Break-even, nicht eingestiegen); dann landet sie im Journal. Unter einer Karte kann man einen Update-Screenshot (M1) anhängen oder eine Frage stellen; die Antwort beginnt mit einer klaren Aktion (z. B. EINSTIEG, WARTEN, LÖSCHEN, HALTEN, SL_ZIEHEN, SCHLIESSEN).\n'+
-'2) „Historie / Journal“: alle abgeschlossenen Trades mit Ergebnis, Setup-Basis und Notizen, Filter nach Setup-Art und Tag, Statistik, Tagesbilanz, Export als CSV, Sicherung als JSON (mit Charts), Analyse als PDF oder HTML, Sicherung importieren.\n'+
+'2) „Historie / Journal“: oben ein Kalender mit dem Ergebnis jedes Tages (Tag antippen zeigt nur diesen Tag), darunter die Bilanz mit Zeitraum-Knöpfen Alle / Monat / Heute (Kacheln für Trades, Trefferquote, Ergebnis, Ø Gewinn/Verlust und aufklappbare Tabellen nach Instrument, Uhrzeit, Session, Säulen, Chance-Risiko, Killzone), danach das Journal mit allen Trades, Filter nach Setup-Art und Tag, Export als CSV, Sicherung als JSON (mit Charts), Analyse als PDF oder HTML, Sicherung importieren.\n'+
 '3) „Einstellungen“: eigener Anthropic-API-Schlüssel (bleibt nur im Browser des Geräts), Verbrauchsanzeige, dieser Hilfe-Chat, rechtlicher Hinweis.\n'+
 'Die Trade Card zeigt: Gesamt-Rating (HOCH, GUT, MITTEL, NIEDRIG), Säulen-Check (Struktur, Liquidität, FVG, Premium/Discount; 4 von 4 stark, 3 brauchbar, weniger gesperrt), Killzone-Hinweis, Einstiegsanweisung mit Löschpreis und Ablaufzeit bei Limit- oder Stop-Orders, Kacheln für Entry, Lot, TP und SL mit Kopier-Knöpfen, Spread-Hinweis, eventuell eine Kurzvariante (engerer SL, größerer Lot, gleicher Haupt-TP, optional ein engerer TP an einer Zwischen-Zone), die ICT-Analyse, M5-Bias, Muster und Nachrichten. Kleine i-Knöpfe an den Kacheln öffnen kurze Erklärungen.\n'+
 'Im Journal heißt ein Trade mit 4 von 4 Säulen „Regulär ausgeführt“, mit 3 von 4 oder außerhalb der Killzone „Regulär ausgeführt (Brauchbar)“; „Eingestiegen trotz Warnung“ steht nur bei echten Regelbrüchen (verworfene Karte, weniger als 3 Säulen oder „Trotz Warnung traden“).';
@@ -1151,10 +1151,11 @@ try{$('hlpB').addEventListener('click',go);$('hlpQ').addEventListener('keydown',
   h+='</div><div class="ksum"><span>Monat: <b style="color:'+(sum>=0?'#4ade80':'#f87171')+'">'+eur(sum,1)+'</b></span><span class="jm">'+td2+' Handelstage · '+pos+' im Plus · '+neg+' im Minus</span></div>';
   var W=[0,0,0,0,0,0,0],N=[0,0,0,0,0,0,0];Object.keys(D).forEach(function(k){var p=k.split('-'),w=(new Date(+p[0],+p[1]-1,+p[2]).getDay()+6)%7;W[w]+=D[k].p;N[w]++});
   if(Object.keys(D).length>1)h+='<div class="msg" style="margin:10px 0 0;font-size:12px">Nach Wochentag (alle Monate, Summe):</div><div class="kwd">'+WD.map(function(w,i){return'<div style="color:'+(N[i]?(W[i]>=0?'#4ade80':'#f87171'):'var(--mut)')+'">'+w+'<br>'+(N[i]?eur(W[i]):'–')+'</div>'}).join('')+'</div>';
-  h+='<div class="msg" style="margin:8px 0 0;font-size:12px">Tippe auf einen Tag, um seine Trades im Journal zu sehen. Gezählt werden die eingetragenen Ergebnisse.</div>';
+  h+='<div class="msg" style="margin:8px 0 0;font-size:12px">Tippe auf einen Tag: Bilanz und Journal zeigen dann nur diesen Tag. Nochmal tippen hebt die Auswahl auf.</div>';
   box.innerHTML=h}catch(e){}};
+ window.kalCur=function(){var n=new Date();return M||{y:n.getFullYear(),m:n.getMonth()}};
  window.kalNav=function(s){var m=M.m+s,y=M.y;if(m<0){m=11;y--}if(m>11){m=0;y++}M={y:y,m:m};kalRender()};
- window.kalPick=function(k){jrDay=(window.jrDay===k)?'':k;try{var s=g('jrD');jrFill();if(s)s.value=jrDay}catch(e){}jrRender();if(jrDay){var j=g('jr');if(j)j.scrollIntoView({behavior:'smooth',block:'start'})}};
+ window.kalPick=function(k){jrDay=(window.jrDay===k)?'':k;try{var s=g('jrD');jrFill();if(s)s.value=jrDay}catch(e){}jrRender()};
  var r0=window.jrRender;if(typeof r0==='function'){window.jrRender=function(){var r=r0.apply(this,arguments);kalRender();return r}}
  setTimeout(kalRender,500);
 })();
@@ -1266,6 +1267,38 @@ details.bs{background:var(--panel);border:1px solid var(--line);border-radius:14
  }catch(e){try{g('stat').style.display=''}catch(x){}}};
  var s0=window.stats;if(typeof s0==='function'){window.stats=function(){var r=s0.apply(this,arguments);bilRender();return r}}
  setTimeout(bilRender,600);
+})();
+</script>
+
+<style>
+#day{display:none!important}
+.bhd{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}.bhd b{font-size:18px}.bhd span{color:var(--ui);font-weight:700;font-size:14px}
+.bch{display:flex;gap:6px;flex-wrap:wrap}.bch button{flex:1;min-width:0;padding:9px 6px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--txt);font:600 13px 'Plus Jakarta Sans',sans-serif;cursor:pointer}.bch button.on{background:var(--ui);border-color:var(--ui);color:#0A0F1C}
+.bempty{color:var(--mut);font-size:14px;padding:6px 2px}
+</style>
+<script>
+/* Kalender und Bilanz verbinden: Zeitraum waehlen (Alle / Monat / Heute / Tag aus dem Kalender) */
+(function(){
+ window.bilMode=window.bilMode||'all';
+ var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+ function g(i){return document.getElementById(i)}
+ function order(){try{var k=g('kal'),b=g('bil');if(!k||!b)return;var kp=k.closest('.panel');if(kp&&kp.nextElementSibling!==b&&!kp.dataset.mv){kp.dataset.mv='1';b.parentNode.insertBefore(kp,b)}}catch(e){}}
+ function period(){var td=today();if(window.jrDay)return{k:'day',d:jrDay,t:jrDay===td?'Heute ('+jrDe(jrDay)+')':(function(){var p=jrDay.split('-');return +p[2]+'. '+MN[+p[1]-1]+' '+p[0]})()};if(bilMode==='month'){var m=window.kalCur?kalCur():{y:new Date().getFullYear(),m:new Date().getMonth()};return{k:'month',y:m.y,m:m.m,t:MN[m.m]+' '+m.y}}return{k:'all',t:'Alle Trades'}}
+ function inP(x,P){if(P.k==='all')return true;var k=jrKey(x);if(P.k==='day')return k===P.d;var p=k.split('-');return +p[0]===P.y&&+p[1]-1===P.m}
+ window.bilSet=function(m){if(m==='today'){jrDay=today();bilMode='all'}else{jrDay='';bilMode=m}try{var s=g('jrD');jrFill();if(s)s.value=jrDay}catch(e){}jrRender();bilRender();try{kalRender()}catch(e){}};
+ var r0=window.bilRender;
+ window.bilRender=function(){order();var P=period(),all=store.hist||[],keep=store.hist;try{store.hist=all.filter(function(x){return inP(x,P)});if(typeof r0==='function')r0()}finally{store.hist=keep}
+  try{var box=g('bil');if(!box)return;var on=P.k==='day'?(P.d===today()?'today':''):P.k;
+   var head='<div class="bhd"><b>Bilanz</b><span>'+P.t+'</span></div><div class="bch"><button type="button" class="'+(on==='all'?'on':'')+'" onclick="bilSet(\'all\')">Alle</button><button type="button" class="'+(on==='month'?'on':'')+'" onclick="bilSet(\'month\')">Monat</button><button type="button" class="'+(on==='today'?'on':'')+'" onclick="bilSet(\'today\')">Heute</button></div>';
+   var n=all.filter(function(x){return inP(x,P)}).length;
+   if(!n){box.innerHTML=head+'<div class="bempty">Keine Einträge in diesem Zeitraum.</div>';return}
+   var tw=g('bilTx');if(tw){var sm=tw.querySelector('summary span');if(sm)sm.textContent='📝 Alle Zahlen als Text (alle Trades)'}
+   box.insertAdjacentHTML('afterbegin',head)}catch(e){}};
+ /* Kalender-Monat nach aussen geben und Bilanz mitziehen */
+ var kn=window.kalNav,kp=window.kalPick;
+ if(typeof kn==='function')window.kalNav=function(s){kn(s);if(bilMode==='month'&&!jrDay)bilRender()};
+ if(typeof kp==='function')window.kalPick=function(k){kp(k);bilRender()};
+ setTimeout(function(){order();bilRender()},700);
 })();
 </script>
 
